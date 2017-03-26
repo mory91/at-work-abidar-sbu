@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FTD2XX_NET, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>HardwareInterface\FTD2XX_NET.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -56,6 +60,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HardwareInterface\CentralBoard.cs" />
+    <Compile Include="HardwareInterface\DX.cs" />
+    <Compile Include="HardwareInterface\dynamixel.cs" />
+    <Compile Include="HardwareInterface\MotorControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="PropertiesForm.cs">
       <SubType>Form</SubType>
