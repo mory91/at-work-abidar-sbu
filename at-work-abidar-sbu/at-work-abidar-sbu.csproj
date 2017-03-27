@@ -113,6 +113,24 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HardwareInterface\CentralBoard.cs" />
+    <Compile Include="HardwareInterface\DX.cs" />
+    <Compile Include="HardwareInterface\dynamixel.cs" />
+    <Compile Include="HardwareInterface\MotorControl.cs" />
+    <Compile Include="InitMapBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InitMapBuilder.Designer.cs">
+      <DependentUpon>InitMapBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Map.cs" />
+    <Compile Include="MapBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MapBuilder.Designer.cs">
+      <DependentUpon>MapBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Obstacle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="PropertiesForm.cs">
       <SubType>Form</SubType>
@@ -122,8 +140,29 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyManager.cs" />
+    <Compile Include="QR.cs" />
+    <Compile Include="Stage.cs" />
+    <Compile Include="Wall.cs" />
     <EmbeddedResource Include="CameraTestForm.resx">
       <DependentUpon>CameraTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateQR.resx">
+      <DependentUpon>CreateQR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateStage.resx">
+      <DependentUpon>CreateStage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateWall.resx">
+      <DependentUpon>CreateWall.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InitMapBuilder.resx">
+      <DependentUpon>InitMapBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MapBuilder.resx">
+      <DependentUpon>MapBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm.resx">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
@@ -154,6 +193,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HardwareInterface\dxl_x64_c.dll" />
+    <Content Include="HardwareInterface\FTD2XX_NET.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
