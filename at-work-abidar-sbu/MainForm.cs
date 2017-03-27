@@ -34,5 +34,11 @@ namespace at_work_abidar_sbu
             InitMapBuilderForm mapBuilderForm = new InitMapBuilderForm();
             mapBuilderForm.ShowDialog();
         }
+
+        private void qRTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            QrCodeTestForm qrCodeTestForm = new QrCodeTestForm();
+            qrCodeTestForm.ShowDialog();
+        }
     }
 }
