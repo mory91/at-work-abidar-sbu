@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace at_work_abidar_sbu
 {
-    public partial class CreateWall : Form
+    public partial class CreateWallForm : Form
     {
         public Map map;
         public double scalex, scaley;
-        public CreateWall()
+        public CreateWallForm()
         {
             InitializeComponent();
         }

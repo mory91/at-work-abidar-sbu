@@ -10,24 +10,22 @@ using System.Windows.Forms;
 
 namespace at_work_abidar_sbu
 {
-    public partial class CreateStage : Form
+    public partial class CreateQRForm : Form
     {
         public Map map;
         public double scalex, scaley;
-        public CreateStage()
+        public CreateQRForm()
         {
             InitializeComponent();
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            Stage stage = new Stage();
-            stage.start = new Point(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text));
-            stage.width = Double.Parse(textBox5.Text);
-            stage.height = Double.Parse(textBox4.Text);
-            stage.scalex = scalex;
-            stage.scaley = scaley;
-            stage.name = textBox3.Text;
-            map.obstacles.Add(stage);
+            QR qr = new QR();
+            qr.start = new Point(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text));
+            qr.scalex = scalex;
+            qr.scaley = scaley;
+            map.obstacles.Add(qr);
             this.Close();
         }
     }

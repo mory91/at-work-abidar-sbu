@@ -1,6 +1,6 @@
 ﻿namespace at_work_abidar_sbu
 {
-    partial class MapBuilder
+    partial class MapBuilderForm
     {
         /// <summary>
         /// Required designer variable.

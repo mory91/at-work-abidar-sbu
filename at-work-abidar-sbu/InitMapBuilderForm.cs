@@ -11,18 +11,18 @@ using Newtonsoft.Json;
 
 namespace at_work_abidar_sbu
 {
-    public partial class InitMapBuilder : Form
+    public partial class InitMapBuilderForm : Form
     {
-        public InitMapBuilder()
+        public InitMapBuilderForm()
         {
             InitializeComponent();
         }
 
         private void CreateMap_Click(object sender, EventArgs e)
         {
-            MapBuilder mp = new MapBuilder(Double.Parse(width.Text), Double.Parse(height.Text));
+            MapBuilderForm mp = new MapBuilderForm(Double.Parse(width.Text), Double.Parse(height.Text));
             mp.Show();
-            // this.Close();
+             this.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,9 +35,10 @@ namespace at_work_abidar_sbu
                 var settings = new JsonSerializerSettings();
                 settings.TypeNameHandling = TypeNameHandling.Objects;
                 Map map = JsonConvert.DeserializeObject<Map>(json, settings);
-                MapBuilder mp = new MapBuilder(map);
+                MapBuilderForm mp = new MapBuilderForm(map);
                 mp.Show();
                 sr.Close();
+                this.Close();
             }
         }
     }

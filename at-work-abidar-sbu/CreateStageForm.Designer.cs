@@ -1,6 +1,6 @@
 ﻿namespace at_work_abidar_sbu
 {
-    partial class CreateStage
+    partial class CreateStageForm
     {
         /// <summary>
         /// Required designer variable.

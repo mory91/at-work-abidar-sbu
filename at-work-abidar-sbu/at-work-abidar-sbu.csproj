@@ -83,23 +83,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateQR.cs">
+    <Compile Include="CreateQRForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateQR.Designer.cs">
-      <DependentUpon>CreateQR.cs</DependentUpon>
+    <Compile Include="CreateQRForm.Designer.cs">
+      <DependentUpon>CreateQRForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateStage.cs">
+    <Compile Include="CreateStageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateStage.Designer.cs">
-      <DependentUpon>CreateStage.cs</DependentUpon>
+    <Compile Include="CreateStageForm.Designer.cs">
+      <DependentUpon>CreateStageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateWall.cs">
+    <Compile Include="CreateWallForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateWall.Designer.cs">
-      <DependentUpon>CreateWall.cs</DependentUpon>
+    <Compile Include="CreateWallForm.Designer.cs">
+      <DependentUpon>CreateWallForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CameraTestForm.cs">
       <SubType>Form</SubType>
@@ -107,28 +107,28 @@
     <Compile Include="CameraTestForm.Designer.cs">
       <DependentUpon>CameraTestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="HardwareInterface\CentralBoard.cs" />
     <Compile Include="HardwareInterface\DX.cs" />
     <Compile Include="HardwareInterface\dynamixel.cs" />
     <Compile Include="HardwareInterface\MotorControl.cs" />
-    <Compile Include="InitMapBuilder.cs">
+    <Compile Include="InitMapBuilderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InitMapBuilder.Designer.cs">
-      <DependentUpon>InitMapBuilder.cs</DependentUpon>
+    <Compile Include="InitMapBuilderForm.Designer.cs">
+      <DependentUpon>InitMapBuilderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Map.cs" />
-    <Compile Include="MapBuilder.cs">
+    <Compile Include="MapBuilderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MapBuilder.Designer.cs">
-      <DependentUpon>MapBuilder.cs</DependentUpon>
+    <Compile Include="MapBuilderForm.Designer.cs">
+      <DependentUpon>MapBuilderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Obstacle.cs" />
     <Compile Include="Program.cs" />
@@ -146,23 +146,23 @@
     <EmbeddedResource Include="CameraTestForm.resx">
       <DependentUpon>CameraTestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateQR.resx">
-      <DependentUpon>CreateQR.cs</DependentUpon>
+    <EmbeddedResource Include="CreateQRForm.resx">
+      <DependentUpon>CreateQRForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateStage.resx">
-      <DependentUpon>CreateStage.cs</DependentUpon>
+    <EmbeddedResource Include="CreateStageForm.resx">
+      <DependentUpon>CreateStageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateWall.resx">
-      <DependentUpon>CreateWall.cs</DependentUpon>
+    <EmbeddedResource Include="CreateWallForm.resx">
+      <DependentUpon>CreateWallForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InitMapBuilder.resx">
-      <DependentUpon>InitMapBuilder.cs</DependentUpon>
+    <EmbeddedResource Include="InitMapBuilderForm.resx">
+      <DependentUpon>InitMapBuilderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MapBuilder.resx">
-      <DependentUpon>MapBuilder.cs</DependentUpon>
+    <EmbeddedResource Include="MapBuilderForm.resx">
+      <DependentUpon>MapBuilderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm.resx">
       <DependentUpon>PropertiesForm.cs</DependentUpon>

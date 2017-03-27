@@ -11,14 +11,14 @@ using Newtonsoft.Json;
 
 namespace at_work_abidar_sbu
 {
-    public partial class MapBuilder : Form
+    public partial class MapBuilderForm : Form
     {
         double scalex, scaley;
         private double height, width;
         private Map map;
         Bitmap res;
 
-        public MapBuilder(double x, double y)
+        public MapBuilderForm(double x, double y)
         {
             InitializeComponent();
             width = x;
@@ -41,7 +41,7 @@ namespace at_work_abidar_sbu
             listBox1.DisplayMember = "Name";
 
         }
-        public MapBuilder(Map map)
+        public MapBuilderForm(Map map)
         {
             InitializeComponent();
             this.map = map;
@@ -65,7 +65,7 @@ namespace at_work_abidar_sbu
 
         private void createStage_Click(object sender, EventArgs e)
         {
-            CreateStage cs = new CreateStage();
+            CreateStageForm cs = new CreateStageForm();
             cs.scalex = scalex;
             cs.scaley = scaley;
             cs.map = map;
@@ -82,7 +82,7 @@ namespace at_work_abidar_sbu
 
         private void createWall_Click(object sender, EventArgs e)
         {
-            CreateWall cg = new CreateWall();
+            CreateWallForm cg = new CreateWallForm();
             cg.scalex = scalex;
             cg.scaley = scaley;
             cg.map = map;
@@ -98,7 +98,7 @@ namespace at_work_abidar_sbu
 
         private void createQR_Click(object sender, EventArgs e)
         {
-            CreateQR qr = new CreateQR();
+            CreateQRForm qr = new CreateQRForm();
             qr.map = map;
             qr.scalex = scalex;
             qr.scaley = scaley;
