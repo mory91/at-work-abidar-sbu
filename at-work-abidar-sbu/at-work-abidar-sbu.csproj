@@ -48,6 +48,10 @@
       <HintPath>..\packages\EmguCV.3.1.0.1\lib\net30\Emgu.CV.World.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FTD2XX_NET, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>HardwareInterface\FTD2XX_NET.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -62,6 +66,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -77,6 +83,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateQR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateQR.Designer.cs">
+      <DependentUpon>CreateQR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateStage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateStage.Designer.cs">
+      <DependentUpon>CreateStage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateWall.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateWall.Designer.cs">
+      <DependentUpon>CreateWall.cs</DependentUpon>
+    </Compile>
     <Compile Include="CameraTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
