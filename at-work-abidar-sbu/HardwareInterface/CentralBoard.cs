@@ -3,46 +3,133 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using FTD2XX_NET;
 
 namespace at_work_abidar_sbu.HardwareInterface
 {
-    enum LED
-    {
-        Left,
-        Right
-    }
-
-    enum Laser
-    {
-        Right,
-        Left
-    }
-
-    enum IR
-    {
-        Front,
-        Rear,
-        Left,
-        Right,
-        Bottom
-    }
-
     class CentralBoard
     {
+        public enum LED
+        {
+            Left,
+            Right
+        }
+
+        public enum Laser
+        {
+            Right,
+            Left
+        }
+
+        public enum IR
+        {
+            Front,
+            Rear,
+            Left,
+            Right
+        }
+
+        public enum BottomSensor
+        {
+            Left,
+            Right
+        }
+
         FTD2XX_NET.FTDI centralBoardCom;
+        Thread DataReceiver;
+
         private byte[] toSend = new byte[4];
+        private ushort[] IRSensorValue = new ushort[8];
+        private bool[] BottomSensorValue = new bool[2];
+        private ushort[] LaserValue = new ushort[2];
+        private bool[] LaserError = new bool[2];
+        bool running;
 
         public CentralBoard()
         {
             centralBoardCom = new FTD2XX_NET.FTDI();
-            string SerialNumber = "AL00F509";
+            string SerialNumber = "AL013DKR";
             centralBoardCom.OpenBySerialNumber(SerialNumber);
 
             if (!centralBoardCom.IsOpen)
                 throw new Exception("Could Not Connect to CentralBoard");
 
             centralBoardCom.SetBaudRate(38400);
+            centralBoardCom.SetTimeouts(100, 1000);
+        }
+
+        ~CentralBoard()
+        {
+            if(centralBoardCom.IsOpen)
+                centralBoardCom.Close();
+        }
+
+        private void FetchData()
+        {
+            while(running)
+            {
+                Read();
+            }
+        }
+
+        private void Read()
+        {
+            byte[] packetStart = new byte[2];
+            byte[] packetBody = new byte[10];
+            uint read = 0;
+
+            centralBoardCom.Read(packetStart, 2, ref read);
+
+            if(packetStart[0] == 0xff && packetStart[1] == 0xff)    //Start of packet detected
+            {
+                centralBoardCom.Read(packetBody, 10, ref read);
+
+                int sum = 0;
+
+                for (int i = 0; i < 9; i++)
+                    sum += packetBody[i];
+
+                if ((byte)(sum & 0xff) != packetBody[9])
+                    return;
+
+                byte IRInfo = packetBody[8];
+
+                BottomSensorValue[0] = ((IRInfo & 1) == 1 ? true : false);
+                BottomSensorValue[1] = (((IRInfo >> 1) & 1) == 1 ? true : false);
+
+                int IRChannel0Num = (IRInfo >> 2) & 7;
+                int IRChannel1Num = (IRInfo >> 5) & 7;
+
+                IRSensorValue[IRChannel0Num] = (ushort)((packetBody[1] << 8) | packetBody[0]);
+                IRSensorValue[IRChannel1Num] = (ushort)((packetBody[3] << 8) | packetBody[2]);
+
+                if (packetBody[4] == 0xFE && packetBody[5] == 0xFE)
+                {
+                    LaserError[0] = true;
+                    LaserValue[0] = 0;
+                }
+                else
+                {
+                    LaserError[0] = false;
+                    LaserValue[0] = (ushort)((packetBody[5] << 8) | packetBody[4]);
+                }
+
+                if (packetBody[6] == 0xFE && packetBody[7] == 0xFE)
+                {
+                    LaserError[1] = true;
+                    LaserValue[1] = 0;
+                }
+                else
+                {
+                    LaserError[1] = false;
+                    LaserValue[1] = (ushort)((packetBody[7] << 8) | packetBody[6]);
+                }
+            }
+            else
+            {
+                centralBoardCom.Purge(FTDI.FT_PURGE.FT_PURGE_RX);
+            }
         }
 
         private void send()
@@ -83,11 +170,10 @@ namespace at_work_abidar_sbu.HardwareInterface
         public void SetIRSensor(IR direction)
         {
             toSend[2] = 0;
-            toSend[1] = 0;
             switch (direction)
             {
                 case IR.Front:
-                    toSend[2] = 8;
+                    toSend[2] = 62;
                     break;
 
                 case IR.Rear:
@@ -99,7 +185,7 @@ namespace at_work_abidar_sbu.HardwareInterface
                     break;
 
                 case IR.Right:
-                    toSend[2] = 62;
+                    toSend[2] = 8;
                     break;
             }
             send();
@@ -126,6 +212,47 @@ namespace at_work_abidar_sbu.HardwareInterface
             send();
             send();
             send();
+        }
+
+        public void Start()
+        {
+            if(!running)
+            {
+                running = true;
+                DataReceiver = new Thread(new ThreadStart(FetchData));
+                DataReceiver.Start();
+            }
+        }
+
+        public void Stop()
+        {
+            if (running)
+                running = false;
+        }
+
+        public bool IsRunning()
+        {
+            return running;
+        }
+
+        public ushort GetLaserValue(Laser laser)
+        {
+            return LaserValue[(int)laser];
+        }
+
+        public bool DoesLaserHaveError(Laser laser)
+        {
+            return LaserError[(int)laser];
+        }
+
+        public ushort GetIRValue(int ir)
+        {
+            return IRSensorValue[ir];
+        }
+
+        public bool GetBottomValue(BottomSensor bottom)
+        {
+            return BottomSensorValue[(int)bottom];
         }
 
     }
