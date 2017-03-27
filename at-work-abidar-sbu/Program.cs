@@ -16,7 +16,7 @@ namespace at_work_abidar_sbu
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PropertiesForm());
+            Application.Run(new CameraTestForm());
         }
     }
 }
