@@ -27,7 +27,8 @@ namespace at_work_abidar_sbu.HardwareInterface
             Front,
             Rear,
             Left,
-            Right
+            Right,
+            None
         }
 
         public enum BottomSensor
@@ -44,7 +45,8 @@ namespace at_work_abidar_sbu.HardwareInterface
         private bool[] BottomSensorValue = new bool[2];
         private ushort[] LaserValue = new ushort[2];
         private bool[] LaserError = new bool[2];
-        bool running;
+        private bool running;
+        private IR currentIr = IR.None;
 
         public CentralBoard()
         {
@@ -170,6 +172,7 @@ namespace at_work_abidar_sbu.HardwareInterface
         public void SetIRSensor(IR direction)
         {
             toSend[2] = 0;
+            currentIr = direction;
             switch (direction)
             {
                 case IR.Front:
@@ -186,6 +189,10 @@ namespace at_work_abidar_sbu.HardwareInterface
 
                 case IR.Right:
                     toSend[2] = 8;
+                    break;
+
+                case IR.None:
+                    toSend[2] = 0;
                     break;
             }
             send();
@@ -245,9 +252,33 @@ namespace at_work_abidar_sbu.HardwareInterface
             return LaserError[(int)laser];
         }
 
-        public ushort GetIRValue(int ir)
+        public Tuple<ushort, ushort> GetIRValue()
         {
-            return IRSensorValue[ir];
+            if (currentIr == IR.None)
+                return null;
+
+            Tuple<ushort, ushort> result;
+            
+            switch(currentIr)
+            {
+                case IR.Right:
+                    result = new Tuple<ushort, ushort>(IRSensorValue[0], IRSensorValue[1]);
+                    break;
+                case IR.Rear:
+                    result = new Tuple<ushort, ushort>(IRSensorValue[2], IRSensorValue[3]);
+                    break;
+                case IR.Left:
+                    result = new Tuple<ushort, ushort>(IRSensorValue[4], IRSensorValue[5]);
+                    break;
+                case IR.Front:
+                    result = new Tuple<ushort, ushort>(IRSensorValue[6], IRSensorValue[7]);
+                    break;
+                default:
+                    result = null;
+                    break;
+            }
+            
+            return result;
         }
 
         public bool GetBottomValue(BottomSensor bottom)

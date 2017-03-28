@@ -51,8 +51,8 @@ namespace at_work_abidar_sbu.HardwareInterface
         private bool running;
 
         private byte[] toSend = new byte[3];                   //Maximum Length of packets is 3
-        public byte[] MotorSpeed = { 128, 128, 128, 128 };    //4 motors and 4 encoders, Stop Value is 128
-        public int[] EncodersValue = new int[4];
+        private byte[] MotorSpeed = { 128, 128, 128, 128 };    //4 motors and 4 encoders, Stop Value is 128
+        private int[] EncodersValue = new int[4];
 
         FTDI frontFTDI;
         FTDI rearFTDI;
@@ -66,11 +66,11 @@ namespace at_work_abidar_sbu.HardwareInterface
             frontFTDI.OpenByLocation(FrontLocationID);
             rearFTDI.OpenByLocation(RearLocationID);
 
-           // if (!frontFTDI.IsOpen)
-                //throw new Exception("Could Not Connect to Front Motor Controller");
+            if (!frontFTDI.IsOpen)
+                throw new Exception("Could Not Connect to Front Motor Controller");
 
-           // if(!rearFTDI.IsOpen)
-             //  throw new Exception("Could Not Connect to Rear Motor Controller");
+            if (!rearFTDI.IsOpen)
+                throw new Exception("Could Not Connect to Rear Motor Controller");
 
             frontFTDI.SetBaudRate(38400);
             rearFTDI.SetBaudRate(38400);
@@ -137,7 +137,7 @@ namespace at_work_abidar_sbu.HardwareInterface
             rearFTDI.Read(mot1, 4, ref read);
             if (read != 4)
             {
-                //Console.WriteLine("Rear Motor Encoder Not Read");
+                Console.WriteLine("Rear Motor Encoder Not Read");
             }
             else
             {
@@ -150,7 +150,7 @@ namespace at_work_abidar_sbu.HardwareInterface
             rearFTDI.Read(mot2, 4, ref read);
             if (read != 4)
             {
-               // Console.WriteLine("Rear Motor Encoder Not Read");
+               Console.WriteLine("Rear Motor Encoder Not Read");
             }
             else
             {
@@ -167,7 +167,7 @@ namespace at_work_abidar_sbu.HardwareInterface
             frontFTDI.Read(mot2, 4, ref read);
             if (read != 4)
             {
-               // Console.WriteLine("Front Motor Encoder Not Read");
+                Console.WriteLine("Front Motor Encoder Not Read");
             }
             else
             {
@@ -180,7 +180,7 @@ namespace at_work_abidar_sbu.HardwareInterface
             frontFTDI.Read(mot1, 4, ref read);
             if (read != 4)
             {
-               // Console.WriteLine("Front Motor Encoder Not Read");
+                Console.WriteLine("Front Motor Encoder Not Read");
             }
             else
             {
@@ -224,16 +224,38 @@ namespace at_work_abidar_sbu.HardwareInterface
         {
             if (mot == Motors.FrontRight || mot == Motors.FrontLeft)
             {
-                MotorSpeed[(int)mot] = (byte)(128 - Value);
-                return;
+                if ((128 - Value) >= 255)
+                {
+                    MotorSpeed[(int)mot] = 255;
+                }
+                else if ((128 - Value) <= 0)
+                {
+                    MotorSpeed[(int)mot] = 0;
+                }
+                else
+                {
+                    MotorSpeed[(int)mot] = (byte)(128 - Value);
+                }
             }
-            MotorSpeed[(int)mot] = (byte)(128 + Value);
+            else
+            {
+                if ((128 + Value) >= 255)
+                {
+                    MotorSpeed[(int)mot] = 255;
+                }
+                else if ((128 + Value) <= 0)
+                {
+                    MotorSpeed[(int)mot] = 0;
+                }
+                else
+                {
+                    MotorSpeed[(int)mot] = (byte)(128 + Value);
+                }
+            }
         }
 
         public void SetDestination(int x, int y, float w)
         {
-
-            //TODO: Limit Values
             byte wTerm = (byte)((w * 44.4 * (Ly + Lx) * Math.PI) / 180);        //44 : factor to convert angle per second
             x *= -2;        //2: factor to conver cm per second
             y *= 2;
