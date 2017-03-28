@@ -35,6 +35,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'debug2|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\debug2\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV.UI, Version=3.1.0.2282, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <HintPath>..\packages\EmguCV.3.1.0.1\lib\net30\Emgu.CV.UI.dll</HintPath>
@@ -91,6 +101,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LabelHandler.cs" />
+    <Compile Include="ObjectDetector.cs" />
+    <Compile Include="ObjectRecognitionTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectRecognitionTestForm.Designer.cs">
+      <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateQRForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,8 +142,14 @@
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MotorControlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MotorControlForm.Designer.cs">
+      <DependentUpon>MotorControlForm.cs</DependentUpon>
     </Compile>
     <Compile Include="HardwareInterface\CentralBoard.cs" />
     <Compile Include="HardwareInterface\DX.cs" />
@@ -169,7 +193,11 @@
     </Compile>
     <Compile Include="PathShape.cs" />
     <Compile Include="Stage.cs" />
+    <Compile Include="SVMTraining.cs" />
     <Compile Include="Wall.cs" />
+    <EmbeddedResource Include="ObjectRecognitionTestForm.resx">
+      <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CameraTestForm.resx">
       <DependentUpon>CameraTestForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -193,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MapBuilderForm.resx">
       <DependentUpon>MapBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MotorControlForm.resx">
+      <DependentUpon>MotorControlForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm.resx">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
