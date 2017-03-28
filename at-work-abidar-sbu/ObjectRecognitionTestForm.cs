@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using Emgu.CV.CvEnum;
 using Emgu.CV.UI;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using OpenTK.Graphics.ES20;
 
 namespace at_work_abidar_sbu
 {
@@ -24,11 +26,11 @@ namespace at_work_abidar_sbu
 
         private int frameCount = 0;
         private int second = 1;
-
+        private Image<Rgb, byte> finalImage;
         private void button1_Click(object sender, EventArgs e)
         {
 
-            Capture capture = new Capture(2); //create a camera captue
+            Capture capture = new Capture(0); //create a camera captue
             Application.Idle += new EventHandler(delegate (object sender1, EventArgs e2)
             {
                 //run this until application closed (close button click on image viewer)
@@ -78,9 +80,20 @@ namespace at_work_abidar_sbu
                             imageOrig.Draw(rect,new Rgb(100,100,100));
                             imageOrig.ROI = rect;
                             var rectImage = imageOrig.Copy();
+                    
+//
+//                            MCvMoments moments = CvInvoke.Moments(rectImage.Convert<Gray,Single>());
+//                            double u20 = moments.Mu20 / moments.M00;
+//                            double u02 = moments.Mu02 / moments.M00;
+//                            double u11 = moments.Mu11 / moments.M00;
+//
+//                            var phi = Math.Atan2(2 * u11, u20 - u02)*0.5;
+//                            rectImage = rectImage.Rotate(-(phi*360/(2*Math.PI)),new Rgb(0,0,0));
                             //rectImage.ROI = rect;
                             Console.WriteLine(rect);
+                         //   Console.WriteLine(phi);
                             imageOrig.ROI = new Rectangle(0,0, image.Width, image.Height);
+                            finalImage = rectImage;
                             pictureBox5.Image = rectImage.ToBitmap();
                            
                         }
@@ -100,6 +113,20 @@ namespace at_work_abidar_sbu
 
         private void ObjectRecognitionTestForm_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            string dir = "images/"+textBox1.Text;
+            if (dir != "" && finalImage != null)
+            {
+                Directory.CreateDirectory(dir);
+                Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                finalImage.Save(dir+"/"+ unixTimestamp+".png");
+            }
+            
 
         }
     }
