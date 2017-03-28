@@ -97,6 +97,12 @@
     <Compile Include="CreateQRForm.Designer.cs">
       <DependentUpon>CreateQRForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreatePathForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreatePathForm.Designer.cs">
+      <DependentUpon>CreatePathForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateStageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +145,12 @@
       <DependentUpon>MapBuilderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Obstacle.cs" />
+    <Compile Include="PathFinderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PathFinderForm.Designer.cs">
+      <DependentUpon>PathFinderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="PropertiesForm.cs">
       <SubType>Form</SubType>
@@ -155,6 +167,7 @@
     <Compile Include="QrCodeTestForm.Designer.cs">
       <DependentUpon>QrCodeTestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PathShape.cs" />
     <Compile Include="Stage.cs" />
     <Compile Include="Wall.cs" />
     <EmbeddedResource Include="CameraTestForm.resx">
@@ -162,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateQRForm.resx">
       <DependentUpon>CreateQRForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreatePathForm.resx">
+      <DependentUpon>CreatePathForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateStageForm.resx">
       <DependentUpon>CreateStageForm.cs</DependentUpon>
@@ -190,6 +206,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="QrCodeTestForm.resx">
+      <DependentUpon>QrCodeTestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="config\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

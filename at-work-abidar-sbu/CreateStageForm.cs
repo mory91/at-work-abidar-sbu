@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace at_work_abidar_sbu
 {
-    public partial class CreateStageForm : Form
+    public partial class CreatePathForm : Form
     {
         public Map map;
         public double scalex, scaley;
-        public CreateStageForm()
+        public CreatePathForm()
         {
             InitializeComponent();
         }
