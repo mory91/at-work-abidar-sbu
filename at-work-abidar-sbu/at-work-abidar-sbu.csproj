@@ -91,6 +91,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ObjectRecognitionTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectRecognitionTestForm.Designer.cs">
+      <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateQRForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +163,9 @@
     </Compile>
     <Compile Include="Stage.cs" />
     <Compile Include="Wall.cs" />
+    <EmbeddedResource Include="ObjectRecognitionTestForm.resx">
+      <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CameraTestForm.resx">
       <DependentUpon>CameraTestForm.cs</DependentUpon>
     </EmbeddedResource>
