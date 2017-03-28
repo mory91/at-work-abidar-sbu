@@ -50,26 +50,21 @@ namespace at_work_abidar_sbu
         {
             while (motor.IsRunning())
             {
-                SetFrontLeftEncoder(motor.EncodersValue[(int)MotorControl.Motors.FrontLeft].ToString());
-                SetFrontRightEncoder(motor.EncodersValue[(int)MotorControl.Motors.FrontRight].ToString());
-                SetRearLeftEncoder(motor.EncodersValue[(int)MotorControl.Motors.RearLeft].ToString());
-                SetRearRightEncoder(motor.EncodersValue[(int)MotorControl.Motors.RearRight].ToString());
+                SetFrontLeftEncoder(motor.GetEncoderValue(MotorControl.Motors.FrontLeft).ToString());
+                SetFrontRightEncoder(motor.GetEncoderValue(MotorControl.Motors.FrontRight).ToString());
+                SetRearLeftEncoder(motor.GetEncoderValue(MotorControl.Motors.RearLeft).ToString());
+                SetRearRightEncoder(motor.GetEncoderValue(MotorControl.Motors.RearRight).ToString());
 
-                SetFrontLeftSpeed((128 - motor.MotorSpeed[(int)MotorControl.Motors.FrontLeft]).ToString());
-                SetFrontRightSpeed((128 - motor.MotorSpeed[(int)MotorControl.Motors.FrontRight]).ToString());
-                SetRearLeftSpeed((motor.MotorSpeed[(int)MotorControl.Motors.RearLeft] - 128).ToString());
-                SetRearRightSpeed((motor.MotorSpeed[(int)MotorControl.Motors.RearLeft] - 128).ToString());
+                SetFrontLeftSpeed((128 - motor.GetMotorsValue(MotorControl.Motors.FrontLeft)).ToString());
+                SetFrontRightSpeed((128 - motor.GetMotorsValue(MotorControl.Motors.FrontRight)).ToString());
+                SetRearLeftSpeed((motor.GetMotorsValue(MotorControl.Motors.RearLeft) - 128).ToString());
+                SetRearRightSpeed((motor.GetMotorsValue(MotorControl.Motors.RearLeft) - 128).ToString());
 
 
-                for(int i = 0; i < 8;i++)
-                {
-                    Console.Write(board.GetIRValue(i));
-                    Console.Write(" ");
-                }
-                Console.WriteLine();
+                Console.Write(board.GetIRValue().Item1);
+                Console.Write(" ");
+                Console.WriteLine(board.GetIRValue().Item2);
             }
-
-            
         }
 
         private void startBtn_Click(object sender, EventArgs e)

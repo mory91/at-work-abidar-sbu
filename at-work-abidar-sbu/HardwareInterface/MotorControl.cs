@@ -266,6 +266,16 @@ namespace at_work_abidar_sbu.HardwareInterface
             SetVal(Motors.RearLeft, (byte)((-(y + x)) - wTerm));
         }
 
+        public int GetEncoderValue(Motors motor)
+        {
+            return EncodersValue[(int)motor];
+        }
+
+        public byte GetMotorsValue(Motors motor)
+        {
+            return MotorSpeed[(int)motor];
+        }
+
         public void Start()
         {
             if (!running)
