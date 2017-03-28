@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Emgu.CV.ML;
 using Emgu.CV.UI;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
@@ -17,9 +18,12 @@ namespace at_work_abidar_sbu
 {
     public partial class ObjectRecognitionTestForm: Form
     {
+        private HOGDescriptor hog = new HOGDescriptor();
+        private ObjectDetector objectDetector;
         public ObjectRecognitionTestForm()
         {
             InitializeComponent();
+            objectDetector = new ObjectDetector("salam2.save");
         }
 
         private int frameCount = 0;
@@ -28,7 +32,7 @@ namespace at_work_abidar_sbu
         private void button1_Click(object sender, EventArgs e)
         {
 
-            Capture capture = new Capture(2); //create a camera captue
+            Capture capture = new Capture(0); //create a camera captue
             Application.Idle += new EventHandler(delegate (object sender1, EventArgs e2)
             {
                 //run this until application closed (close button click on image viewer)
@@ -56,7 +60,6 @@ namespace at_work_abidar_sbu
                 pictureBox3.Image =temp.ToBitmap();
                 Image<Gray, byte> eroded = temp.Erode(2);
                 pictureBox4.Image = eroded.ToBitmap();
-
                 VectorOfVectorOfPoint contoursDetected = new VectorOfVectorOfPoint();
                 CvInvoke.FindContours(eroded, contoursDetected, null, Emgu.CV.CvEnum.RetrType.List, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
 
@@ -81,6 +84,7 @@ namespace at_work_abidar_sbu
                             //rectImage.ROI = rect;
                             Console.WriteLine(rect);
                             imageOrig.ROI = new Rectangle(0,0, image.Width, image.Height);
+                            
                             pictureBox5.Image = rectImage.ToBitmap();
                            
                         }
@@ -94,6 +98,8 @@ namespace at_work_abidar_sbu
             });
         }
 
+        
+
         private void timer1_Tick(object sender, EventArgs e)
         {
         }
@@ -101,6 +107,14 @@ namespace at_work_abidar_sbu
         private void ObjectRecognitionTestForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void predictButton_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(objectDetector.predict(new Image<Bgr, byte>((Bitmap) Image.FromFile(openFileDialog1.FileName))).ToString());
+            }
         }
     }
 }
