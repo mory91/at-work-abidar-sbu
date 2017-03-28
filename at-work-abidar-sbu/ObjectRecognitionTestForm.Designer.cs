@@ -40,6 +40,8 @@
             this.cannyHighHS = new System.Windows.Forms.HScrollBar();
             this.origPictureBox = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.predictButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -141,11 +143,26 @@
             this.pictureBox5.TabIndex = 9;
             this.pictureBox5.TabStop = false;
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // predictButton
+            // 
+            this.predictButton.Location = new System.Drawing.Point(171, 404);
+            this.predictButton.Name = "predictButton";
+            this.predictButton.Size = new System.Drawing.Size(86, 29);
+            this.predictButton.TabIndex = 10;
+            this.predictButton.Text = "Predict";
+            this.predictButton.UseVisualStyleBackColor = true;
+            this.predictButton.Click += new System.EventHandler(this.predictButton_Click);
+            // 
             // ObjectRecognitionTestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(685, 489);
+            this.Controls.Add(this.predictButton);
             this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.origPictureBox);
             this.Controls.Add(this.cannyHighHS);
@@ -182,5 +199,7 @@
         private System.Windows.Forms.HScrollBar cannyHighHS;
         private System.Windows.Forms.PictureBox origPictureBox;
         private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button predictButton;
     }
 }

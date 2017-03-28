@@ -27,9 +27,8 @@ namespace at_work_abidar_sbu
             Capture capture = new Capture(1); //create a camera captue
             Application.Idle += new EventHandler(delegate (object sender1, EventArgs e2)
             {  //run this until application closed (close button click on image viewer)
-                pictureBox1.Image = capture.QuerySmallFrame().Bitmap; //draw the image obtained from camera
-                Graphics g = Graphics.FromImage(pictureBox1.Image);
-                g.DrawString("fps:"+ frameCount/second, Font,Brushes.Red,10,10);
+//                Graphics g = Graphics.FromImage(pictureBox1.Image);
+//                g.DrawString("fps:"+ frameCount/second, Font,Brushes.Red,10,10);
                 frameCount++;
             });
         }
