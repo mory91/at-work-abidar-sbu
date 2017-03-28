@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HardwareAPI\Navigation.cs" />
     <Compile Include="ObjectRecognitionTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,7 +123,7 @@
       <DependentUpon>CameraTestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
-    	 <SubType>Form</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="MotorControlForm.cs">
       <SubType>Form</SubType>

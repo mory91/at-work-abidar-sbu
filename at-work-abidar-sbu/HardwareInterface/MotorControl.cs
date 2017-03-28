@@ -220,7 +220,7 @@ namespace at_work_abidar_sbu.HardwareInterface
                 EncodersValue[i] = 0;
         }
 
-        public void SetVal(Motors mot, byte Value)
+        public void SetVal(Motors mot, int Value)
         {
             if (mot == Motors.FrontRight || mot == Motors.FrontLeft)
             {
@@ -257,13 +257,13 @@ namespace at_work_abidar_sbu.HardwareInterface
         public void SetDestination(int x, int y, float w)
         {
             byte wTerm = (byte)((w * 44.4 * (Ly + Lx) * Math.PI) / 180);        //44 : factor to convert angle per second
-            x *= -2;        //2: factor to conver cm per second
+            x *= -2;                                                            //2: factor to conver cm per second
             y *= 2;
 
-            SetVal(Motors.FrontLeft, (byte)((-(y - x)) - wTerm));
-            SetVal(Motors.FrontRight, (byte)((-(y + x)) + wTerm));
-            SetVal(Motors.RearRight, (byte)((x - y) + wTerm));
-            SetVal(Motors.RearLeft, (byte)((-(y + x)) - wTerm));
+            SetVal(Motors.FrontLeft, ((-(y - x)) - wTerm));
+            SetVal(Motors.FrontRight, ((-(y + x)) + wTerm));
+            SetVal(Motors.RearRight, ((x - y) + wTerm));
+            SetVal(Motors.RearLeft, ((-(y + x)) - wTerm));
         }
 
         public int GetEncoderValue(Motors motor)
