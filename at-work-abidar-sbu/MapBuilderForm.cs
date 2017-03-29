@@ -13,6 +13,7 @@ namespace at_work_abidar_sbu
 {
     public partial class MapBuilderForm : Form
     {
+		PathFinder pathFinder;
         double scalex, scaley;
         private double height, width;
         private Map map;
@@ -40,21 +41,7 @@ namespace at_work_abidar_sbu
             listBox1.DataSource = map.obstacles;
             listBox1.DisplayMember = "Name";
 
-			PathFinder pathFinder = new PathFinder();
-			pathFinder.setSrc(0, 0);
-			pathFinder.setSrc(100, 300);
-			pathFinder.findPath();
-			List<Noqte> path = pathFinder.getPath();
-			foreach (Noqte p in path)
-			{
-				PathShape shape = new PathShape();
-				shape.name = "Path_Shape";
-				shape.scalex = scalex;
-				shape.scaley = scaley;
-				shape.start = new Point((int)p.x, (int)p.y);
-				map.obstacles.Add(shape);
-			}
-			map.build(res);
+			pathFinder = new PathFinder();
 		}
         public MapBuilderForm(Map map)
         {
@@ -81,6 +68,7 @@ namespace at_work_abidar_sbu
         private void createStage_Click(object sender, EventArgs e)
         {
             CreateStageForm cs = new CreateStageForm();
+			cs.pathFinder = pathFinder;
             cs.scalex = scalex;
             cs.scaley = scaley;
             cs.map = map;
@@ -98,6 +86,7 @@ namespace at_work_abidar_sbu
         private void createWall_Click(object sender, EventArgs e)
         {
             CreateWallForm cg = new CreateWallForm();
+			cg.pathFinder = pathFinder;
             cg.scalex = scalex;
             cg.scaley = scaley;
             cg.map = map;
@@ -134,7 +123,19 @@ namespace at_work_abidar_sbu
 
 		private void btnPath_Click(object sender, EventArgs e)
 		{
-
+			CreatePathForm createPathForm = new CreatePathForm();
+			createPathForm.pathFinder = pathFinder;
+			createPathForm.map = map;
+			createPathForm.scalex = scalex;
+			createPathForm.scaley = scaley;
+			createPathForm.FormClosing += (o, form) =>
+			{
+				map = createPathForm.map;
+				pictureBox1.Image = map.build(res); ;
+				listBox1.DataSource = null;
+				listBox1.DataSource = map.obstacles;
+			};
+			createPathForm.Show();
 		}
 
 		private void delete_Click(object sender, EventArgs e)
