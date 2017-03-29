@@ -13,6 +13,7 @@ namespace at_work_abidar_sbu
 {
     public partial class MapBuilderForm : Form
     {
+		PathFinder pathFinder;
         double scalex, scaley;
         private double height, width;
         private Map map;
@@ -40,7 +41,8 @@ namespace at_work_abidar_sbu
             listBox1.DataSource = map.obstacles;
             listBox1.DisplayMember = "Name";
 
-        }
+			pathFinder = new PathFinder();
+		}
         public MapBuilderForm(Map map)
         {
             InitializeComponent();
@@ -66,6 +68,7 @@ namespace at_work_abidar_sbu
         private void createStage_Click(object sender, EventArgs e)
         {
             CreateStageForm cs = new CreateStageForm();
+			cs.pathFinder = pathFinder;
             cs.scalex = scalex;
             cs.scaley = scaley;
             cs.map = map;
@@ -83,6 +86,7 @@ namespace at_work_abidar_sbu
         private void createWall_Click(object sender, EventArgs e)
         {
             CreateWallForm cg = new CreateWallForm();
+			cg.pathFinder = pathFinder;
             cg.scalex = scalex;
             cg.scaley = scaley;
             cg.map = map;
@@ -112,7 +116,29 @@ namespace at_work_abidar_sbu
             qr.Show();
         }
 
-        private void delete_Click(object sender, EventArgs e)
+		private void pictureBox1_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnPath_Click(object sender, EventArgs e)
+		{
+			CreatePathForm createPathForm = new CreatePathForm();
+			createPathForm.pathFinder = pathFinder;
+			createPathForm.map = map;
+			createPathForm.scalex = scalex;
+			createPathForm.scaley = scaley;
+			createPathForm.FormClosing += (o, form) =>
+			{
+				map = createPathForm.map;
+				pictureBox1.Image = map.build(res); ;
+				listBox1.DataSource = null;
+				listBox1.DataSource = map.obstacles;
+			};
+			createPathForm.Show();
+		}
+
+		private void delete_Click(object sender, EventArgs e)
         {
             map.obstacles.RemoveAt(listBox1.SelectedIndex);
             pictureBox1.Image = map.build(res); ;
@@ -120,19 +146,19 @@ namespace at_work_abidar_sbu
             listBox1.DataSource = map.obstacles;
         }
 
-        private void save_Click(object sender, EventArgs e)
-        {
-            var settings = new JsonSerializerSettings();
-            settings.TypeNameHandling = TypeNameHandling.Objects;
-            string json = JsonConvert.SerializeObject(map, Formatting.Indented, settings);
-            Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            using (System.IO.StreamWriter file =
-            new System.IO.StreamWriter(unixTimestamp + ".map"))
-            {
-                file.Write(json);
-            }
+		private void save_Click(object sender, EventArgs e)
+		{
+			var settings = new JsonSerializerSettings();
+			settings.TypeNameHandling = TypeNameHandling.Objects;
+			string json = JsonConvert.SerializeObject(map, Formatting.Indented, settings);
+			Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+			using (System.IO.StreamWriter file =
+			new System.IO.StreamWriter(unixTimestamp + ".map"))
+			{
+				file.Write(json);
+			}
 
-        }
+		}
     }
 
 }
