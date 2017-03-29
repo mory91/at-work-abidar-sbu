@@ -101,6 +101,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HardwareAPI\Navigation.cs" />
     <Compile Include="LabelHandler.cs" />
     <Compile Include="ObjectDetector.cs" />
     <Compile Include="ObjectRecognitionTestForm.cs">

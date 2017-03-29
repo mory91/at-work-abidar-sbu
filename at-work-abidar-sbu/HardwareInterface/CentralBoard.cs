@@ -39,6 +39,7 @@ namespace at_work_abidar_sbu.HardwareInterface
 
         FTD2XX_NET.FTDI centralBoardCom;
         Thread DataReceiver;
+        PropertyManager propertyManager;
 
         private byte[] toSend = new byte[4];
         private ushort[] IRSensorValue = new ushort[8];
@@ -51,7 +52,10 @@ namespace at_work_abidar_sbu.HardwareInterface
         public CentralBoard()
         {
             centralBoardCom = new FTD2XX_NET.FTDI();
-            string SerialNumber = "AL013DKR";
+            propertyManager = PropertyManager.i;
+            propertyManager.Load("Hardware");
+
+            string SerialNumber = propertyManager.GetStringValue("Hardware", "CentralBoardSerialNumber");
             centralBoardCom.OpenBySerialNumber(SerialNumber);
 
             if (!centralBoardCom.IsOpen)
@@ -234,7 +238,17 @@ namespace at_work_abidar_sbu.HardwareInterface
         public void Stop()
         {
             if (running)
+            {
                 running = false;
+                toSend[1] = 0;
+                toSend[2] = 0;
+                send();
+                send();
+                send();
+                send();
+                send();
+                send();
+            }
         }
 
         public bool IsRunning()
