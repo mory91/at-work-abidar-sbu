@@ -42,21 +42,27 @@ namespace at_work_abidar_sbu
 
             Capture capture = new Capture(0); //create a camera captue
             ImageViewer imageViewer = new ImageViewer();
+            ImageViewer imageViewer2 = new ImageViewer();
             Application.Idle += new EventHandler(delegate (object sender1, EventArgs e2)
             {
                 //run this until application closed (close button click on image viewer)
                // pictureBox1.Image = capture.QuerySmallFrame().Bitmap; //draw the image obtained from camera
                 Image<Rgb, byte> imageOrig = capture.QueryFrame().ToImage<Rgb, byte>();
+
+                Image<Rgb, byte> image = imageOrig.SmoothBlur(3,3);
+            
+                //image._EqualizeHist();
+             //   image._GammaCorrect((threshHS.Value / 128.0));
+                Image<Gray, byte> imagefiltered = image/*.SmoothBlur(3, 3)*/.Convert<Gray, byte>().PyrDown().PyrUp();
+//                imagefiltered = imagefiltered.SmoothGaussian()
+                //  imageViewer.Image = image;
+                //                Image<Gray, byte> imageThresh = imageblur.ThresholdBinary(new Gray(threshHS.Value), new Gray(255));
+
+                //                pictureBox1.Image =  imageThresh.ToBitmap();
+                imageViewer2.Image = imagefiltered;
+                Image<Gray, byte> edges = imagefiltered.Canny(cannyLowHS.Value, cannyHighHS.Value);
+
                 
-                Image<Gray, byte> image = imageOrig.Convert<Gray, byte>();
-                image._EqualizeHist();
-                Image<Gray, byte> imageblur = image.SmoothBlur(3, 3).Convert<Gray, byte>();
-              //  imageViewer.Image = image;
-//                Image<Gray, byte> imageThresh = imageblur.ThresholdBinary(new Gray(threshHS.Value), new Gray(255));
-
-//                pictureBox1.Image =  imageThresh.ToBitmap();
-                Image<Gray, byte> edges = imageblur.Canny(cannyLowHS.Value, cannyHighHS.Value);
-
                 pictureBox1.Image = edges.ToBitmap();
                 Image<Gray, byte> delated = edges.Dilate(2);
 
@@ -119,6 +125,7 @@ namespace at_work_abidar_sbu
                 //                Canny(cannyLowHS.Value, cannyHighHS.Value).ToBitmap();
             });
             imageViewer.Show();
+            imageViewer2.Show();
         }
 
         
