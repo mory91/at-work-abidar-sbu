@@ -231,6 +231,7 @@ namespace at_work_abidar_sbu.HardwareInterface
             {
                 running = true;
                 DataReceiver = new Thread(new ThreadStart(FetchData));
+                DataReceiver.Name = "CentralBoardDataReceiver";
                 DataReceiver.Start();
             }
         }

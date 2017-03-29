@@ -43,8 +43,7 @@ namespace at_work_abidar_sbu
                 stopBtn.Enabled = false;
             }
 
-            board.SetIRSensor(CentralBoard.IR.Front);
-        }
+         }
 
         private void UpdateSpeedEncoder()
         {
@@ -59,11 +58,6 @@ namespace at_work_abidar_sbu
                 SetFrontRightSpeed((128 - motor.GetMotorsValue(MotorControl.Motors.FrontRight)).ToString());
                 SetRearLeftSpeed((motor.GetMotorsValue(MotorControl.Motors.RearLeft) - 128).ToString());
                 SetRearRightSpeed((motor.GetMotorsValue(MotorControl.Motors.RearLeft) - 128).ToString());
-
-
-                Console.Write(board.GetIRValue().Item1);
-                Console.Write(" ");
-                Console.WriteLine(board.GetIRValue().Item2);
             }
         }
 
@@ -209,5 +203,10 @@ namespace at_work_abidar_sbu
         }
 
         #endregion
+
+        private void resetEncodersBtn_Click(object sender, EventArgs e)
+        {
+            motor.ResetEncoder();
+        }
     }
 }

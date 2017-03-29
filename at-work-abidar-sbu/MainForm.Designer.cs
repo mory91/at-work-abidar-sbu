@@ -35,6 +35,7 @@
             this.testsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.qRTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.motorTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,14 +64,14 @@
             // configsToolStripMenuItem
             // 
             this.configsToolStripMenuItem.Name = "configsToolStripMenuItem";
-            this.configsToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
+            this.configsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.configsToolStripMenuItem.Text = "Configs";
             this.configsToolStripMenuItem.Click += new System.EventHandler(this.configsToolStripMenuItem_Click);
             // 
             // mapBuilderToolStripMenuItem
             // 
             this.mapBuilderToolStripMenuItem.Name = "mapBuilderToolStripMenuItem";
-            this.mapBuilderToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
+            this.mapBuilderToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.mapBuilderToolStripMenuItem.Text = "Map Builder";
             this.mapBuilderToolStripMenuItem.Click += new System.EventHandler(this.mapBuilderToolStripMenuItem_Click);
             // 
@@ -78,7 +79,8 @@
             // 
             this.testsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cameraTestToolStripMenuItem,
-            this.qRTestToolStripMenuItem});
+            this.qRTestToolStripMenuItem,
+            this.motorTestToolStripMenuItem});
             this.testsToolStripMenuItem.Name = "testsToolStripMenuItem";
             this.testsToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
             this.testsToolStripMenuItem.Text = "Tests";
@@ -86,16 +88,23 @@
             // cameraTestToolStripMenuItem
             // 
             this.cameraTestToolStripMenuItem.Name = "cameraTestToolStripMenuItem";
-            this.cameraTestToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
+            this.cameraTestToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.cameraTestToolStripMenuItem.Text = "Camera Test";
             this.cameraTestToolStripMenuItem.Click += new System.EventHandler(this.cameraTestToolStripMenuItem_Click);
             // 
             // qRTestToolStripMenuItem
             // 
             this.qRTestToolStripMenuItem.Name = "qRTestToolStripMenuItem";
-            this.qRTestToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
+            this.qRTestToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.qRTestToolStripMenuItem.Text = "QR Test";
             this.qRTestToolStripMenuItem.Click += new System.EventHandler(this.qRTestToolStripMenuItem_Click);
+            // 
+            // motorTestToolStripMenuItem
+            // 
+            this.motorTestToolStripMenuItem.Name = "motorTestToolStripMenuItem";
+            this.motorTestToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.motorTestToolStripMenuItem.Text = "Motor Test";
+            this.motorTestToolStripMenuItem.Click += new System.EventHandler(this.motorTestToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -104,7 +113,7 @@
             this.ClientSize = new System.Drawing.Size(437, 364);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -124,6 +133,7 @@
         private System.Windows.Forms.ToolStripMenuItem configsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mapBuilderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem qRTestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem motorTestToolStripMenuItem;
     }
 }
 

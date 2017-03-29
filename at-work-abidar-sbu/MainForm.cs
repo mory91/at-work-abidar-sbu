@@ -15,8 +15,6 @@ namespace at_work_abidar_sbu
 {
     public partial class MainForm : Form
     {
-
-        Navigation nav;
         public MainForm()
         {
             InitializeComponent();
@@ -49,6 +47,12 @@ namespace at_work_abidar_sbu
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void motorTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MotorControlForm mf = new MotorControlForm();
+            mf.ShowDialog();
         }
     }
 }
