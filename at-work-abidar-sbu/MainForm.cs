@@ -7,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using at_work_abidar_sbu.HardwareInterface;
+using System.Threading;
+using at_work_abidar_sbu.HardwareAPI;
 
 namespace at_work_abidar_sbu
 {
     public partial class MainForm : Form
     {
+
+        Navigation nav;
         public MainForm()
         {
             InitializeComponent();
@@ -39,6 +44,11 @@ namespace at_work_abidar_sbu
         {
             QrCodeTestForm qrCodeTestForm = new QrCodeTestForm();
             qrCodeTestForm.ShowDialog();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
