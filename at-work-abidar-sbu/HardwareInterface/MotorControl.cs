@@ -98,6 +98,7 @@ namespace at_work_abidar_sbu.HardwareInterface
 
             uint written = 0;
 
+            Monitor.Enter(toSend);
             switch (mot)
             {
                 case Motors.FrontLeft:
@@ -120,6 +121,7 @@ namespace at_work_abidar_sbu.HardwareInterface
                     rearFTDI.Write(toSend, 3, ref written);
                     break;
             }
+            Monitor.Exit(toSend);
         }
 
         private void ReadEncoderValueFromController()
@@ -219,13 +221,16 @@ namespace at_work_abidar_sbu.HardwareInterface
             frontFTDI.Write(toSend, 2, ref written);
             rearFTDI.Write(toSend, 2, ref written);
 
+
+            Monitor.Enter(EncodersValue);
             for (int i = 0; i < 4; i++)
                 EncodersValue[i] = 0;
+            Monitor.Exit(EncodersValue);
         }
 
         public void SetVal(Motors mot, int Value)
         {
-
+            Monitor.Enter(MotorSpeed);
             if (mot == Motors.FrontRight || mot == Motors.FrontLeft)
             {
                 if ((128 - Value) >= 255)
@@ -256,6 +261,7 @@ namespace at_work_abidar_sbu.HardwareInterface
                     MotorSpeed[(int)mot] = (byte)(128 + Value);
                 }
             }
+            Monitor.Exit(MotorSpeed);
         }
 
         public void SetDestination(int x, int y, float w)
@@ -280,7 +286,10 @@ namespace at_work_abidar_sbu.HardwareInterface
 
         public byte GetMotorsValue(Motors motor)
         {
-            return MotorSpeed[(int)motor];
+            Monitor.Enter(MotorSpeed);
+            var speed =  MotorSpeed[(int)motor];
+            Monitor.Exit(MotorSpeed);
+            return speed;
         }
 
         public void Start()

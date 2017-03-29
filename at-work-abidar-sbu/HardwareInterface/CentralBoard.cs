@@ -48,6 +48,7 @@ namespace at_work_abidar_sbu.HardwareInterface
         private bool[] LaserError = new bool[2];
         private bool running;
         private IR currentIr = IR.None;
+        private object readLock = new object();
 
         public CentralBoard()
         {
@@ -89,6 +90,7 @@ namespace at_work_abidar_sbu.HardwareInterface
 
             if(packetStart[0] == 0xff && packetStart[1] == 0xff)    //Start of packet detected
             {
+                Monitor.Enter(readLock);
                 centralBoardCom.Read(packetBody, 10, ref read);
 
                 int sum = 0;
@@ -131,6 +133,7 @@ namespace at_work_abidar_sbu.HardwareInterface
                     LaserError[1] = false;
                     LaserValue[1] = (ushort)((packetBody[7] << 8) | packetBody[6]);
                 }
+                Monitor.Exit(readLock);
             }
             else
             {
@@ -259,12 +262,18 @@ namespace at_work_abidar_sbu.HardwareInterface
 
         public ushort GetLaserValue(Laser laser)
         {
-            return LaserValue[(int)laser];
+            Monitor.Enter(readLock);
+            var res = LaserValue[(int)laser];
+            Monitor.Exit(readLock);
+            return res;
         }
 
         public bool DoesLaserHaveError(Laser laser)
         {
-            return LaserError[(int)laser];
+            Monitor.Enter(readLock);
+            var res = LaserError[(int)laser];
+            Monitor.Exit(readLock);
+            return res;
         }
 
         public Tuple<ushort, ushort> GetIRValue()
@@ -273,7 +282,8 @@ namespace at_work_abidar_sbu.HardwareInterface
                 return null;
 
             Tuple<ushort, ushort> result;
-            
+
+            Monitor.Enter(readLock);
             switch(currentIr)
             {
                 case IR.Right:
@@ -292,13 +302,17 @@ namespace at_work_abidar_sbu.HardwareInterface
                     result = null;
                     break;
             }
+            Monitor.Exit(readLock);
             
             return result;
         }
 
         public bool GetBottomValue(BottomSensor bottom)
         {
-            return BottomSensorValue[(int)bottom];
+            Monitor.Enter(readLock);
+            var res = BottomSensorValue[(int)bottom];
+            Monitor.Exit(readLock);
+            return res;
         }
 
     }

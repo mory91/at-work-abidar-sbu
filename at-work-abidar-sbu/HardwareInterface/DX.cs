@@ -40,8 +40,6 @@ namespace at_work_abidar_sbu.HardwareInterface
 
 
             dynamixel.packetHandler();
-
-            
         }
 
         ~DX()
