@@ -17,8 +17,8 @@ namespace at_work_abidar_sbu.HardwareInterface
         {
             FTDI ftdi = new FTDI();
 
-            ftdi.OpenBySerialNumber("ABC");
-
+            ftdi.OpenBySerialNumber("A4012ADD");
+        
             if (!ftdi.IsOpen)
                 throw new Exception("Could not connect to Dynamixel");
 
@@ -27,7 +27,6 @@ namespace at_work_abidar_sbu.HardwareInterface
             ftdi.Close();
 
             portHandle = dynamixel.portHandler(COMPort);
-
         }
 
     }

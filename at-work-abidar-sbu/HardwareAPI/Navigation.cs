@@ -25,27 +25,17 @@ namespace at_work_abidar_sbu.HardwareAPI
 
         private bool running;
         private bool Moving;
-        private bool move;
 
-        private float xStartPoint;
-        private float yStartPoint;
-
-        private float xSetPoint;
-        private float ySetPoint;
-
-        private float xToMove;
-        private float yToMove;
-
-        private CentralBoard.Laser xLaser;
-        private CentralBoard.Laser yLaser;
-
-        private byte Speed;
+        int desiredEncoderValue;
+        MotorControl.Motors encoderToWatch;
         
+        private byte Speed;
+                
         public Navigation()
         {
             board = new CentralBoard();
             motor = new MotorControl();
-           // dynamixel = new DX();
+            dynamixel = new DX();
             running = false;
             Moving = false;
             Speed = 0;
@@ -58,56 +48,20 @@ namespace at_work_abidar_sbu.HardwareAPI
 
         private void ThreadWorker()
         {
-            ushort CurrentLaserX = 0;
-            ushort CurrentLaserY = 0;
-            int xToSend = 0;
-            int yToSend = 0;
+            int currentEncoderValue = 0;
+
             while(running)
             {
-                if (xToMove == 0 && yToMove == 0)
+                if(Moving)
                 {
-                    xToSend = 0;
-                    yToSend = 0;
-                }
-                else if (xToMove != 0 && move)
-                {
-                    Thread.Sleep(300);
-                    CurrentLaserX = board.GetLaserValue(xLaser);
-                    if (Math.Abs(CurrentLaserX - xSetPoint) < 10 || CurrentLaserX < xSetPoint)
+                    currentEncoderValue = Math.Abs(motor.GetEncoderValue(encoderToWatch));
+                    if(currentEncoderValue > desiredEncoderValue)
                     {
-                        xStartPoint = 0;
-                        xSetPoint = 0;
-                        xToMove = 0;
-                        CurrentLaserX = 0;
-                        xToSend = 0;
-                        move = false;
                         Moving = false;
-                    }
-                    else
-                    {
-                        xToSend = (xToMove > 0 ? Speed : -Speed);
+                        desiredEncoderValue = 0;
+                        motor.SetDestination(0, 0, 0);
                     }
                 }
-                else if (yToMove != 0 && move)
-                {
-                    Thread.Sleep(300);
-                    CurrentLaserY = board.GetLaserValue(yLaser);
-                    if (Math.Abs(CurrentLaserY - ySetPoint) < 10 || CurrentLaserY < ySetPoint)
-                    {
-                        yStartPoint = 0;
-                        ySetPoint = 0;
-                        yToMove = 0;
-                        CurrentLaserY = 0;
-                        yToSend = 0;
-                        move = false;
-                        Moving = false;
-                    }
-                    else
-                    {
-                        yToSend = (yToMove > 0 ? Speed : -Speed);
-                    }
-                }
-                motor.SetDestination(xToSend, yToSend, 0);
             }
         }
 
@@ -123,19 +77,8 @@ namespace at_work_abidar_sbu.HardwareAPI
                 running = true;
                 Moving = false;
 
-                xStartPoint = 0;
-                yStartPoint = 0;
-                xSetPoint = 0;
-                ySetPoint = 0;
-                xToMove = 0;
-                yToMove = 0;
-
                 NavigationThread = new Thread(new ThreadStart(ThreadWorker));
                 NavigationThread.Start();
-
-                motor.SetDestination(0, 5, 0);
-                Thread.Sleep(800);
-                motor.SetDestination(0, 0, 0);
             }
         }
 
@@ -147,13 +90,6 @@ namespace at_work_abidar_sbu.HardwareAPI
                 board.Stop();
                 running = false;
                 Moving = false;
-
-                xStartPoint = 0;
-                yStartPoint = 0;
-                xSetPoint = 0;
-                ySetPoint = 0;
-                xToMove = 0;
-                yToMove = 0;
             }
         }
 
@@ -177,34 +113,42 @@ namespace at_work_abidar_sbu.HardwareAPI
             if (Moving)
                 return;
 
-            Moving = true;
+            motor.ResetEncoder();
 
-            ///TODO: Rotate Lasers
+            if (xCm == 0 && yCm == 0)
+                return;
 
-            if(xCm >= 0)
+            desiredEncoderValue = Math.Abs((int)((xCm != 0 ? xCm : yCm) * (998 / 35)));
+
+            if (xCm == 0 || yCm == 0)
             {
-                xLaser = CentralBoard.Laser.Right;
-                yLaser = CentralBoard.Laser.Left;
+                encoderToWatch = MotorControl.Motors.FrontLeft;     //All wheels can be used
             }
             else
             {
-                xLaser = CentralBoard.Laser.Left;
-                yLaser = CentralBoard.Laser.Right;
+                if ((xCm < 0 && yCm > 0) || (xCm > 0 && yCm < 0))
+                {
+                    encoderToWatch = MotorControl.Motors.FrontRight;
+                }
+                else
+                {
+                    encoderToWatch = MotorControl.Motors.FrontLeft;
+                }
+                desiredEncoderValue = (int)(desiredEncoderValue * 1.414213562373);
             }
 
-            xToMove = xCm;
-            yToMove = yCm;
+            int xSpeed = (xCm > 0 ? Speed : -Speed);
+            int ySpeed = (yCm > 0 ? Speed : -Speed);
 
-            Thread.Sleep(400);
+            if (xCm == 0)
+                xSpeed = 0;
 
-            xStartPoint = board.GetLaserValue(xLaser);
-            yStartPoint = board.GetLaserValue(yLaser);
+            if (yCm == 0)
+                ySpeed = 0;
 
-            xSetPoint = xStartPoint + (xToMove > 0 ? -(xToMove * 10) : (xToMove * 10));
-            ySetPoint = yStartPoint + (yToMove > 0 ? -(yToMove * 10) : (yToMove * 10));
+            motor.SetDestination(xSpeed, ySpeed, 0);
 
-            move = true;
-
+            Moving = true;
         }
 
         public void Rotate(float degree)
@@ -213,6 +157,33 @@ namespace at_work_abidar_sbu.HardwareAPI
                 return;
 
             Moving = true;
+        }
+
+        public float GetDistance(Orientation or, CentralBoard.Laser laser)
+        {
+            float result = 0.0f;
+
+            switch(or)
+            {
+                case Orientation.Front:
+                    
+                    break;
+                case Orientation.Rear:
+
+                    break;
+                case Orientation.Left:
+
+                    break;
+                case Orientation.Right:
+
+                    break;
+            }
+
+            Thread.Sleep(400);                  //Let Laser update value
+
+            result = board.GetLaserValue(laser) / 10;
+
+            return result;
         }
 
     }

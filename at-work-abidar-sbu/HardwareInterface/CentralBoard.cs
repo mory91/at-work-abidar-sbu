@@ -238,7 +238,17 @@ namespace at_work_abidar_sbu.HardwareInterface
         public void Stop()
         {
             if (running)
+            {
                 running = false;
+                toSend[1] = 0;
+                toSend[2] = 0;
+                send();
+                send();
+                send();
+                send();
+                send();
+                send();
+            }
         }
 
         public bool IsRunning()
