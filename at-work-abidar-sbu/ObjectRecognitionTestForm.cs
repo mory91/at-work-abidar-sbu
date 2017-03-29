@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Emgu.CV.ML;
 using Emgu.CV.UI;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
@@ -17,20 +18,30 @@ using OpenTK.Graphics.ES20;
 
 namespace at_work_abidar_sbu
 {
-    public partial class ObjectRecognitionTestForm: Form
+    public partial class ObjectRecognitionTestForm : Form
     {
+        private HOGDescriptor hog = new HOGDescriptor();
+        private ObjectDetector objectDetector;
         public ObjectRecognitionTestForm()
         {
             InitializeComponent();
+            objectDetector = new ObjectDetector("salam2.save");
         }
 
         private int frameCount = 0;
         private int second = 1;
         private Image<Rgb, byte> finalImage;
+
+        private string[] names =
+        {
+            "ball11", "ball3", "box-head", "big-screw", "black-nut", "big-black-screw",
+            "small-black-screw"
+        };
         private void button1_Click(object sender, EventArgs e)
         {
 
             Capture capture = new Capture(0); //create a camera captue
+            ImageViewer imageViewer = new ImageViewer();
             Application.Idle += new EventHandler(delegate (object sender1, EventArgs e2)
             {
                 //run this until application closed (close button click on image viewer)
@@ -58,13 +69,13 @@ namespace at_work_abidar_sbu
                 pictureBox3.Image =temp.ToBitmap();
                 Image<Gray, byte> eroded = temp.Erode(2);
                 pictureBox4.Image = eroded.ToBitmap();
-
                 VectorOfVectorOfPoint contoursDetected = new VectorOfVectorOfPoint();
                 CvInvoke.FindContours(eroded, contoursDetected, null, Emgu.CV.CvEnum.RetrType.List, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
 
                 VectorOfVectorOfPoint contoursArray = new VectorOfVectorOfPoint();
                 int count = contoursDetected.Size;
-                
+                Bitmap bitmap = imageOrig.ToBitmap();
+                Graphics g = Graphics.FromImage(bitmap);
                 for (int i = 0; i < count; i++)
                 {
                     using (VectorOfPoint currContour = contoursDetected[i])
@@ -95,17 +106,22 @@ namespace at_work_abidar_sbu
                             imageOrig.ROI = new Rectangle(0,0, image.Width, image.Height);
                             finalImage = rectImage;
                             pictureBox5.Image = rectImage.ToBitmap();
-                           
+                            g.DrawRectangle(Pens.White,rect);
+                            float f = (int)objectDetector.predict(rectImage.Convert<Bgr, byte>());
+                            g.DrawString(names[(int) (f-1)],this.Font,Brushes.Red,rect.X,rect.Y);
                         }
                         
                     }
                 }
                 Console.WriteLine(contoursArray.Size);
-                CvInvoke.DrawContours(imageOrig,contoursArray,-1,new MCvScalar(255,255,255));
-                origPictureBox.Image = imageOrig.ToBitmap();
+                //CvInvoke.DrawContours(imageOrig,contoursArray,-1,new MCvScalar(255,255,255));
+                imageViewer.Image = new Image<Bgr,byte>(bitmap);
                 //                Canny(cannyLowHS.Value, cannyHighHS.Value).ToBitmap();
             });
+            imageViewer.Show();
         }
+
+        
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -128,6 +144,14 @@ namespace at_work_abidar_sbu
             }
             
 
+        }
+
+        private void predictButton_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(objectDetector.predict(new Image<Bgr, byte>((Bitmap) Image.FromFile(openFileDialog1.FileName))).ToString());
+            }
         }
     }
 }
