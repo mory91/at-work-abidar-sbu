@@ -35,7 +35,7 @@ namespace at_work_abidar_sbu.HardwareAPI
         {
             board = new CentralBoard();
             motor = new MotorControl();
-            dynamixel = new DX();
+            dynamixel = DX.i;
             running = false;
             Moving = false;
             Speed = 0;
@@ -48,14 +48,12 @@ namespace at_work_abidar_sbu.HardwareAPI
 
         private void ThreadWorker()
         {
-            int currentEncoderValue = 0;
-
             while(running)
             {
                 if(Moving)
                 {
-                    currentEncoderValue = Math.Abs(motor.GetEncoderValue(encoderToWatch));
-                    if(currentEncoderValue > desiredEncoderValue)
+                    int CurrentEncoderValue = motor.GetEncoderValue(encoderToWatch);
+                    if ((desiredEncoderValue > 0 && CurrentEncoderValue > desiredEncoderValue) || (desiredEncoderValue < 0 && CurrentEncoderValue < desiredEncoderValue))
                     {
                         Moving = false;
                         desiredEncoderValue = 0;
@@ -78,6 +76,7 @@ namespace at_work_abidar_sbu.HardwareAPI
                 Moving = false;
 
                 NavigationThread = new Thread(new ThreadStart(ThreadWorker));
+                NavigationThread.Name = "NavigationThread";
                 NavigationThread.Start();
             }
         }
@@ -118,22 +117,18 @@ namespace at_work_abidar_sbu.HardwareAPI
             if (xCm == 0 && yCm == 0)
                 return;
 
-            desiredEncoderValue = Math.Abs((int)((xCm != 0 ? xCm : yCm) * (998 / 35)));
+            desiredEncoderValue = (int)(xCm != 0 ? xCm : yCm) * (998 / 32);
 
-            if (xCm == 0 || yCm == 0)
+            encoderToWatch = MotorControl.Motors.FrontLeft;
+
+            if ((xCm < 0 && yCm > 0) || (xCm > 0 && yCm < 0))
             {
-                encoderToWatch = MotorControl.Motors.FrontLeft;     //All wheels can be used
+                desiredEncoderValue = (int)(desiredEncoderValue * 1.414213562373);
+                encoderToWatch = MotorControl.Motors.FrontRight;
+                desiredEncoderValue *= -1;
             }
-            else
+            else if((xCm < 0 && yCm < 0) || (xCm > 0 && yCm > 0))
             {
-                if ((xCm < 0 && yCm > 0) || (xCm > 0 && yCm < 0))
-                {
-                    encoderToWatch = MotorControl.Motors.FrontRight;
-                }
-                else
-                {
-                    encoderToWatch = MotorControl.Motors.FrontLeft;
-                }
                 desiredEncoderValue = (int)(desiredEncoderValue * 1.414213562373);
             }
 
@@ -155,6 +150,8 @@ namespace at_work_abidar_sbu.HardwareAPI
         {
             if (Moving)
                 return;
+
+
 
             Moving = true;
         }

@@ -21,10 +21,9 @@ namespace at_work_abidar_sbu
 
         private void button1_Click(object sender, EventArgs e)
         {
-            QR qr = new QR();
-            qr.start = new Point(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text));
-            qr.scalex = scalex;
-            qr.scaley = scaley;
+            MapObject qr = new MapObject(WordObjectType.QR,Double.Parse(textBox1.Text), Double.Parse(textBox2.Text));
+           
+            //qr = new Point(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text));
             map.obstacles.Add(qr);
             this.Close();
         }

@@ -15,13 +15,22 @@ using ZXing;
 
 namespace at_work_abidar_sbu
 {
-    public partial class QrCodeTestForm : Form
+	public partial class QrCodeTestForm : Form
     {
-        public QrCodeTestForm()
+		public string qrDecoder(string fileName)
+		{
+			IBarcodeReader reader = new BarcodeReader();
+			var barcodeBitmap = (Bitmap)Bitmap.FromFile(fileName);
+			var result = reader.Decode(barcodeBitmap);
+			if (result == null)
+				return null;
+			else
+				return result.Text;
+		}
+		public QrCodeTestForm()
         {
             InitializeComponent();
         }
-
 		private void button1_Click(object sender, EventArgs e)
 		{
 			// create a barcode reader instance
@@ -123,6 +132,11 @@ namespace at_work_abidar_sbu
 				textBox1.Text = openFileDialog1.FileName;
 				pictureBox1.Load(textBox1.Text);
 			}
+		}
+
+		private void QrCodeTestForm_Load(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

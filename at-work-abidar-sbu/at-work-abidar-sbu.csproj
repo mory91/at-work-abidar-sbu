@@ -15,6 +15,21 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -25,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,6 +57,36 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2|x86'">
+    <OutputPath>bin\x86\Debug2\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
@@ -62,9 +108,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>HardwareInterface\FTD2XX_NET.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Protobuf, Version=3.2.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Protobuf.3.2.0\lib\net45\Google.Protobuf.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Google.ProtocolBuffers">
+      <HintPath>ProtoBufDependecy\executables\Google.ProtocolBuffers.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.ProtocolBuffers.Serialization">
+      <HintPath>ProtoBufDependecy\executables\Google.ProtocolBuffers.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -105,6 +153,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\Navigation\PathFinder.cs" />
+    <Compile Include="AI\Navigation\Point.cs" />
     <Compile Include="HardwareAPI\Navigation.cs" />
     <Compile Include="LabelHandler.cs" />
     <Compile Include="Listener.cs" />
@@ -120,6 +170,12 @@
     </Compile>
     <Compile Include="CreateQRForm.Designer.cs">
       <DependentUpon>CreateQRForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreatePathForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreatePathForm.Designer.cs">
+      <DependentUpon>CreatePathForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CreateStageForm.cs">
       <SubType>Form</SubType>
@@ -161,14 +217,35 @@
     <Compile Include="InitMapBuilderForm.Designer.cs">
       <DependentUpon>InitMapBuilderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Map.cs" />
+    <Compile Include="ProtoBuf\AttentionMessage.cs" />
+    <Compile Include="ProtoBuf\BeaconSignal.cs" />
+    <Compile Include="ProtoBuf\BenchmarkControl.cs" />
+    <Compile Include="ProtoBuf\BenchmarkInfo.cs" />
+    <Compile Include="ProtoBuf\BenchmarkState.cs" />
+    <Compile Include="ProtoBuf\ConveyorBelt.cs" />
+    <Compile Include="ProtoBuf\Inventory.cs" />
+    <Compile Include="ProtoBuf\LoggingStatus.cs" />
+    <Compile Include="ProtoBuf\NavigationTask.cs" />
+    <Compile Include="ProtoBuf\RobotInfo.cs" />
+    <Compile Include="ProtoBuf\RobotStatusReport.cs" />
+    <Compile Include="ProtoBuf\TaskInfo.cs" />
+    <Compile Include="ProtoBuf\Time.cs" />
+    <Compile Include="ProtoBuf\TransportationTask.cs" />
+    <Compile Include="ProtoBuf\VersionInfo.cs" />
+    <Compile Include="WorldModel\Map.cs" />
     <Compile Include="MapBuilderForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MapBuilderForm.Designer.cs">
       <DependentUpon>MapBuilderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Obstacle.cs" />
+    <Compile Include="WorldModel\MapObject.cs" />
+    <Compile Include="PathFinderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PathFinderForm.Designer.cs">
+      <DependentUpon>PathFinderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="PropertiesForm.cs">
       <SubType>Form</SubType>
@@ -185,9 +262,11 @@
     <Compile Include="QrCodeTestForm.Designer.cs">
       <DependentUpon>QrCodeTestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Stage.cs" />
+    <Compile Include="PathShape.cs" />
+    <Compile Include="WorldModel\Stage.cs" />
     <Compile Include="SVMTraining.cs" />
-    <Compile Include="Wall.cs" />
+    <Compile Include="WorldModel\Wall.cs" />
+    <Compile Include="WorldModel\WordObjectType.cs" />
     <EmbeddedResource Include="ObjectRecognitionTestForm.resx">
       <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -196,6 +275,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateQRForm.resx">
       <DependentUpon>CreateQRForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreatePathForm.resx">
+      <DependentUpon>CreatePathForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateStageForm.resx">
       <DependentUpon>CreateStageForm.cs</DependentUpon>
@@ -215,6 +297,9 @@
     <EmbeddedResource Include="MotorControlForm.resx">
       <DependentUpon>MotorControlForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PathFinderForm.resx">
+      <DependentUpon>PathFinderForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm.resx">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -227,6 +312,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="QrCodeTestForm.resx">
+      <DependentUpon>QrCodeTestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="config\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -249,6 +337,19 @@
     <Content Include="HardwareInterface\dxl_x64_c.dll" />
     <Content Include="HardwareInterface\FTD2XX_NET.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

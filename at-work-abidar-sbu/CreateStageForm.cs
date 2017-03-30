@@ -13,20 +13,17 @@ namespace at_work_abidar_sbu
     public partial class CreateStageForm : Form
     {
         public Map map;
-        public double scalex, scaley;
         public CreateStageForm()
         {
             InitializeComponent();
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            Stage stage = new Stage();
-            stage.start = new Point(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text));
-            stage.width = Double.Parse(textBox5.Text);
-            stage.height = Double.Parse(textBox4.Text);
-            stage.scalex = scalex;
-            stage.scaley = scaley;
-            stage.name = textBox3.Text;
+
+            MapObject stage = new MapObject(WordObjectType.Stage, nameTextBox.Text, Double.Parse(xTextBox.Text), 
+                Double.Parse(yTextBox.Text), Int32.Parse(widthTextBox.Text), Int32.Parse(heightTextBox.Text));
+
+        //    pathFinder.addObstacle((int) stage.X, (int) stage.Y, (int)stage.Width, (int)stage.Height);
             map.obstacles.Add(stage);
             this.Close();
         }

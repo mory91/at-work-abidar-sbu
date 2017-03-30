@@ -108,6 +108,7 @@
 			this.Controls.Add(this.button1);
 			this.Name = "QrCodeTestForm";
 			this.Text = "QrCodeTestForm";
+			this.Load += new System.EventHandler(this.QrCodeTestForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

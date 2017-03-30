@@ -43,8 +43,8 @@ namespace at_work_abidar_sbu.HardwareInterface
             RearRight
         }
 
-        private const uint FrontLocationID = 0x1211;
-        private const uint RearLocationID = 0x1212;
+        private const string FrontSerialNumber = "A50285BI";
+        private const string RearSerialNumber = "A9SJ39XX";
         private const byte Lx = 16;
         private const byte Ly = 19;
         private const byte SYNC_BYTE = 0x00;
@@ -63,8 +63,9 @@ namespace at_work_abidar_sbu.HardwareInterface
             frontFTDI = new FTDI();
             rearFTDI = new FTDI();
 
-            frontFTDI.OpenByLocation(FrontLocationID);
-            rearFTDI.OpenByLocation(RearLocationID);
+            frontFTDI.OpenBySerialNumber(FrontSerialNumber);
+            rearFTDI.OpenBySerialNumber(RearSerialNumber);
+
 
             if (!frontFTDI.IsOpen)
                 throw new Exception("Could Not Connect to Front Motor Controller");
@@ -97,6 +98,7 @@ namespace at_work_abidar_sbu.HardwareInterface
 
             uint written = 0;
 
+            Monitor.Enter(toSend);
             switch (mot)
             {
                 case Motors.FrontLeft:
@@ -119,10 +121,12 @@ namespace at_work_abidar_sbu.HardwareInterface
                     rearFTDI.Write(toSend, 3, ref written);
                     break;
             }
+            Monitor.Exit(toSend);
         }
 
         private void ReadEncoderValueFromController()
         {
+            Monitor.Enter(EncodersValue);
             toSend[0] = SYNC_BYTE;
             toSend[1] = (byte)Commands.GET_ENCODERS;
 
@@ -189,6 +193,7 @@ namespace at_work_abidar_sbu.HardwareInterface
                 EncodersValue[(int)Motors.FrontRight] |= (mot1[2] << 8);
                 EncodersValue[(int)Motors.FrontRight] |= (mot1[3]);
             }
+            Monitor.Exit(EncodersValue);
         }
 
         private void SendSpeedReceiveEncoder()
@@ -216,12 +221,16 @@ namespace at_work_abidar_sbu.HardwareInterface
             frontFTDI.Write(toSend, 2, ref written);
             rearFTDI.Write(toSend, 2, ref written);
 
+
+            Monitor.Enter(EncodersValue);
             for (int i = 0; i < 4; i++)
                 EncodersValue[i] = 0;
+            Monitor.Exit(EncodersValue);
         }
 
         public void SetVal(Motors mot, int Value)
         {
+            Monitor.Enter(MotorSpeed);
             if (mot == Motors.FrontRight || mot == Motors.FrontLeft)
             {
                 if ((128 - Value) >= 255)
@@ -252,6 +261,7 @@ namespace at_work_abidar_sbu.HardwareInterface
                     MotorSpeed[(int)mot] = (byte)(128 + Value);
                 }
             }
+            Monitor.Exit(MotorSpeed);
         }
 
         public void SetDestination(int x, int y, float w)
@@ -268,12 +278,18 @@ namespace at_work_abidar_sbu.HardwareInterface
 
         public int GetEncoderValue(Motors motor)
         {
-            return EncodersValue[(int)motor];
+            Monitor.Enter(EncodersValue);
+            var value = EncodersValue[(int)motor];
+            Monitor.Exit(EncodersValue);
+            return value;
         }
 
         public byte GetMotorsValue(Motors motor)
         {
-            return MotorSpeed[(int)motor];
+            Monitor.Enter(MotorSpeed);
+            var speed =  MotorSpeed[(int)motor];
+            Monitor.Exit(MotorSpeed);
+            return speed;
         }
 
         public void Start()
@@ -283,6 +299,7 @@ namespace at_work_abidar_sbu.HardwareInterface
                 SetDestination(0, 0, 0);
                 running = true;
                 PacketSender = new Thread(new ThreadStart(SendSpeedReceiveEncoder));
+                PacketSender.Name = "MotorControlPacketSender";
                 PacketSender.Start();
                 ResetEncoder();
             }

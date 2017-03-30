@@ -1,73 +1,73 @@
 ﻿namespace at_work_abidar_sbu
 {
-    partial class CreateStageForm
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class CreateStageForm
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
+            this.xTextBox = new System.Windows.Forms.TextBox();
+            this.yTextBox = new System.Windows.Forms.TextBox();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.heightTextBox = new System.Windows.Forms.TextBox();
+            this.widthTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // xTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(45, 12);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(160, 20);
-            this.textBox1.TabIndex = 1;
+            this.xTextBox.Location = new System.Drawing.Point(56, 12);
+            this.xTextBox.Name = "xTextBox";
+            this.xTextBox.Size = new System.Drawing.Size(149, 20);
+            this.xTextBox.TabIndex = 1;
             // 
-            // textBox2
+            // yTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(45, 43);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(160, 20);
-            this.textBox2.TabIndex = 2;
+            this.yTextBox.Location = new System.Drawing.Point(56, 43);
+            this.yTextBox.Name = "yTextBox";
+            this.yTextBox.Size = new System.Drawing.Size(149, 20);
+            this.yTextBox.TabIndex = 2;
             // 
-            // textBox3
+            // nameTextBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(45, 121);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(160, 20);
-            this.textBox3.TabIndex = 3;
+            this.nameTextBox.Location = new System.Drawing.Point(56, 121);
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(149, 20);
+            this.nameTextBox.TabIndex = 5;
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(130, 147);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
+            this.button1.TabIndex = 6;
             this.button1.Text = "Create";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -99,19 +99,19 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Width";
             // 
-            // textBox4
+            // heightTextBox
             // 
-            this.textBox4.Location = new System.Drawing.Point(45, 95);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(160, 20);
-            this.textBox4.TabIndex = 8;
+            this.heightTextBox.Location = new System.Drawing.Point(56, 95);
+            this.heightTextBox.Name = "heightTextBox";
+            this.heightTextBox.Size = new System.Drawing.Size(149, 20);
+            this.heightTextBox.TabIndex = 4;
             // 
-            // textBox5
+            // widthTextBox
             // 
-            this.textBox5.Location = new System.Drawing.Point(45, 69);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(160, 20);
-            this.textBox5.TabIndex = 9;
+            this.widthTextBox.Location = new System.Drawing.Point(56, 69);
+            this.widthTextBox.Name = "widthTextBox";
+            this.widthTextBox.Size = new System.Drawing.Size(149, 20);
+            this.widthTextBox.TabIndex = 3;
             // 
             // label4
             // 
@@ -131,41 +131,41 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "Name";
             // 
-            // CreateStage
+            // CreateStageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(238, 185);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.widthTextBox);
+            this.Controls.Add(this.heightTextBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Name = "CreateStage";
+            this.Controls.Add(this.nameTextBox);
+            this.Controls.Add(this.yTextBox);
+            this.Controls.Add(this.xTextBox);
+            this.Name = "CreateStageForm";
             this.Text = "Create Stage";
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        }
+		}
 
-        #endregion
+		#endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-    }
+		private System.Windows.Forms.TextBox xTextBox;
+		private System.Windows.Forms.TextBox yTextBox;
+		private System.Windows.Forms.TextBox nameTextBox;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TextBox heightTextBox;
+		private System.Windows.Forms.TextBox widthTextBox;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label5;
+	}
 }

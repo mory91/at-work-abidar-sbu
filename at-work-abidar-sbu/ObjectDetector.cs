@@ -40,13 +40,13 @@ namespace at_work_abidar_sbu
         {
             HOGDescriptor hog = new HOGDescriptor();    // with defaults values
             Image<Bgr, Byte> imageOfInterest = Resize(im);
-            Point[] p = new Point[imageOfInterest.Width * imageOfInterest.Height];
+            System.Drawing.Point[] p = new System.Drawing.Point[imageOfInterest.Width * imageOfInterest.Height];
             int k = 0;
             for (int i = 0; i < imageOfInterest.Width; i++)
             {
                 for (int j = 0; j < imageOfInterest.Height; j++)
                 {
-                    Point p1 = new Point(i, j);
+                    System.Drawing.Point p1 = new System.Drawing.Point(i, j);
                     p[k++] = p1;
                 }
             }
