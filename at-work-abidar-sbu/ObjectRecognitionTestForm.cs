@@ -69,7 +69,7 @@ namespace at_work_abidar_sbu
                 pictureBox2.Image = delated.ToBitmap();
                 Image<Gray,byte> temp = new Image<Gray, byte>(delated.Width + 2, delated.Height + 2);
                 Rectangle rectangle = new Rectangle(0, 0, delated.Rows - 2, delated.Cols - 2);
-                CvInvoke.FloodFill(delated, temp, new Point(0, 0),new MCvScalar(),out rectangle ,  
+                CvInvoke.FloodFill(delated, temp, new System.Drawing.Point(0, 0),new MCvScalar(),out rectangle ,  
                     new MCvScalar(), new MCvScalar(),Connectivity.FourConnected,4 + (255 << 8) + FloodFillType.MaskOnly);
                 
                 pictureBox3.Image =temp.ToBitmap();

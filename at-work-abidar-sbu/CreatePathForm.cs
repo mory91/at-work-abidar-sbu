@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using at_work_abidar_sbu.AI.Navigation;
 
 namespace at_work_abidar_sbu
 {
@@ -29,7 +29,7 @@ namespace at_work_abidar_sbu
 			pathShape.start = new Point(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text));
 			pathShape.scalex = scalex;
 			pathShape.scaley = scaley;
-			map.obstacles.Add(pathShape);
+		//	map.obstacles.Add(pathShape);
 			this.Close();
         }
     }

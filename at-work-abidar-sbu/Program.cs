@@ -17,11 +17,12 @@ namespace at_work_abidar_sbu
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //            Application.Run(new MainForm());
-           // Application.Run(new ObjectRecognitionTestForm());
-//            SVMTraining svmTraining = new SVMTraining();
-//            svmTraining.train();
-//            Application.Run(new MainForm());
-            Application.Run(new ObjectRecognitionTestForm());
+            // Application.Run(new ObjectRecognitionTestForm());
+            //            SVMTraining svmTraining = new SVMTraining();
+            //            svmTraining.train();
+                        Application.Run(new MainForm());
+            //            Application.Run(new ObjectRecognitionTestForm());
+//            Application.Run(new PathFinderForm());
         }
     }
 }
