@@ -16,9 +16,19 @@ namespace at_work_abidar_sbu.HardwareAPI
             dynamixel = DX.i;
         }
 
+        public void OpenGripper()
+        {
+            dynamixel.OpenGripper();
+        }
+
+        public void CloseGripper()
+        {
+            dynamixel.CloseGripper();
+        }
+
         public void GoToCameraPosition()
         {
-
+            
         }
 
         public void GoToGripPosition()
