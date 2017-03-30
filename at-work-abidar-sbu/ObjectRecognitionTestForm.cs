@@ -153,5 +153,10 @@ namespace at_work_abidar_sbu
                 MessageBox.Show(objectDetector.predict(new Image<Bgr, byte>((Bitmap) Image.FromFile(openFileDialog1.FileName))).ToString());
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
