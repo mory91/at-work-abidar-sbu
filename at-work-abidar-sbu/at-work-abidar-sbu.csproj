@@ -147,6 +147,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HardwareAPI\Arm.cs" />
     <Compile Include="HardwareAPI\Navigation.cs" />
     <Compile Include="LabelHandler.cs" />
     <Compile Include="ObjectDetector.cs" />
@@ -162,7 +163,9 @@
     <Compile Include="CreateQRForm.Designer.cs">
       <DependentUpon>CreateQRForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreatePathForm.cs" />
+    <Compile Include="CreatePathForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CreatePathForm.Designer.cs">
       <DependentUpon>CreatePathForm.cs</DependentUpon>
     </Compile>
@@ -214,7 +217,9 @@
       <DependentUpon>MapBuilderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Obstacle.cs" />
-    <Compile Include="PathFinderForm.cs" />
+    <Compile Include="PathFinderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PathFinderForm.Designer.cs">
       <DependentUpon>PathFinderForm.cs</DependentUpon>
     </Compile>

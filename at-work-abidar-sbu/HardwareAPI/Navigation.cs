@@ -11,7 +11,6 @@ namespace at_work_abidar_sbu.HardwareAPI
     enum Orientation
     {
         Front,
-        Rear,
         Left,
         Right
     }
@@ -151,7 +150,7 @@ namespace at_work_abidar_sbu.HardwareAPI
             if (Moving)
                 return;
 
-
+            ///TODO: Finish Rotate
 
             Moving = true;
         }
@@ -163,20 +162,44 @@ namespace at_work_abidar_sbu.HardwareAPI
             switch(or)
             {
                 case Orientation.Front:
-                    
-                    break;
-                case Orientation.Rear:
+                    switch(laser)
+                    {
+                        case CentralBoard.Laser.Left:
+                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(60));
+                            break;
 
+                        case CentralBoard.Laser.Right:
+                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(240));
+                            break;
+                    }
                     break;
                 case Orientation.Left:
+                    switch (laser)
+                    {
+                        case CentralBoard.Laser.Left:
+                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(150));
+                            break;
 
+                        case CentralBoard.Laser.Right:
+                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(150));
+                            break;
+                    }
                     break;
                 case Orientation.Right:
+                    switch (laser)
+                    {
+                        case CentralBoard.Laser.Left:
+                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(150));
+                            break;
 
+                        case CentralBoard.Laser.Right:
+                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(150));
+                            break;
+                    }
                     break;
             }
 
-            Thread.Sleep(400);                  //Let Laser update value
+            Thread.Sleep(600);                  //Let Laser update value
 
             result = board.GetLaserValue(laser) / 10;
 
