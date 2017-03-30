@@ -29,16 +29,8 @@ namespace at_work_abidar_sbu
         {
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                System.IO.StreamReader sr = new
-                   System.IO.StreamReader(openFileDialog1.FileName);
-                string json = sr.ReadToEnd();
-                var settings = new JsonSerializerSettings();
-                settings.TypeNameHandling = TypeNameHandling.Objects;
-                Map map = JsonConvert.DeserializeObject<Map>(json, settings);
+                Map map = Map.Load(openFileDialog1.FileName);
                 MapBuilderForm mp = new MapBuilderForm(map);
-                mp.Show();
-                sr.Close();
-                this.Close();
             }
         }
     }

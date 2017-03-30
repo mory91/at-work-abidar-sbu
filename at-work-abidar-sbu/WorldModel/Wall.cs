@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace at_work_abidar_sbu
 {
-    class Wall : Obstacle
+    class Wall //: Obstacle
     {
-        public Point start { get; set; }
-        public Point end { get; set; }
+        public System.Drawing.Point start { get; set; }
+        public System.Drawing.Point end { get; set; }
         public double scalex { get; set; }
         public double scaley { get; set; }
 
@@ -21,10 +21,7 @@ namespace at_work_abidar_sbu
                 return ToString();
             }
         }
-        public override string ToString()
-        {
-            return "Wall => " +"Start : " + start.ToString();
-        }
+        
         public void draw(Bitmap scene)
         {
             Pen blackPen = new Pen(Color.Black, 3);
