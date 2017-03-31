@@ -25,7 +25,7 @@ namespace at_work_abidar_sbu
         public ObjectRecognitionTestForm()
         {
             InitializeComponent();
-            objectDetector = new ObjectDetector("salam2.save");
+            objectDetector = new ObjectDetector("svm3.save");
         }
 
         private int frameCount = 0;
@@ -34,23 +34,44 @@ namespace at_work_abidar_sbu
 
         private string[] names =
         {
-            "ball11", "ball3", "box-head", "big-screw", "black-nut", "big-black-screw",
-            "small-black-screw"
+            "big-nut",
+            "big-screw",
+             "box-head",
+            "knife",
+            "light",
+            "small-screw"
         };
+
         private void button1_Click(object sender, EventArgs e)
         {
 
             Capture capture = new Capture(0); //create a camera captue
             ImageViewer imageViewer = new ImageViewer();
             ImageViewer imageViewer2 = new ImageViewer();
+            Rectangle lightbox = Rectangle.Empty;
             Application.Idle += new EventHandler(delegate (object sender1, EventArgs e2)
             {
                 //run this until application closed (close button click on image viewer)
                // pictureBox1.Image = capture.QuerySmallFrame().Bitmap; //draw the image obtained from camera
                 Image<Rgb, byte> imageOrig = capture.QueryFrame().ToImage<Rgb, byte>();
-
-                Image<Rgb, byte> image = imageOrig.SmoothBlur(3,3);
-            
+                Image<Rgb, byte> image = imageOrig.Copy();
+                if (!lightbox.IsEmpty)
+                {
+                    var l2 = lightbox;
+                    l2.X -= 10;
+                    l2.Y -= 10;
+                    l2.Width += 20;
+                    l2.Height += 20;
+                    image.ROI = l2;
+                    var light = image.InRange(new Rgb(200, 200, 200), new Rgb(255, 255, 255));
+                    light = light.Dilate(5);
+                    image.SetValue(new Rgb(156, 163, 167), light);
+                    image.ROI = new Rectangle(0, 0, imageOrig.Width, imageOrig.Height);
+                }
+                
+                image = image.SmoothBlur(3,3);
+               
+              //  image.ThresholdTrunc(new Rgb(254, 251, 254), new Rgb(156, 163, 167));
                 //image._EqualizeHist();
              //   image._GammaCorrect((threshHS.Value / 128.0));
                 Image<Gray, byte> imagefiltered = image/*.SmoothBlur(3, 3)*/.Convert<Gray, byte>().PyrDown().PyrUp();
@@ -75,6 +96,8 @@ namespace at_work_abidar_sbu
                 pictureBox3.Image =temp.ToBitmap();
                 Image<Gray, byte> eroded = temp.Erode(2);
                 pictureBox4.Image = eroded.ToBitmap();
+                origPictureBox.Image = imageOrig.ToBitmap();
+               
                 VectorOfVectorOfPoint contoursDetected = new VectorOfVectorOfPoint();
                 CvInvoke.FindContours(eroded, contoursDetected, null, Emgu.CV.CvEnum.RetrType.List, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
 
@@ -82,6 +105,7 @@ namespace at_work_abidar_sbu
                 int count = contoursDetected.Size;
                 Bitmap bitmap = imageOrig.ToBitmap();
                 Graphics g = Graphics.FromImage(bitmap);
+           //     lightbox = Rectangle.Empty;
                 for (int i = 0; i < count; i++)
                 {
                     using (VectorOfPoint currContour = contoursDetected[i])
@@ -115,6 +139,10 @@ namespace at_work_abidar_sbu
                             g.DrawRectangle(Pens.White,rect);
                             float f = (int)objectDetector.predict(rectImage.Convert<Bgr, byte>());
                             g.DrawString(names[(int) (f-1)],this.Font,Brushes.Red,rect.X,rect.Y);
+                            if (names[(int) (f - 1)] == "light")
+                            {
+                                lightbox = rect;
+                            }
                         }
                         
                     }

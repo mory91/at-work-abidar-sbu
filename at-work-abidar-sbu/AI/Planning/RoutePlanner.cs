@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using at_work_abidar_sbu.AI.Navigation;
 using at_work_abidar_sbu.HardwareAPI;
 using at_work_abidar_sbu.HardwareInterface;
+using OpenTK.Graphics.OpenGL;
 
 namespace at_work_abidar_sbu.AI.Planning
 {
@@ -46,15 +47,18 @@ namespace at_work_abidar_sbu.AI.Planning
         public float LL;
         public float RF;
         public float RR;
+        private const int ROBOT_SIZE = 44;
+        private const int LASER_TO_SIDE = 10;
+        private const int LASER_TO_FRONT = 4;
         public void ReadLaserValues()
         {
             var t =nav.GetDistanceSync(Orientation.Front);
-            LF = t.Item1;
-            RF = t.Item2;
+            LF = t.Item1 + ROBOT_SIZE / 2 - LASER_TO_FRONT;
+            RF = t.Item2 + ROBOT_SIZE / 2 - LASER_TO_FRONT;
 
             t = nav.GetDistanceSync(Orientation.Left);
-            LL = t.Item1;
-            RR = t.Item2;
+            LL = t.Item1+ROBOT_SIZE/2 -LASER_TO_SIDE ;
+            RR = t.Item2+ROBOT_SIZE / 2 - LASER_TO_SIDE;
             
         }
 

@@ -28,11 +28,13 @@ namespace at_work_abidar_sbu
                 int labelNum = 1;
                 foreach (var dir in dirs)
                 {
+                    Console.WriteLine(dir);
                     string[] images = Directory.GetFiles(dir);
                     foreach (var image in images)
                     {
                         imagesList.Add(Image.FromFile(image));
                         labels.Add(labelNum);
+
                     }
                     labelNum++;
                 }
@@ -76,7 +78,7 @@ namespace at_work_abidar_sbu
             {
                 Image<Bgr, byte> loadedImg = new Image<Bgr, byte>((Bitmap)img);
              
-                for (int i = 0; i < 360; i+=30)
+                for (int i = 0; i < 360; i+=20)
                 {
                     float[] histog = GetVector(loadedImg.Rotate(i, new Bgr(255, 255, 255)));
                     hogs.Add(histog);
@@ -99,7 +101,7 @@ namespace at_work_abidar_sbu
 
                 //bool trained = model.Train(trainData, trainClasses, null, null, p);
                 bool trained = model.TrainAuto(trainData);
-                SaveSVMToFile(model, "salam2.save");
+                SaveSVMToFile(model, "svm3.save");
             }
         }
         private T[,] To2D<T>(T[][] source)
