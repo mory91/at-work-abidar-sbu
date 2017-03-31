@@ -10,6 +10,8 @@ namespace at_work_abidar_sbu.AI.Navigation
     {
         private int _MapWidth=800;
         private int _MapHeight=600;
+		private int[] _dx = {+1, 0, -1, 0}; //Front, Left, Rear, Right
+		private int[] _dy = {0, -1, 0, +1};
         private int MapWidth => _MapWidth;
 //x, cm
 
@@ -22,6 +24,7 @@ namespace at_work_abidar_sbu.AI.Navigation
         Point[,] nxt;
         Point src, dst;
         List<Point> path;
+		int[,,] obstacleDistance;
         public PathFinder()
         {
             SetUp();
@@ -36,15 +39,17 @@ namespace at_work_abidar_sbu.AI.Navigation
             nxt = new Point[MapWidth + 10, MapHeight + 10];
             setSrc(0, 0);
             setDst(0, 0);
-            for (int i = 0; i < MapWidth; i++)
-                for (int j = 0; j < MapHeight; j++)
+            for (int i = 0; i <= MapWidth; i++)
+                for (int j = 0; j <= MapHeight; j++)
                 {
                     map[i, j] = 0;
                     dis[i, j] = -1;
                     touchWall[i, j] = 0;
-                }
-            for (int i = 0; i < MapWidth; i++)
-                for (int j = 0; j < MapHeight; j++)
+					for (int k = 0; k < 4; k++)
+						obstacleDistance[i, j, k] = -1;
+				}
+			for (int i = 0; i <= MapWidth; i++)
+                for (int j = 0; j <= MapHeight; j++)
                     nxt[i, j] = new Point(-1, -1);
         }
 
@@ -120,12 +125,9 @@ namespace at_work_abidar_sbu.AI.Navigation
             SetUp();
             foreach (MapObject o in map.obstacles)
             {
-                addObstacle((int) o.X, (int)o.Y, (int)o.Width, (int)o.Height);
+                addObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height);
             }
-           
-
         }
-
         public Point getDst()
         {
             return dst;
@@ -152,5 +154,51 @@ namespace at_work_abidar_sbu.AI.Navigation
         {
             return path;
         }
+		public void setSrc(int rectX, int rectY, int rectW, int rectH, int orientation, double laserLL, double laserLF, double laserRR, double laserRF)
+		{
+			double[] lasers = {(laserLF + laserRF) / 2.0, laserLL, -1, laserRR};
+			int srcX = 0;
+			int srcY = 0;
+			for (int i = 0; i < MapWidth; i++)
+				for (int j = 0; j < MapHeight; j++)
+				{
+					double sum = 0;
+					double minSum = 1000 * 1000 * 1000 + 10;
+					for (int k = 0; k < 4; k++)
+					{
+						int k2 = (k + orientation) % 4;
+						if (obstacleDistance[k2, i, j] != -1 && lasers[k] != -1)
+							sum += Math.Abs(lasers[k] - obstacleDistance[k2, i, j]);
+					}
+					if (sum < minSum)
+					{
+						minSum = sum;
+						srcX = i;
+						srcY = j;
+					}
+				}
+			if (srcX >= rectX && srcY >= rectY && srcX <= rectX + rectW && srcY <= rectY + rectH)
+				setSrc(srcX, srcY);
+		}
+		public void calcObstacleDistances()
+		{
+			for (int i = 0; i < MapWidth; i++)
+				for (int j = 0; j < MapWidth; j++)
+				{
+					for (int k = 0; k < 4; k++)
+					{
+						for (int l = 0; l <= Math.Max(MapWidth, MapHeight); l++)
+						{
+							int x2 = i + _dx[k] * l;
+							int y2 = j + _dy[k] * l;
+							if (!isInMap(x2, y2) || map[x2, y2] != 0)
+							{
+								obstacleDistance[i, j, k] = l - 1;
+								continue;
+							}
+						}
+					}
+                }
+		}
     }
 }
