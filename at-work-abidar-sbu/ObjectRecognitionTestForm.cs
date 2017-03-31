@@ -42,28 +42,34 @@ namespace at_work_abidar_sbu
 
             Capture capture = new Capture(0); //create a camera captue
             ImageViewer imageViewer = new ImageViewer();
+            ImageViewer imageViewer2 = new ImageViewer();
             Application.Idle += new EventHandler(delegate (object sender1, EventArgs e2)
             {
                 //run this until application closed (close button click on image viewer)
                // pictureBox1.Image = capture.QuerySmallFrame().Bitmap; //draw the image obtained from camera
                 Image<Rgb, byte> imageOrig = capture.QueryFrame().ToImage<Rgb, byte>();
+
+                Image<Rgb, byte> image = imageOrig.SmoothBlur(3,3);
+            
+                //image._EqualizeHist();
+             //   image._GammaCorrect((threshHS.Value / 128.0));
+                Image<Gray, byte> imagefiltered = image/*.SmoothBlur(3, 3)*/.Convert<Gray, byte>().PyrDown().PyrUp();
+//                imagefiltered = imagefiltered.SmoothGaussian()
+                //  imageViewer.Image = image;
+                //                Image<Gray, byte> imageThresh = imageblur.ThresholdBinary(new Gray(threshHS.Value), new Gray(255));
+
+                //                pictureBox1.Image =  imageThresh.ToBitmap();
+                imageViewer2.Image = imagefiltered;
+                Image<Gray, byte> edges = imagefiltered.Canny(cannyLowHS.Value, cannyHighHS.Value);
+
                 
-                Image<Gray, byte> image = imageOrig.Convert<Gray, byte>();
-                image._EqualizeHist();
-                Image<Gray, byte> imageblur = image.SmoothBlur(3, 3).Convert<Gray, byte>();
-              //  imageViewer.Image = image;
-//                Image<Gray, byte> imageThresh = imageblur.ThresholdBinary(new Gray(threshHS.Value), new Gray(255));
-
-//                pictureBox1.Image =  imageThresh.ToBitmap();
-                Image<Gray, byte> edges = imageblur.Canny(cannyLowHS.Value, cannyHighHS.Value);
-
                 pictureBox1.Image = edges.ToBitmap();
                 Image<Gray, byte> delated = edges.Dilate(2);
 
                 pictureBox2.Image = delated.ToBitmap();
                 Image<Gray,byte> temp = new Image<Gray, byte>(delated.Width + 2, delated.Height + 2);
                 Rectangle rectangle = new Rectangle(0, 0, delated.Rows - 2, delated.Cols - 2);
-                CvInvoke.FloodFill(delated, temp, new Point(0, 0),new MCvScalar(),out rectangle ,  
+                CvInvoke.FloodFill(delated, temp, new System.Drawing.Point(0, 0),new MCvScalar(),out rectangle ,  
                     new MCvScalar(), new MCvScalar(),Connectivity.FourConnected,4 + (255 << 8) + FloodFillType.MaskOnly);
                 
                 pictureBox3.Image =temp.ToBitmap();
@@ -119,6 +125,7 @@ namespace at_work_abidar_sbu
                 //                Canny(cannyLowHS.Value, cannyHighHS.Value).ToBitmap();
             });
             imageViewer.Show();
+            imageViewer2.Show();
         }
 
         
@@ -152,6 +159,11 @@ namespace at_work_abidar_sbu
             {
                 MessageBox.Show(objectDetector.predict(new Image<Bgr, byte>((Bitmap) Image.FromFile(openFileDialog1.FileName))).ToString());
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

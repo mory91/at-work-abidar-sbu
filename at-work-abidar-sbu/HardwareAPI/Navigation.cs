@@ -11,7 +11,6 @@ namespace at_work_abidar_sbu.HardwareAPI
     enum Orientation
     {
         Front,
-        Rear,
         Left,
         Right
     }
@@ -35,7 +34,7 @@ namespace at_work_abidar_sbu.HardwareAPI
         {
             board = new CentralBoard();
             motor = new MotorControl();
-            dynamixel = new DX();
+            dynamixel = DX.i;
             running = false;
             Moving = false;
             Speed = 0;
@@ -48,14 +47,12 @@ namespace at_work_abidar_sbu.HardwareAPI
 
         private void ThreadWorker()
         {
-            int currentEncoderValue = 0;
-
             while(running)
             {
                 if(Moving)
                 {
-                    currentEncoderValue = Math.Abs(motor.GetEncoderValue(encoderToWatch));
-                    if(currentEncoderValue > desiredEncoderValue)
+                    int CurrentEncoderValue = motor.GetEncoderValue(encoderToWatch);
+                    if ((desiredEncoderValue > 0 && CurrentEncoderValue > desiredEncoderValue) || (desiredEncoderValue < 0 && CurrentEncoderValue < desiredEncoderValue))
                     {
                         Moving = false;
                         desiredEncoderValue = 0;
@@ -78,6 +75,7 @@ namespace at_work_abidar_sbu.HardwareAPI
                 Moving = false;
 
                 NavigationThread = new Thread(new ThreadStart(ThreadWorker));
+                NavigationThread.Name = "NavigationThread";
                 NavigationThread.Start();
             }
         }
@@ -118,22 +116,18 @@ namespace at_work_abidar_sbu.HardwareAPI
             if (xCm == 0 && yCm == 0)
                 return;
 
-            desiredEncoderValue = Math.Abs((int)((xCm != 0 ? xCm : yCm) * (998 / 35)));
+            desiredEncoderValue = (int)(xCm != 0 ? xCm : yCm) * (998 / 32);
 
-            if (xCm == 0 || yCm == 0)
+            encoderToWatch = MotorControl.Motors.FrontLeft;
+
+            if ((xCm < 0 && yCm > 0) || (xCm > 0 && yCm < 0))
             {
-                encoderToWatch = MotorControl.Motors.FrontLeft;     //All wheels can be used
+                desiredEncoderValue = (int)(desiredEncoderValue * 1.414213562373);
+                encoderToWatch = MotorControl.Motors.FrontRight;
+                desiredEncoderValue *= -1;
             }
-            else
+            else if((xCm < 0 && yCm < 0) || (xCm > 0 && yCm > 0))
             {
-                if ((xCm < 0 && yCm > 0) || (xCm > 0 && yCm < 0))
-                {
-                    encoderToWatch = MotorControl.Motors.FrontRight;
-                }
-                else
-                {
-                    encoderToWatch = MotorControl.Motors.FrontLeft;
-                }
                 desiredEncoderValue = (int)(desiredEncoderValue * 1.414213562373);
             }
 
@@ -156,6 +150,8 @@ namespace at_work_abidar_sbu.HardwareAPI
             if (Moving)
                 return;
 
+            ///TODO: Finish Rotate
+
             Moving = true;
         }
 
@@ -166,20 +162,44 @@ namespace at_work_abidar_sbu.HardwareAPI
             switch(or)
             {
                 case Orientation.Front:
-                    
-                    break;
-                case Orientation.Rear:
+                    switch(laser)
+                    {
+                        case CentralBoard.Laser.Left:
+                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(60));
+                            break;
 
+                        case CentralBoard.Laser.Right:
+                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(240));
+                            break;
+                    }
                     break;
                 case Orientation.Left:
+                    switch (laser)
+                    {
+                        case CentralBoard.Laser.Left:
+                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(150));
+                            break;
 
+                        case CentralBoard.Laser.Right:
+                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(150));
+                            break;
+                    }
                     break;
                 case Orientation.Right:
+                    switch (laser)
+                    {
+                        case CentralBoard.Laser.Left:
+                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(150));
+                            break;
 
+                        case CentralBoard.Laser.Right:
+                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(150));
+                            break;
+                    }
                     break;
             }
 
-            Thread.Sleep(400);                  //Let Laser update value
+            Thread.Sleep(600);                  //Let Laser update value
 
             result = board.GetLaserValue(laser) / 10;
 

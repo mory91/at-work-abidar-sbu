@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using at_work_abidar_sbu.AI.Navigation;
 using Newtonsoft.Json;
 
 namespace at_work_abidar_sbu
 {
     public partial class MapBuilderForm : Form
     {
+		PathFinder pathFinder;
         double scalex, scaley;
         private double height, width;
         private Map map;
@@ -34,27 +36,11 @@ namespace at_work_abidar_sbu
             map = new Map();
             map.height = height;
             map.width = width;
-            map.scalex = scalex;
-            map.scaley = scaley;
             pictureBox1.Image = res;
             listBox1.DataSource = map.obstacles;
             listBox1.DisplayMember = "Name";
 
-			PathFinder pathFinder = new PathFinder();
-			pathFinder.setSrc(0, 0);
-			pathFinder.setSrc(100, 300);
-			pathFinder.findPath();
-			List<Noqte> path = pathFinder.getPath();
-			foreach (Noqte p in path)
-			{
-				PathShape shape = new PathShape();
-				shape.name = "Path_Shape";
-				shape.scalex = scalex;
-				shape.scaley = scaley;
-				shape.start = new Point((int)p.x, (int)p.y);
-				map.obstacles.Add(shape);
-			}
-			map.build(res);
+			pathFinder = new PathFinder();
 		}
         public MapBuilderForm(Map map)
         {
@@ -65,15 +51,7 @@ namespace at_work_abidar_sbu
             listBox1.DisplayMember = "Name";
             height = map.height;
             width = map.width;
-            res = new Bitmap((int)pictureBox1.Width, (int)pictureBox1.Height);
-            scalex = res.Width / width;
-            scaley = res.Height / height;
-            using (Graphics grp = Graphics.FromImage(res))
-            {
-                grp.FillRectangle(
-                    Brushes.White, 0, 0, res.Width, res.Height);
-            }
-            pictureBox1.Image = map.build(res);
+            DrawMap();
             listBox1.DataSource = null;
             listBox1.DataSource = map.obstacles;
         }
@@ -81,13 +59,11 @@ namespace at_work_abidar_sbu
         private void createStage_Click(object sender, EventArgs e)
         {
             CreateStageForm cs = new CreateStageForm();
-            cs.scalex = scalex;
-            cs.scaley = scaley;
-            cs.map = map;
+		    cs.map = map;
             cs.FormClosing += (o, form) =>
             {
                 map = cs.map;
-                pictureBox1.Image = map.build(res);
+                DrawMap();
                 listBox1.DataSource = null;
                 listBox1.DataSource = map.obstacles;
             };
@@ -98,66 +74,109 @@ namespace at_work_abidar_sbu
         private void createWall_Click(object sender, EventArgs e)
         {
             CreateWallForm cg = new CreateWallForm();
-            cg.scalex = scalex;
-            cg.scaley = scaley;
-            cg.map = map;
+		    cg.map = map;
             cg.FormClosing += (o, form) =>
             {
                 map = cg.map;
-                pictureBox1.Image = map.build(res); ;
+                DrawMap();
+        //      pictureBox1.Image = map.build(res); ;
                 listBox1.DataSource = null;
                 listBox1.DataSource = map.obstacles;
             };
             cg.Show();
         }
 
+        private void DrawMap()
+        {
+            res = new Bitmap((int)pictureBox1.Width, (int)pictureBox1.Height);
+            scalex = res.Width / width;
+            scaley = res.Height / height;
+            using (Graphics gr = Graphics.FromImage(res))
+            {
+                gr.FillRectangle(
+                    Brushes.White, 0, 0, res.Width, res.Height);
+                foreach (MapObject o in map.obstacles)
+                {
+                    Rectangle rect = new Rectangle((int)(o.X * scalex), (int)(o.Y * scaley), (int)(o.Width * scalex), (int)(o.Height * scaley));
+                    switch (o.Type)
+                    {
+                       
+                        case WordObjectType.Stage:
+                            var name = o.Name;
+                            if (name[0] == 'S')
+                                gr.FillRectangle(Brushes.Red, rect);
+                            if (name[0] == 'T')
+                                gr.FillRectangle(Brushes.Blue, rect);
+                            if (name[0] == 'U')
+                                gr.FillRectangle(Brushes.Yellow, rect);
+                            if (name[0] == 'D')
+                                gr.FillRectangle(Brushes.Orange, rect);
+                            break;
+                        case WordObjectType.Wall:
+                                gr.FillRectangle(Brushes.Black, rect);
+                            break;
+                        case WordObjectType.QR:
+                                gr.FillRectangle(Brushes.Gray,rect);
+                            break;
+                        default:
+                            gr.FillRectangle(Brushes.Crimson, rect);
+                            break;
+                    }
+                }
+            }
+            pictureBox1.Image = res;
+
+        }
+
         private void createQR_Click(object sender, EventArgs e)
         {
             CreateQRForm qr = new CreateQRForm();
             qr.map = map;
-            qr.scalex = scalex;
-            qr.scaley = scaley;
+//            qr.scalex = scalex;
+//            qr.scaley = scaley;
             qr.FormClosing += (o, form) =>
             {
                 map = qr.map;
-                pictureBox1.Image = map.build(res); ;
+                DrawMap();
                 listBox1.DataSource = null;
                 listBox1.DataSource = map.obstacles;
             };
             qr.Show();
         }
 
-		private void pictureBox1_Click(object sender, EventArgs e)
-		{
-
-		}
-
+		
 		private void btnPath_Click(object sender, EventArgs e)
 		{
-
+			CreatePathForm createPathForm = new CreatePathForm();
+			createPathForm.pathFinder = pathFinder;
+			createPathForm.map = map;
+			createPathForm.scalex = scalex;
+			createPathForm.scaley = scaley;
+			createPathForm.FormClosing += (o, form) =>
+			{
+				map = createPathForm.map;
+                DrawMap();
+                listBox1.DataSource = null;
+				listBox1.DataSource = map.obstacles;
+			};
+			createPathForm.Show();
 		}
 
-		private void delete_Click(object sender, EventArgs e)
+        
+
+        private void delete_Click(object sender, EventArgs e)
         {
             map.obstacles.RemoveAt(listBox1.SelectedIndex);
-            pictureBox1.Image = map.build(res); ;
+            DrawMap();
             listBox1.DataSource = null;
             listBox1.DataSource = map.obstacles;
         }
 
 		private void save_Click(object sender, EventArgs e)
 		{
-			var settings = new JsonSerializerSettings();
-			settings.TypeNameHandling = TypeNameHandling.Objects;
-			string json = JsonConvert.SerializeObject(map, Formatting.Indented, settings);
-			Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-			using (System.IO.StreamWriter file =
-			new System.IO.StreamWriter(unixTimestamp + ".map"))
-			{
-				file.Write(json);
-			}
-
-		}
+            Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            map.Save(unixTimestamp+".map");
+        }
     }
 
 }

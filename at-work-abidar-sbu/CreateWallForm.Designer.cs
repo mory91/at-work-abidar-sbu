@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.X2TextBox = new System.Windows.Forms.TextBox();
+            this.Y2TextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Y1TextBox = new System.Windows.Forms.TextBox();
+            this.X1TextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label4
@@ -48,19 +48,19 @@
             this.label4.TabIndex = 21;
             this.label4.Text = "END Y";
             // 
-            // textBox5
+            // X2TextBox
             // 
-            this.textBox5.Location = new System.Drawing.Point(53, 76);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(160, 20);
-            this.textBox5.TabIndex = 20;
+            this.X2TextBox.Location = new System.Drawing.Point(53, 76);
+            this.X2TextBox.Name = "X2TextBox";
+            this.X2TextBox.Size = new System.Drawing.Size(160, 20);
+            this.X2TextBox.TabIndex = 20;
             // 
-            // textBox4
+            // Y2TextBox
             // 
-            this.textBox4.Location = new System.Drawing.Point(53, 102);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(160, 20);
-            this.textBox4.TabIndex = 19;
+            this.Y2TextBox.Location = new System.Drawing.Point(53, 102);
+            this.Y2TextBox.Name = "Y2TextBox";
+            this.Y2TextBox.Size = new System.Drawing.Size(160, 20);
+            this.Y2TextBox.TabIndex = 19;
             // 
             // label3
             // 
@@ -99,35 +99,35 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox2
+            // Y1TextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(53, 50);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(160, 20);
-            this.textBox2.TabIndex = 13;
+            this.Y1TextBox.Location = new System.Drawing.Point(53, 50);
+            this.Y1TextBox.Name = "Y1TextBox";
+            this.Y1TextBox.Size = new System.Drawing.Size(160, 20);
+            this.Y1TextBox.TabIndex = 13;
             // 
-            // textBox1
+            // X1TextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(53, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(160, 20);
-            this.textBox1.TabIndex = 12;
+            this.X1TextBox.Location = new System.Drawing.Point(53, 19);
+            this.X1TextBox.Name = "X1TextBox";
+            this.X1TextBox.Size = new System.Drawing.Size(160, 20);
+            this.X1TextBox.TabIndex = 12;
             // 
-            // CreateWall
+            // CreateWallForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(242, 168);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.X2TextBox);
+            this.Controls.Add(this.Y2TextBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Name = "CreateWall";
+            this.Controls.Add(this.Y1TextBox);
+            this.Controls.Add(this.X1TextBox);
+            this.Name = "CreateWallForm";
             this.Text = "Create Wall";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -136,13 +136,13 @@
 
         #endregion
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox X2TextBox;
+        private System.Windows.Forms.TextBox Y2TextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox Y1TextBox;
+        private System.Windows.Forms.TextBox X1TextBox;
     }
 }

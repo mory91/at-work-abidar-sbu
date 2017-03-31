@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace at_work_abidar_sbu
 {
-    class QR : Obstacle
+    class QR //: Obstacle
     {
-        public Point start { get; set; }
+        public System.Drawing.Point start { get; set; }
         public double scalex { get; set; }
         public double scaley { get; set; }
         public string Name
