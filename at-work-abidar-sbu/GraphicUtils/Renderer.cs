@@ -107,7 +107,7 @@ namespace at_work_abidar_sbu.GraphicUtils
             {
                 int Bottom = (int) (center.y + ROBOT_SIZE / 2);
                 int Left = (int) (center.x - ROBOT_SIZE / 2);
-                gr.DrawLine(Pens.Brown,(int) (Left*scalex), (int)(Bottom *scaley), (int)(Left * scalex), (int)((Bottom-RF) * scaley));
+                gr.DrawLine(Pens.Brown,(int) (Left*scalex), (int)(Bottom *scaley), (int)(Left * scalex), (int)((Bottom+RF) * scaley));
                 gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Bottom * scaley), (int)((Left-RR) * scalex), (int)((Bottom) * scaley));
                 Left += ROBOT_SIZE;
                 gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Bottom * scaley), (int)(Left * scalex), (int)((Bottom + LF) * scaley));

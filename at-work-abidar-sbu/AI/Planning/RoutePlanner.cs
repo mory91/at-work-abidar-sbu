@@ -48,18 +48,22 @@ namespace at_work_abidar_sbu.AI.Planning
         public float RR;
         public void ReadLaserValues()
         {
-            var lf = nav.GetDistance(Orientation.Front, CentralBoard.Laser.Left);
-            var ll = nav.GetDistance(Orientation.Left, CentralBoard.Laser.Left);
-            var rf = nav.GetDistance(Orientation.Front, CentralBoard.Laser.Right);
-            var rr = nav.GetDistance(Orientation.Right, CentralBoard.Laser.Right);
+            var t =nav.GetDistanceSync(Orientation.Front);
+            LF = t.Item1;
+            RF = t.Item2;
+
+            t = nav.GetDistanceSync(Orientation.Left);
+            LL = t.Item1;
+            RR = t.Item2;
+            
         }
 
         public Point RobotPositionFromLasers()
         {
             Point c = new Point();
             ReadLaserValues();
-            c.x = RR + 22-6;
-            //c.y = map.height-(RF + 22-2);
+            c.x = RR + 22-10;
+            c.y = map.height-(RF + 22-4);
             return c;
         }
     }

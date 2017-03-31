@@ -146,8 +146,8 @@ namespace at_work_abidar_sbu.HardwareInterface
         public void LasersPointForward()
         {
             group_num = dynamixel.groupSyncWrite(portHandle, 1, (byte)Instructions.GoalPosition, 2);
-            dynamixel.groupSyncWriteAddParam(group_num, (byte)Actuator.LeftLaser, (ushort)511, 2);
-            dynamixel.groupSyncWriteAddParam(group_num, (byte)Actuator.RightLaser, (ushort)511, 2);
+            dynamixel.groupSyncWriteAddParam(group_num, (byte)Actuator.LeftLaser, (ushort)208, 2);
+            dynamixel.groupSyncWriteAddParam(group_num, (byte)Actuator.RightLaser, (ushort)820, 2);
             dynamixel.groupSyncWriteTxPacket(group_num);
             dynamixel.groupSyncWriteClearParam(group_num);
         }
@@ -155,8 +155,8 @@ namespace at_work_abidar_sbu.HardwareInterface
         public void LasersPointSides()
         {
             group_num = dynamixel.groupSyncWrite(portHandle, 1, (byte)Instructions.GoalPosition, 2);
-            dynamixel.groupSyncWriteAddParam(group_num, (byte)Actuator.LeftLaser, (ushort)208, 2);
-            dynamixel.groupSyncWriteAddParam(group_num, (byte)Actuator.RightLaser, (ushort)820, 2);
+            dynamixel.groupSyncWriteAddParam(group_num, (byte)Actuator.LeftLaser, (ushort)511, 2);
+            dynamixel.groupSyncWriteAddParam(group_num, (byte)Actuator.RightLaser, (ushort)511, 2);
             dynamixel.groupSyncWriteTxPacket(group_num);
             dynamixel.groupSyncWriteClearParam(group_num);
         }
