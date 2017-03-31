@@ -19,6 +19,7 @@ namespace at_work_abidar_sbu
 {
     public partial class MainForm : Form
     {
+        Arm arm;
 
         public MainForm()
         {
@@ -134,7 +135,7 @@ namespace at_work_abidar_sbu
                         {
                             double dx = rallyPoint[0].x - robot.x;
                             double dy = rallyPoint[0].y - robot.y;
-                            Console.WriteLine((float) (dx));
+                            Console.WriteLine((float)(dx));
                             Console.WriteLine((float)(dy));
 
                             if (Math.Abs(dx) <= Math.Abs(dy))

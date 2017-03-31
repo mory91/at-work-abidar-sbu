@@ -16,7 +16,7 @@ namespace at_work_abidar_sbu.AI.Planning
         private List<Point> rallyPoints = new List<Point>();
         private HardwareAPI.Navigation nav;
         private Map map;
-        public RoutePlanner(PathShape path,Map map)
+        public RoutePlanner(PathShape path, Map map)
         {
             this.path = path;
             nav = HardwareAPI.Navigation.i;
