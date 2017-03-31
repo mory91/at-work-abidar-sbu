@@ -181,11 +181,11 @@ namespace at_work_abidar_sbu.HardwareAPI
                     switch(laser)
                     {
                         case CentralBoard.Laser.Left:
-                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(60));
+                            dynamixel.SetPositioinWithoutTof(Actuator.LeftLaser, 208);
                             break;
 
                         case CentralBoard.Laser.Right:
-                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(240));
+                            dynamixel.SetPositioinWithoutTof(Actuator.RightLaser, 820);
                             break;
                     }
                     break;
@@ -193,11 +193,11 @@ namespace at_work_abidar_sbu.HardwareAPI
                     switch (laser)
                     {
                         case CentralBoard.Laser.Left:
-                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(150));
+                            dynamixel.SetPositioinWithoutTof(Actuator.LeftLaser, 511);
                             break;
 
                         case CentralBoard.Laser.Right:
-                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(150));
+                            dynamixel.SetPositioinWithoutTof(Actuator.RightLaser, 511);
                             break;
                     }
                     break;
@@ -205,17 +205,17 @@ namespace at_work_abidar_sbu.HardwareAPI
                     switch (laser)
                     {
                         case CentralBoard.Laser.Left:
-                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(150));
+                            dynamixel.SetPositioinWithoutTof(Actuator.LeftLaser, 511);
                             break;
 
                         case CentralBoard.Laser.Right:
-                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(150));
+                            dynamixel.SetPositioinWithoutTof(Actuator.RightLaser, 511);
                             break;
                     }
                     break;
             }
 
-            Thread.Sleep(600);                  //Let Laser update value
+            Thread.Sleep(2000);                  //Let Laser update value
 
             result = board.GetLaserValue(laser) / 10;
 

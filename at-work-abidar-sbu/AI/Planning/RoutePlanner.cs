@@ -59,7 +59,7 @@ namespace at_work_abidar_sbu.AI.Planning
             Point c = new Point();
             ReadLaserValues();
             c.x = RR + 22-6;
-            c.y = map.height-(RF + 22-2);
+            //c.y = map.height-(RF + 22-2);
             return c;
         }
     }
