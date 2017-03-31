@@ -123,10 +123,6 @@ namespace at_work_abidar_sbu.HardwareInterface
                 {
                     LaserError[0] = false;
                     LaserValue[0] = (ushort)((packetBody[5] << 8) | packetBody[4]);
-                    if(LaserValue[0] == 0 && RightLaserOn)
-                    {
-                        SelectLaser(true, Laser.Right);
-                    }
                 }
 
                 if (packetBody[6] == 0xFE && packetBody[7] == 0xFE)
@@ -138,10 +134,6 @@ namespace at_work_abidar_sbu.HardwareInterface
                 {
                     LaserError[1] = false;
                     LaserValue[1] = (ushort)((packetBody[7] << 8) | packetBody[6]);
-                    if (LaserValue[1] == 0 && LeftLaserOn)
-                    {
-                        SelectLaser(true, Laser.Left);
-                    }
                 }
                 Monitor.Exit(readLock);
             }

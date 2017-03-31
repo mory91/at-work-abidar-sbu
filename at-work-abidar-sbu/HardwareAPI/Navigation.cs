@@ -82,8 +82,8 @@ namespace at_work_abidar_sbu.HardwareAPI
         {
             if (!running)
             {
-                board.SelectLaser(true, CentralBoard.Laser.Left);
-                board.SelectLaser(true, CentralBoard.Laser.Right);
+                //board.SelectLaser(true, CentralBoard.Laser.Left);
+                //board.SelectLaser(true, CentralBoard.Laser.Right);
 
                 motor.Start();
                 board.Start();
@@ -215,9 +215,13 @@ namespace at_work_abidar_sbu.HardwareAPI
                     break;
             }
 
-            Thread.Sleep(1000);                  //Let Laser update value
+            Thread.Sleep(400);                  //Let Laser update value
+            board.SelectLaser(true, laser);
+            Thread.Sleep(1000);
 
             result = board.GetLaserValue(laser) / 10;
+
+            board.SelectLaser(false,laser);
 
             return result;
         }
@@ -233,9 +237,15 @@ namespace at_work_abidar_sbu.HardwareAPI
                 dynamixel.LasersPointSides();
             }
 
+            Thread.Sleep(400);
+            board.SelectLaser(true, CentralBoard.Laser.Left);
+            board.SelectLaser(true, CentralBoard.Laser.Right);
             Thread.Sleep(1000);
 
             Tuple<float, float> res = new Tuple<float, float>(board.GetLaserValue(CentralBoard.Laser.Left) / 10, board.GetLaserValue(CentralBoard.Laser.Right) / 10);
+
+            board.SelectLaser(false, CentralBoard.Laser.Left);
+            board.SelectLaser(false, CentralBoard.Laser.Right);
 
             return res;
         }
