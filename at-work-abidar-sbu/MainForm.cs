@@ -157,6 +157,8 @@ namespace at_work_abidar_sbu
         {
             route = new RoutePlanner(null,map);
             robot = route.RobotPositionFromLasers();
+            Console.WriteLine("Robot: {0} {1}",robot.x,robot.y);
+            Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
             Render();
         }
     }
