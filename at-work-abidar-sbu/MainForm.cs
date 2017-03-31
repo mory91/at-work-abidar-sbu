@@ -19,6 +19,7 @@ namespace at_work_abidar_sbu
 {
     public partial class MainForm : Form
     {
+        Arm arm;
 
         public MainForm()
         {

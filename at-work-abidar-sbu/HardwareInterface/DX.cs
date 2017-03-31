@@ -67,13 +67,15 @@ namespace at_work_abidar_sbu.HardwareInterface
             }
 
             SetSpeed(Actuator.ArmPlate, 50);
+            SetSpeed(Actuator.ArmMiddle1, 50);
+            SetSpeed(Actuator.ArmMiddle2, 50);
             SetSpeed(Actuator.Gripper1, 300);
             SetSpeed(Actuator.Gripper2, 300);
             SetSpeed(Actuator.LeftLaser, 1000);
             SetSpeed(Actuator.RightLaser, 1000);
 
-            SetTorqueLimit(Actuator.Gripper1, 250);
-            SetTorqueLimit(Actuator.Gripper2, 250);
+            SetTorqueLimit(Actuator.Gripper1, 300);
+            SetTorqueLimit(Actuator.Gripper2, 300);
 
             
         }
@@ -113,7 +115,7 @@ namespace at_work_abidar_sbu.HardwareInterface
             ushort CurrentPosition = 0;
             CurrentPosition = dynamixel.read2ByteTxRx(portHandle, 1, (byte)act, (ushort)Instructions.PresentPosition);
             dynamixel.write2ByteTxRx(portHandle, 1, (byte)act, (ushort)Instructions.GoalPosition, position);
-            while (Math.Abs(CurrentPosition - position) > 100)
+            while (Math.Abs(CurrentPosition - position) > 35)
             {
                 CurrentPosition = dynamixel.read2ByteTxRx(portHandle, 1, (byte)act, (ushort)Instructions.PresentPosition);
             }
