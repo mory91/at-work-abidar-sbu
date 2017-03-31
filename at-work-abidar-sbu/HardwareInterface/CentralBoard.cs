@@ -247,6 +247,22 @@ namespace at_work_abidar_sbu.HardwareInterface
             if(!running)
             {
                 running = true;
+                toSend[1] = 0x03;
+                toSend[2] = 0x00;
+                send();                                     //Tof, Hamash Tofe
+                send();
+                send();
+                send();
+                send();
+                send();
+                toSend[1] = 0x00;
+                toSend[2] = 0x00;
+                send();
+                send();
+                send();
+                send();
+                send();
+                send();
                 DataReceiver = new Thread(new ThreadStart(FetchData));
                 DataReceiver.Name = "CentralBoardDataReceiver";
                 DataReceiver.Start();
