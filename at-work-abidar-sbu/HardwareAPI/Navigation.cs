@@ -215,11 +215,29 @@ namespace at_work_abidar_sbu.HardwareAPI
                     break;
             }
 
-            Thread.Sleep(2000);                  //Let Laser update value
+            Thread.Sleep(1000);                  //Let Laser update value
 
             result = board.GetLaserValue(laser) / 10;
 
             return result;
+        }
+
+        public Tuple<float, float> GetDistanceSync(Orientation or)
+        {
+            if (or == Orientation.Front)
+            {
+                dynamixel.LasersPointForward();
+            }
+            else
+            {
+                dynamixel.LasersPointSides();
+            }
+
+            Thread.Sleep(1000);
+
+            Tuple<float, float> res = new Tuple<float, float>(board.GetLaserValue(CentralBoard.Laser.Left) / 10, board.GetLaserValue(CentralBoard.Laser.Right) / 10);
+
+            return res;
         }
 
     }
