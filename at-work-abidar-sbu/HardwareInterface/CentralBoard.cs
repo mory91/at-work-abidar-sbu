@@ -46,6 +46,8 @@ namespace at_work_abidar_sbu.HardwareInterface
         private bool[] BottomSensorValue = new bool[2];
         private ushort[] LaserValue = new ushort[2];
         private bool[] LaserError = new bool[2];
+        private bool LeftLaserOn;
+        private bool RightLaserOn;
         private bool running;
         private IR currentIr = IR.None;
         private object readLock = new object();
@@ -121,6 +123,10 @@ namespace at_work_abidar_sbu.HardwareInterface
                 {
                     LaserError[0] = false;
                     LaserValue[0] = (ushort)((packetBody[5] << 8) | packetBody[4]);
+                    if(LaserValue[0] == 0 && RightLaserOn)
+                    {
+                        SelectLaser(true, Laser.Right);
+                    }
                 }
 
                 if (packetBody[6] == 0xFE && packetBody[7] == 0xFE)
@@ -132,6 +138,10 @@ namespace at_work_abidar_sbu.HardwareInterface
                 {
                     LaserError[1] = false;
                     LaserValue[1] = (ushort)((packetBody[7] << 8) | packetBody[6]);
+                    if (LaserValue[1] == 0 && LeftLaserOn)
+                    {
+                        SelectLaser(true, Laser.Left);
+                    }
                 }
                 Monitor.Exit(readLock);
             }
@@ -215,10 +225,14 @@ namespace at_work_abidar_sbu.HardwareInterface
             if(PowerOn)
             {
                 toSend[1] = (byte)(toSend[1] | (int)Math.Pow(2, (select == Laser.Left ? 1 : 0)));
+                LeftLaserOn = (select == Laser.Left ? true : false);
+                RightLaserOn = (select == Laser.Right ? true : false);
             }
             else
             {
                 toSend[1] = (byte)(toSend[1] & (~(int)Math.Pow(2, (select == Laser.Left ? 1 : 0))));
+                LeftLaserOn = (select == Laser.Left ? false : true);
+                RightLaserOn = (select == Laser.Right ? false : true);
             }
             send();
             send();
@@ -233,6 +247,22 @@ namespace at_work_abidar_sbu.HardwareInterface
             if(!running)
             {
                 running = true;
+                toSend[1] = 0x03;
+                toSend[2] = 0x00;
+                send();                                     //Tof, Hamash Tofe
+                send();
+                send();
+                send();
+                send();
+                send();
+                toSend[1] = 0x00;
+                toSend[2] = 0x00;
+                send();
+                send();
+                send();
+                send();
+                send();
+                send();
                 DataReceiver = new Thread(new ThreadStart(FetchData));
                 DataReceiver.Name = "CentralBoardDataReceiver";
                 DataReceiver.Start();
