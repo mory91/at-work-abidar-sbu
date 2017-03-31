@@ -46,7 +46,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(638, 442);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-          //  this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // createStage
             // 
@@ -131,7 +131,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "MapBuilderForm";
             this.Text = "MapBuilder";
-          //  this.Load += new System.EventHandler(this.MapBuilderForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 

@@ -129,6 +129,7 @@
             this.Controls.Add(this.X1TextBox);
             this.Name = "CreateWallForm";
             this.Text = "Create Wall";
+            this.Load += new System.EventHandler(this.CreateWallForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

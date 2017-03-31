@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
@@ -8,14 +9,14 @@ using at_work_abidar_sbu.HardwareInterface;
 
 namespace at_work_abidar_sbu.HardwareAPI
 {
-    enum Orientation
+    public enum Orientation
     {
         Front,
         Left,
         Right
     }
 
-    class Navigation
+    public class Navigation
     {
         CentralBoard board;
         MotorControl motor;
@@ -29,8 +30,23 @@ namespace at_work_abidar_sbu.HardwareAPI
         MotorControl.Motors encoderToWatch;
         
         private byte Speed;
-                
-        public Navigation()
+        private static Navigation instance;
+
+        public static Navigation i
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Navigation();
+                    instance.Initialize();
+                }
+                    
+                return instance;
+            }
+        }
+
+        private Navigation()
         {
             board = new CentralBoard();
             motor = new MotorControl();
@@ -165,11 +181,11 @@ namespace at_work_abidar_sbu.HardwareAPI
                     switch(laser)
                     {
                         case CentralBoard.Laser.Left:
-                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(60));
+                            dynamixel.SetPositioinWithoutTof(Actuator.LeftLaser, 208);
                             break;
 
                         case CentralBoard.Laser.Right:
-                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(240));
+                            dynamixel.SetPositioinWithoutTof(Actuator.RightLaser, 820);
                             break;
                     }
                     break;
@@ -177,11 +193,11 @@ namespace at_work_abidar_sbu.HardwareAPI
                     switch (laser)
                     {
                         case CentralBoard.Laser.Left:
-                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(150));
+                            dynamixel.SetPositioinWithoutTof(Actuator.LeftLaser, 511);
                             break;
 
                         case CentralBoard.Laser.Right:
-                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(150));
+                            dynamixel.SetPositioinWithoutTof(Actuator.RightLaser, 511);
                             break;
                     }
                     break;
@@ -189,17 +205,17 @@ namespace at_work_abidar_sbu.HardwareAPI
                     switch (laser)
                     {
                         case CentralBoard.Laser.Left:
-                            dynamixel.SetPosition(Actuator.LeftLaser, DX.FrontAngleConverter(150));
+                            dynamixel.SetPositioinWithoutTof(Actuator.LeftLaser, 511);
                             break;
 
                         case CentralBoard.Laser.Right:
-                            dynamixel.SetPosition(Actuator.RightLaser, DX.FrontAngleConverter(150));
+                            dynamixel.SetPositioinWithoutTof(Actuator.RightLaser, 511);
                             break;
                     }
                     break;
             }
 
-            Thread.Sleep(600);                  //Let Laser update value
+            Thread.Sleep(2000);                  //Let Laser update value
 
             result = board.GetLaserValue(laser) / 10;
 

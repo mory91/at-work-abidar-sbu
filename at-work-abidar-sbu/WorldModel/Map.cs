@@ -35,9 +35,6 @@ namespace at_work_abidar_sbu
             var settings = new JsonSerializerSettings();
             settings.TypeNameHandling = TypeNameHandling.Objects;
             Map map = JsonConvert.DeserializeObject<Map>(json, settings);
-            MapBuilderForm mp = new MapBuilderForm(map);
-            mp.Show();
-            sr.Close();
             return map;
         }
     }

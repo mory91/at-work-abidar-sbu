@@ -7,7 +7,7 @@ using at_work_abidar_sbu.AI.Navigation;
 
 namespace at_work_abidar_sbu
 {
-    class PathShape// : Ob
+    public class PathShape// : Ob
     {
         public string name { get; set; }
         public List<Point> path { get; set; }
