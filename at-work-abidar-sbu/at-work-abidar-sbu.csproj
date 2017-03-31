@@ -155,9 +155,11 @@
   <ItemGroup>
     <Compile Include="AI\Navigation\PathFinder.cs" />
     <Compile Include="AI\Navigation\Point.cs" />
+    <Compile Include="AI\Planning\RoutePlanner.cs" />
+    <Compile Include="GraphicUtils\Renderer.cs" />
     <Compile Include="HardwareAPI\Navigation.cs" />
-    <Compile Include="LabelHandler.cs" />
-    <Compile Include="ObjectDetector.cs" />
+    <Compile Include="AI\Learning\LabelHandler.cs" />
+    <Compile Include="AI\Learning\ObjectDetector.cs" />
     <Compile Include="ObjectRecognitionTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -239,12 +241,6 @@
       <DependentUpon>MapBuilderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WorldModel\MapObject.cs" />
-    <Compile Include="PathFinderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PathFinderForm.Designer.cs">
-      <DependentUpon>PathFinderForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="PropertiesForm.cs">
       <SubType>Form</SubType>
@@ -254,7 +250,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyManager.cs" />
-    <Compile Include="QR.cs" />
     <Compile Include="QrCodeTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,9 +257,7 @@
       <DependentUpon>QrCodeTestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PathShape.cs" />
-    <Compile Include="WorldModel\Stage.cs" />
-    <Compile Include="SVMTraining.cs" />
-    <Compile Include="WorldModel\Wall.cs" />
+    <Compile Include="AI\Learning\SVMTraining.cs" />
     <Compile Include="WorldModel\WordObjectType.cs" />
     <EmbeddedResource Include="ObjectRecognitionTestForm.resx">
       <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>
@@ -296,9 +289,6 @@
     <EmbeddedResource Include="MotorControlForm.resx">
       <DependentUpon>MotorControlForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PathFinderForm.resx">
-      <DependentUpon>PathFinderForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="PropertiesForm.resx">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -315,6 +305,9 @@
       <DependentUpon>QrCodeTestForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="config\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config\Hardware.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="OpenTK.dll.config" />

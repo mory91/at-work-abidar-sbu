@@ -10,7 +10,7 @@ namespace at_work_abidar_sbu
     public class MapObject
     {
 
-        public string Name { get;  }
+        public string Name { get; set; }
         public WordObjectType Type { get; set; }
 
         public RectangleF Bound {
@@ -20,7 +20,9 @@ namespace at_work_abidar_sbu
             }
         }
 
-
+        public MapObject()
+        {
+        }
 
         public MapObject(WordObjectType type,string name ,double x,double y,int width,int height)
         {
@@ -40,7 +42,7 @@ namespace at_work_abidar_sbu
 
         public override string ToString()
         {
-            return Type + Name;
+            return Type + " "+Name;
         }
 
         public double X { get; set; }

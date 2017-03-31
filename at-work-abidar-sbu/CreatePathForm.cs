@@ -14,23 +14,22 @@ namespace at_work_abidar_sbu
     {
 		public PathFinder pathFinder;
 		public Map map;
-		public double scalex, scaley;
+        PathShape pathShape = new PathShape();
         public CreatePathForm()
         {
             InitializeComponent();
         }
         private void button1_Click(object sender, EventArgs e)
         {
-			pathFinder.setSrc(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text));
-			pathFinder.setDst(Int32.Parse(textBox5.Text), Int32.Parse(textBox4.Text));
-			pathFinder.findPath();
-			PathShape pathShape = new PathShape();
+            pathFinder.LoadInMap(map);
+            pathFinder.setSrc(Int32.Parse(srcXTextBox.Text), Int32.Parse(srcYTextBox.Text));
+			pathFinder.setDst(Int32.Parse(dstXtextBox.Text), Int32.Parse(dstYTextBox.Text));
+            
+            pathFinder.findPath();
 			pathShape.path = pathFinder.getPath();
-			pathShape.start = new Point(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text));
-			pathShape.scalex = scalex;
-			pathShape.scaley = scaley;
-		//	map.obstacles.Add(pathShape);
-			this.Close();
+			pathShape.start = new Point(Int32.Parse(srcXTextBox.Text), Int32.Parse(srcYTextBox.Text));
+            //	map.obstacles.Add(pathShape);
+			Close();
         }
     }
 }

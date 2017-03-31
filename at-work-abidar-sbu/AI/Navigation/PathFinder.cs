@@ -8,9 +8,14 @@ namespace at_work_abidar_sbu.AI.Navigation
 {
     public class PathFinder
     {
-        const int MAP_WIDTH = 800; //x, cm
-        const int MAP_HEIGHT = 600; //y, cm
-        const int ROBOT_SIZE = 46; //cm
+        private int _MapWidth=800;
+        private int _MapHeight=600;
+        private int MapWidth => _MapWidth;
+//x, cm
+
+        int MapHeight => _MapHeight;
+//y, cm
+        const int RobotSize = 46; //cm
         int[,] dis;
         int[,] map;
         int[,] touchWall;
@@ -19,24 +24,30 @@ namespace at_work_abidar_sbu.AI.Navigation
         List<Point> path;
         public PathFinder()
         {
+            SetUp();
+        }
+
+        private void SetUp()
+        {
             path = new List<Point>();
-            dis = new int[MAP_WIDTH + 10, MAP_HEIGHT + 10];
-            map = new int[MAP_WIDTH + 10, MAP_HEIGHT + 10];
-            touchWall = new int[MAP_WIDTH + 10, MAP_HEIGHT + 10];
-            nxt = new Point[MAP_WIDTH + 10, MAP_HEIGHT + 10];
+            dis = new int[MapWidth + 10, MapHeight + 10];
+            map = new int[MapWidth + 10, MapHeight + 10];
+            touchWall = new int[MapWidth + 10, MapHeight + 10];
+            nxt = new Point[MapWidth + 10, MapHeight + 10];
             setSrc(0, 0);
             setDst(0, 0);
-            for (int i = 0; i < MAP_WIDTH; i++)
-                for (int j = 0; j < MAP_HEIGHT; j++)
+            for (int i = 0; i < MapWidth; i++)
+                for (int j = 0; j < MapHeight; j++)
                 {
                     map[i, j] = 0;
                     dis[i, j] = -1;
                     touchWall[i, j] = 0;
                 }
-            for (int i = 0; i < MAP_WIDTH; i++)
-                for (int j = 0; j < MAP_HEIGHT; j++)
+            for (int i = 0; i < MapWidth; i++)
+                for (int j = 0; j < MapHeight; j++)
                     nxt[i, j] = new Point(-1, -1);
         }
+
         public void setSrc(int x, int y)
         {
             if (isInMap(x, y))
@@ -82,6 +93,7 @@ namespace at_work_abidar_sbu.AI.Navigation
             }
             path.Reverse();
         }
+
         public void addObstacle(int x, int y, int w, int h)
         {
             for (int i = x; i < x + w; i++)
@@ -90,8 +102,8 @@ namespace at_work_abidar_sbu.AI.Navigation
                     if (!isInMap(i, j))
                         continue;
                     map[i, j] = 1; //1 for FULL, 0 for EMPTY
-                    for (int i2 = i - ROBOT_SIZE / 2; i2 <= i + ROBOT_SIZE / 2; i2++)
-                        for (int j2 = j - ROBOT_SIZE / 2; j2 <= j + ROBOT_SIZE / 2; j2++)
+                    for (int i2 = i - RobotSize / 2; i2 <= i + RobotSize / 2; i2++)
+                        for (int j2 = j - RobotSize / 2; j2 <= j + RobotSize / 2; j2++)
                             if (isInMap(i2, j2))
                                 touchWall[i2, j2] = 1;
                 }
@@ -100,15 +112,29 @@ namespace at_work_abidar_sbu.AI.Navigation
         {
             return src;
         }
+
+        public void LoadInMap(Map map)
+        {
+            _MapWidth = (int)map.width;
+            _MapHeight = (int)map.height;
+            SetUp();
+            foreach (MapObject o in map.obstacles)
+            {
+                addObstacle((int) o.X, (int)o.Y, (int)o.Width, (int)o.Height);
+            }
+           
+
+        }
+
         public Point getDst()
         {
             return dst;
         }
         public bool isInMap(int x, int y)
         {
-            if (x < 0 || x > MAP_WIDTH)
+            if (x < 0 || x > MapWidth)
                 return false;
-            if (y < 0 || y > MAP_HEIGHT)
+            if (y < 0 || y > MapHeight)
                 return false;
             return true;
         }
@@ -116,8 +142,8 @@ namespace at_work_abidar_sbu.AI.Navigation
         {
             if (!isInMap(x, y))
                 return false;
-            for (int i = x - ROBOT_SIZE / 2; i <= x + ROBOT_SIZE / 2; i++)
-                for (int j = y - ROBOT_SIZE / 2; j <= y + ROBOT_SIZE / 2; j++)
+            for (int i = x - RobotSize / 2; i <= x + RobotSize / 2; i++)
+                for (int j = y - RobotSize / 2; j <= y + RobotSize / 2; j++)
                     if (!isInMap(i, j) || map[i, j] != 0) //out of bounds or obstacle
                         return false;
             return true;

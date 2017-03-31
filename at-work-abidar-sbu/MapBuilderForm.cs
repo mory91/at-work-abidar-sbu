@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using at_work_abidar_sbu.AI.Navigation;
+using at_work_abidar_sbu.GraphicUtils;
 using Newtonsoft.Json;
 
 namespace at_work_abidar_sbu
@@ -19,7 +20,7 @@ namespace at_work_abidar_sbu
         private double height, width;
         private Map map;
         Bitmap res;
-
+        PathShape path;
         public MapBuilderForm(double x, double y)
         {
             InitializeComponent();
@@ -52,8 +53,7 @@ namespace at_work_abidar_sbu
             height = map.height;
             width = map.width;
             DrawMap();
-            listBox1.DataSource = null;
-            listBox1.DataSource = map.obstacles;
+            ResetList();
         }
 
         private void createStage_Click(object sender, EventArgs e)
@@ -64,8 +64,7 @@ namespace at_work_abidar_sbu
             {
                 map = cs.map;
                 DrawMap();
-                listBox1.DataSource = null;
-                listBox1.DataSource = map.obstacles;
+                ResetList();
             };
             cs.Show();
 
@@ -88,43 +87,11 @@ namespace at_work_abidar_sbu
 
         private void DrawMap()
         {
-            res = new Bitmap((int)pictureBox1.Width, (int)pictureBox1.Height);
-            scalex = res.Width / width;
-            scaley = res.Height / height;
-            using (Graphics gr = Graphics.FromImage(res))
-            {
-                gr.FillRectangle(
-                    Brushes.White, 0, 0, res.Width, res.Height);
-                foreach (MapObject o in map.obstacles)
-                {
-                    Rectangle rect = new Rectangle((int)(o.X * scalex), (int)(o.Y * scaley), (int)(o.Width * scalex), (int)(o.Height * scaley));
-                    switch (o.Type)
-                    {
-                       
-                        case WordObjectType.Stage:
-                            var name = o.Name;
-                            if (name[0] == 'S')
-                                gr.FillRectangle(Brushes.Red, rect);
-                            if (name[0] == 'T')
-                                gr.FillRectangle(Brushes.Blue, rect);
-                            if (name[0] == 'U')
-                                gr.FillRectangle(Brushes.Yellow, rect);
-                            if (name[0] == 'D')
-                                gr.FillRectangle(Brushes.Orange, rect);
-                            break;
-                        case WordObjectType.Wall:
-                                gr.FillRectangle(Brushes.Black, rect);
-                            break;
-                        case WordObjectType.QR:
-                                gr.FillRectangle(Brushes.Gray,rect);
-                            break;
-                        default:
-                            gr.FillRectangle(Brushes.Crimson, rect);
-                            break;
-                    }
-                }
-            }
-            pictureBox1.Image = res;
+            Renderer renderer = new Renderer();
+            pictureBox1.Image = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
+                .DrawMap(map)
+                .DrawPath(path, map)
+                .GetBitmap(); ;
 
         }
 
@@ -138,38 +105,45 @@ namespace at_work_abidar_sbu
             {
                 map = qr.map;
                 DrawMap();
-                listBox1.DataSource = null;
-                listBox1.DataSource = map.obstacles;
+                ResetList();
             };
             qr.Show();
         }
 
-		
-		private void btnPath_Click(object sender, EventArgs e)
+        private void ResetList()
+        {
+            listBox1.DataSource = null;
+            listBox1.DataSource = map.obstacles;
+        }
+
+
+        private void btnPath_Click(object sender, EventArgs e)
 		{
 			CreatePathForm createPathForm = new CreatePathForm();
 			createPathForm.pathFinder = pathFinder;
 			createPathForm.map = map;
-			createPathForm.scalex = scalex;
-			createPathForm.scaley = scaley;
 			createPathForm.FormClosing += (o, form) =>
 			{
 				map = createPathForm.map;
+			    path = new PathShape();
+                
+                path.path = pathFinder.getPath();
                 DrawMap();
-                listBox1.DataSource = null;
-				listBox1.DataSource = map.obstacles;
-			};
+                ResetList();
+            };
 			createPathForm.Show();
 		}
 
-        
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
 
         private void delete_Click(object sender, EventArgs e)
         {
             map.obstacles.RemoveAt(listBox1.SelectedIndex);
             DrawMap();
-            listBox1.DataSource = null;
-            listBox1.DataSource = map.obstacles;
+            ResetList();
         }
 
 		private void save_Click(object sender, EventArgs e)

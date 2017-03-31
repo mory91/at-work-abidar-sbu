@@ -8,7 +8,7 @@ using at_work_abidar_sbu.HardwareInterface;
 
 namespace at_work_abidar_sbu.HardwareAPI
 {
-    enum Orientation
+    public enum Orientation
     {
         Front,
         Rear,
@@ -16,7 +16,7 @@ namespace at_work_abidar_sbu.HardwareAPI
         Right
     }
 
-    class Navigation
+    public class Navigation
     {
         CentralBoard board;
         MotorControl motor;
@@ -30,8 +30,19 @@ namespace at_work_abidar_sbu.HardwareAPI
         MotorControl.Motors encoderToWatch;
         
         private byte Speed;
-                
-        public Navigation()
+        private static Navigation instance;
+
+        public static Navigation i
+        {
+            get
+            {
+                if(instance == null)
+                    instance = new Navigation();
+                return instance;
+            }
+        }
+
+        private Navigation()
         {
             board = new CentralBoard();
             motor = new MotorControl();

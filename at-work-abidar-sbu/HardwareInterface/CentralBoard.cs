@@ -8,7 +8,7 @@ using FTD2XX_NET;
 
 namespace at_work_abidar_sbu.HardwareInterface
 {
-    class CentralBoard
+    public class CentralBoard
     {
         public enum LED
         {
