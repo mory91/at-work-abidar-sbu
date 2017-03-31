@@ -19,6 +19,7 @@ namespace at_work_abidar_sbu
 {
     public partial class MainForm : Form
     {
+
         public MainForm()
         {
             InitializeComponent();
@@ -106,7 +107,7 @@ namespace at_work_abidar_sbu
                 //rallyPoint.RemoveAt(0);
 
               
-                nav.Initialize();
+              //  nav.Initialize();
                 nav.SetSpeed(10);
                 moved = true;
                 Timer1.Enabled = true;

@@ -155,9 +155,11 @@
   <ItemGroup>
     <Compile Include="AI\Navigation\PathFinder.cs" />
     <Compile Include="AI\Navigation\Point.cs" />
+    <Compile Include="HardwareAPI\Arm.cs" />
     <Compile Include="AI\Planning\RoutePlanner.cs" />
     <Compile Include="GraphicUtils\Renderer.cs" />
     <Compile Include="HardwareAPI\Navigation.cs" />
+    <Compile Include="Listener.cs" />
     <Compile Include="AI\Learning\LabelHandler.cs" />
     <Compile Include="AI\Learning\ObjectDetector.cs" />
     <Compile Include="ObjectRecognitionTestForm.cs">
