@@ -118,7 +118,7 @@ namespace at_work_abidar_sbu
         }
 
         private bool moved = false;
-        private int R = 20;
+        private int R = 32;
         private void Timer1_Tick(object sender, EventArgs e)
         {
 

@@ -167,6 +167,8 @@ namespace at_work_abidar_sbu.AI.Navigation
 			for (int i = rectX; i <= rectX + rectW; i++)
 				for (int j = rectY; j <= rectY + rectH; j++)
 				{
+					if (!isInMap(i, j) || touchWall[i, j] != 0)
+						continue;
 					double sum = 0;
 					for (int k = 0; k < 4; k++)
 					{
