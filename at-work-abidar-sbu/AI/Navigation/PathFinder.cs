@@ -37,6 +37,7 @@ namespace at_work_abidar_sbu.AI.Navigation
             map = new int[MapWidth + 10, MapHeight + 10];
             touchWall = new int[MapWidth + 10, MapHeight + 10];
             nxt = new Point[MapWidth + 10, MapHeight + 10];
+            obstacleDistance = new int[MapWidth + 10, MapHeight + 10,4];
             setSrc(0, 0);
             setDst(0, 0);
             for (int i = 0; i <= MapWidth; i++)
@@ -51,6 +52,8 @@ namespace at_work_abidar_sbu.AI.Navigation
 			for (int i = 0; i <= MapWidth; i++)
                 for (int j = 0; j <= MapHeight; j++)
                     nxt[i, j] = new Point(-1, -1);
+
+           
         }
 
         public void setSrc(int x, int y)
@@ -127,6 +130,7 @@ namespace at_work_abidar_sbu.AI.Navigation
             {
                 addObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height);
             }
+            calcObstacleDistances();
         }
         public Point getDst()
         {
@@ -167,8 +171,8 @@ namespace at_work_abidar_sbu.AI.Navigation
 					for (int k = 0; k < 4; k++)
 					{
 						int k2 = (k + orientation) % 4;
-						if (obstacleDistance[k2, i, j] != -1 && lasers[k] != -1)
-							sum += Math.Abs(lasers[k] - obstacleDistance[k2, i, j]);
+						if (obstacleDistance[i, j,k2] != -1 && lasers[k] != -1)
+							sum += Math.Abs(lasers[k] - obstacleDistance[ i, j,k2]);
 					}
 					if (sum < minSum)
 					{
