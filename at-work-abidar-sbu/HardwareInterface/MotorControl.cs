@@ -89,6 +89,8 @@ namespace at_work_abidar_sbu.HardwareInterface
 
             if (frontFTDI.IsOpen)
                 frontFTDI.Close();
+
+            running = false;
         }
 
         private void WriteSpeedToController(Motors mot, byte value)

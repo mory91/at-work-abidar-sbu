@@ -50,7 +50,6 @@ namespace at_work_abidar_sbu.HardwareInterface
         private bool RightLaserOn;
         private bool running;
         private IR currentIr = IR.None;
-        private object readLock = new object();
 
         public CentralBoard()
         {
@@ -72,6 +71,8 @@ namespace at_work_abidar_sbu.HardwareInterface
         {
             if(centralBoardCom.IsOpen)
                 centralBoardCom.Close();
+
+            running = false;
         }
 
         private void FetchData()
@@ -92,8 +93,8 @@ namespace at_work_abidar_sbu.HardwareInterface
 
             if(packetStart[0] == 0xff && packetStart[1] == 0xff)    //Start of packet detected
             {
-                Monitor.Enter(readLock);
                 centralBoardCom.Read(packetBody, 10, ref read);
+                Monitor.Enter(readLock);
 
                 int sum = 0;
 
@@ -105,37 +106,61 @@ namespace at_work_abidar_sbu.HardwareInterface
 
                 byte IRInfo = packetBody[8];
 
+                Monitor.Enter(BottomSensorValue);
                 BottomSensorValue[0] = ((IRInfo & 1) == 1 ? true : false);
                 BottomSensorValue[1] = (((IRInfo >> 1) & 1) == 1 ? true : false);
+                Monitor.Exit(BottomSensorValue);
 
                 int IRChannel0Num = (IRInfo >> 2) & 7;
                 int IRChannel1Num = (IRInfo >> 5) & 7;
 
+                Monitor.Enter(IRSensorValue);
                 IRSensorValue[IRChannel0Num] = (ushort)((packetBody[1] << 8) | packetBody[0]);
                 IRSensorValue[IRChannel1Num] = (ushort)((packetBody[3] << 8) | packetBody[2]);
+                Monitor.Exit(IRSensorValue);
 
                 if (packetBody[4] == 0xFE && packetBody[5] == 0xFE)
                 {
+                    Monitor.Enter(LaserError);
                     LaserError[0] = true;
+                    Monitor.Exit(LaserError);
+
+                    Monitor.Enter(LaserValue);
                     LaserValue[0] = 0;
+                    Monitor.Exit(LaserValue);
                 }
                 else
                 {
+                    Monitor.Enter(LaserError);
                     LaserError[0] = false;
+                    Monitor.Exit(LaserError);
+
+                    Monitor.Enter(LaserValue);
                     LaserValue[0] = (ushort)((packetBody[5] << 8) | packetBody[4]);
+                    Monitor.Exit(LaserValue);
                 }
 
                 if (packetBody[6] == 0xFE && packetBody[7] == 0xFE)
                 {
+                    Monitor.Enter(LaserError);
                     LaserError[1] = true;
+                    Monitor.Exit(LaserError);
+
+                    Monitor.Enter(LaserValue);
                     LaserValue[1] = 0;
+                    Monitor.Exit(LaserValue);
                 }
                 else
                 {
+                    Monitor.Enter(LaserError);
                     LaserError[1] = false;
+                    Monitor.Exit(LaserError);
+
+                    Monitor.Enter(LaserValue);
                     LaserValue[1] = (ushort)((packetBody[7] << 8) | packetBody[6]);
+                    Monitor.Exit(LaserValue);
                 }
-                Monitor.Exit(readLock);
+                
             }
             else
             {
@@ -239,22 +264,6 @@ namespace at_work_abidar_sbu.HardwareInterface
             if(!running)
             {
                 running = true;
-                toSend[1] = 0x03;
-                toSend[2] = 0x00;
-                send();                                     //Tof, Hamash Tofe
-                send();
-                send();
-                send();
-                send();
-                send();
-                toSend[1] = 0x00;
-                toSend[2] = 0x00;
-                send();
-                send();
-                send();
-                send();
-                send();
-                send();
                 DataReceiver = new Thread(new ThreadStart(FetchData));
                 DataReceiver.Name = "CentralBoardDataReceiver";
                 DataReceiver.Start();
@@ -284,17 +293,17 @@ namespace at_work_abidar_sbu.HardwareInterface
 
         public ushort GetLaserValue(Laser laser)
         {
-            Monitor.Enter(readLock);
+            Monitor.Enter(LaserValue);
             var res = LaserValue[(int)laser];
-            Monitor.Exit(readLock);
+            Monitor.Exit(LaserValue);
             return res;
         }
 
         public bool DoesLaserHaveError(Laser laser)
         {
-            Monitor.Enter(readLock);
+            Monitor.Enter(LaserError);
             var res = LaserError[(int)laser];
-            Monitor.Exit(readLock);
+            Monitor.Exit(LaserError);
             return res;
         }
 
@@ -305,7 +314,7 @@ namespace at_work_abidar_sbu.HardwareInterface
 
             Tuple<ushort, ushort> result;
 
-            Monitor.Enter(readLock);
+            Monitor.Enter(IRSensorValue);
             switch(currentIr)
             {
                 case IR.Right:
@@ -324,16 +333,16 @@ namespace at_work_abidar_sbu.HardwareInterface
                     result = null;
                     break;
             }
-            Monitor.Exit(readLock);
+            Monitor.Exit(IRSensorValue);
             
             return result;
         }
 
         public bool GetBottomValue(BottomSensor bottom)
         {
-            Monitor.Enter(readLock);
+            Monitor.Enter(BottomSensorValue);
             var res = BottomSensorValue[(int)bottom];
-            Monitor.Exit(readLock);
+            Monitor.Exit(BottomSensorValue);
             return res;
         }
 
