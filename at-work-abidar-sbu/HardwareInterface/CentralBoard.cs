@@ -72,6 +72,8 @@ namespace at_work_abidar_sbu.HardwareInterface
         {
             if(centralBoardCom.IsOpen)
                 centralBoardCom.Close();
+
+            running = false;
         }
 
         private void FetchData()
@@ -92,8 +94,8 @@ namespace at_work_abidar_sbu.HardwareInterface
 
             if(packetStart[0] == 0xff && packetStart[1] == 0xff)    //Start of packet detected
             {
-                Monitor.Enter(readLock);
                 centralBoardCom.Read(packetBody, 10, ref read);
+                Monitor.Enter(readLock);
 
                 int sum = 0;
 
@@ -239,22 +241,6 @@ namespace at_work_abidar_sbu.HardwareInterface
             if(!running)
             {
                 running = true;
-                toSend[1] = 0x03;
-                toSend[2] = 0x00;
-                send();                                     //Tof, Hamash Tofe
-                send();
-                send();
-                send();
-                send();
-                send();
-                toSend[1] = 0x00;
-                toSend[2] = 0x00;
-                send();
-                send();
-                send();
-                send();
-                send();
-                send();
                 DataReceiver = new Thread(new ThreadStart(FetchData));
                 DataReceiver.Name = "CentralBoardDataReceiver";
                 DataReceiver.Start();
