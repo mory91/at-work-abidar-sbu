@@ -97,12 +97,13 @@ namespace at_work_abidar_sbu
             CreatePathForm createPathForm = new CreatePathForm();
             createPathForm.pathFinder =new PathFinder();
             createPathForm.map = map;
+            nav = Navigation.i;
             createPathForm.FormClosing += (o, form) =>
             {
                 map = createPathForm.map;
                 path = new PathShape();
                 path.path = createPathForm.pathFinder.getPath();
-                route = new RoutePlanner(path,map);
+                route = new RoutePlanner(path,map,createPathForm.pathFinder);
                 rallyPoint = route.NormalizePath();
                 robot = rallyPoint[0] ?? new Point(0, 0);
                 //rallyPoint.RemoveAt(0);
@@ -117,6 +118,7 @@ namespace at_work_abidar_sbu
         }
 
         private bool moved = false;
+        private int R = 20;
         private void Timer1_Tick(object sender, EventArgs e)
         {
 
@@ -129,8 +131,24 @@ namespace at_work_abidar_sbu
                     moved = false;
                     if (rallyPoint.Count > 0)
                     {
-                        robot = rallyPoint[0];
+
+                        
+                        var robotl = rallyPoint[0];
+
+
+                        robot = route.RobotPositionFromLasers();
+                        Console.WriteLine("Robot: {0} {1}", robot.x, robot.y);
+                        Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
+                        Render();
+
+                        route.pathFinder.setSrc((int) (robotl.x-R/2),(int) (robotl.y-R/2),R,R,0,route.LL,route.LF,route.RR,route.RF);
+                        path = new PathShape();
+                        path.path = route.pathFinder.getPath();
+                        route.path = path;
+                        rallyPoint = route.NormalizePath();
                         rallyPoint.RemoveAt(0);
+
+
                         if (rallyPoint.Count > 0)
                         {
                             double dx = rallyPoint[0].x - robot.x;
@@ -156,7 +174,7 @@ namespace at_work_abidar_sbu
 
         private void button1_Click(object sender, EventArgs e)
         {
-            route = new RoutePlanner(null,map);
+            route = new RoutePlanner(null,map,null);
             robot = route.RobotPositionFromLasers();
             Console.WriteLine("Robot: {0} {1}",robot.x,robot.y);
             Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);

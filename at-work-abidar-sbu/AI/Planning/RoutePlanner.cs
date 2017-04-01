@@ -12,15 +12,19 @@ namespace at_work_abidar_sbu.AI.Planning
 {
     public class RoutePlanner
     {
-        private PathShape path;
+        public PathShape path { get; set; }
         private List<Point> rallyPoints = new List<Point>();
         private HardwareAPI.Navigation nav;
         private Map map;
-        public RoutePlanner(PathShape path, Map map)
+        public PathFinder pathFinder { get; set; }
+
+        public RoutePlanner(PathShape path, Map map,PathFinder pathFinder)
         {
             this.path = path;
             nav = HardwareAPI.Navigation.i;
             this.map = map;
+            this.pathFinder = pathFinder;
+
         }
 
         public List<Point> NormalizePath()
@@ -66,8 +70,8 @@ namespace at_work_abidar_sbu.AI.Planning
         {
             Point c = new Point();
             ReadLaserValues();
-            c.x = RR + 22-10;
-            c.y = map.height-(RF + 22-4);
+            c.x = RR ;
+            c.y = map.height-(RF +10);
             return c;
         }
     }
