@@ -11,13 +11,13 @@ namespace at_work_abidar_sbu.AI.Navigation
         private int _MapWidth=800;
         private int _MapHeight=600;
 		private int[] _dy = {+1, 0, -1, 0}; //Front, Left, Rear, Right
-		private int[] _dx = {0, -1, 0, +1};
+		private int[] _dx = {0, +1, 0, -1};
         private int MapWidth => _MapWidth;
 //x, cm
 
         int MapHeight => _MapHeight;
 //y, cm
-        const int RobotSize = 48; //cm
+        const int RobotSize = 55; //cm
         int[,] dis;
         int[,] map;
         int[,] touchWall;
@@ -68,6 +68,17 @@ namespace at_work_abidar_sbu.AI.Navigation
         }
         public void findPath()
         {
+            for (int i = 0; i <= MapWidth; i++)
+                for (int j = 0; j <= MapHeight; j++)
+                    nxt[i, j] = new Point(-1, -1);
+            for (int i = 0; i <= MapWidth; i++)
+                for (int j = 0; j <= MapHeight; j++)
+                {
+                 //   map[i, j] = 0;
+                    dis[i, j] = -1;
+                  //  touchWall[i, j] = 0;
+                }
+
             path.Clear();
             List<Point> q = new List<Point>();
             q.Add(src);
@@ -102,14 +113,17 @@ namespace at_work_abidar_sbu.AI.Navigation
             path.Reverse();
         }
 
-        public void addObstacle(int x, int y, int w, int h)
+        public void addObstacle(int x, int y, int w, int h, bool isWall)
         {
+            int tmp = 1;
+            if (isWall)
+                tmp = 2;
             for (int i = x; i < x + w; i++)
                 for (int j = y; j < y + h; j++)
                 {
                     if (!isInMap(i, j))
                         continue;
-                    map[i, j] = 1; //1 for FULL, 0 for EMPTY
+                    map[i, j] = tmp; //1 for FULL, 0 for EMPTY
                     for (int i2 = i - RobotSize / 2; i2 <= i + RobotSize / 2; i2++)
                         for (int j2 = j - RobotSize / 2; j2 <= j + RobotSize / 2; j2++)
                             if (isInMap(i2, j2))
@@ -128,7 +142,7 @@ namespace at_work_abidar_sbu.AI.Navigation
             SetUp();
             foreach (MapObject o in map.obstacles)
             {
-                addObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height);
+                addObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height,o.Type==WordObjectType.Wall);
             }
             calcObstacleDistances();
         }
@@ -173,7 +187,7 @@ namespace at_work_abidar_sbu.AI.Navigation
 					for (int k = 0; k < 4; k++)
 					{
 						int k2 = (k + orientation) % 4;
-						if (obstacleDistance[i, j,k2] != -1 && lasers[k] != -1)
+						if (obstacleDistance[i, j,k2] != -1 && lasers[k] > 0)
 							sum += Math.Abs(lasers[k] - obstacleDistance[i, j, k2]);
 					}
 					if (sum < minSum)
@@ -188,7 +202,7 @@ namespace at_work_abidar_sbu.AI.Navigation
 		}
 		private int calcDis(int x, int y, int orientation)
 		{
-			if (!isInMap(x, y) || map[x, y] != 0)
+			if (!isInMap(x, y) || map[x, y] == 2) //out or wall
 			{
 				if (isInMap(x, y))
 					obstacleDistance[x, y, orientation] = 0;
