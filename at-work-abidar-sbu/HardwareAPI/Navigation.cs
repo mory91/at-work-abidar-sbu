@@ -242,7 +242,7 @@ namespace at_work_abidar_sbu.HardwareAPI
             board.SelectLaser(true, CentralBoard.Laser.Right);
             Thread.Sleep(2000);
 
-            Tuple<float, float> res = new Tuple<float, float>(board.GetLaserValue(CentralBoard.Laser.Right) / 10, board.GetLaserValue(CentralBoard.Laser.Left) / 10);
+            Tuple<float, float> res = new Tuple<float, float>(board.GetLaserValue(CentralBoard.Laser.Left) / 10, board.GetLaserValue(CentralBoard.Laser.Right) / 10);
 
             board.SelectLaser(false, CentralBoard.Laser.Left);
             board.SelectLaser(false, CentralBoard.Laser.Right);
