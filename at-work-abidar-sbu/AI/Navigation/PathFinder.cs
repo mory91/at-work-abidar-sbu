@@ -10,14 +10,14 @@ namespace at_work_abidar_sbu.AI.Navigation
     {
         private int _MapWidth=800;
         private int _MapHeight=600;
-		private int[] _dx = {+1, 0, -1, 0}; //Front, Left, Rear, Right
-		private int[] _dy = {0, -1, 0, +1};
+		private int[] _dy = {+1, 0, -1, 0}; //Front, Left, Rear, Right
+		private int[] _dx = {0, -1, 0, +1};
         private int MapWidth => _MapWidth;
 //x, cm
 
         int MapHeight => _MapHeight;
 //y, cm
-        const int RobotSize = 46; //cm
+        const int RobotSize = 48; //cm
         int[,] dis;
         int[,] map;
         int[,] touchWall;
@@ -180,25 +180,27 @@ namespace at_work_abidar_sbu.AI.Navigation
 			if (srcX >= rectX && srcY >= rectY && srcX <= rectX + rectW && srcY <= rectY + rectH)
 				setSrc(srcX, srcY);
 		}
+		private int calcDis(int x, int y, int orientation)
+		{
+			if (!isInMap(x, y) || map[x, y] != 0)
+			{
+				if (isInMap(x, y))
+					obstacleDistance[x, y, orientation] = 0;
+				return 0;
+			}
+			if (obstacleDistance[x, y, orientation] != -1)
+				return obstacleDistance[x, y, orientation];
+			int x2 = x + _dx[orientation];
+			int y2 = y + _dy[orientation];
+			obstacleDistance[x, y, orientation] = calcDis(x2, y2, orientation) + 1;
+			return obstacleDistance[x, y, orientation];
+        }
 		public void calcObstacleDistances()
 		{
-			for (int i = 0; i < MapWidth; i++)
-				for (int j = 0; j < MapWidth; j++)
-				{
-					for (int k = 0; k < 4; k++)
-					{
-						for (int l = 0; l <= Math.Max(MapWidth, MapHeight); l++)
-						{
-							int x2 = i + _dx[k] * l;
-							int y2 = j + _dy[k] * l;
-							if (!isInMap(x2, y2) || map[x2, y2] != 0)
-							{
-								obstacleDistance[i, j, k] = l - 1;
-								continue;
-							}
-						}
-					}
-                }
+			for (int k = 0; k < 4; k++)
+				for (int i = 0; i < MapWidth; i++)
+					for (int j = 0; j < MapHeight; j++)
+						calcDis(i, j, k);
 		}
     }
 }
