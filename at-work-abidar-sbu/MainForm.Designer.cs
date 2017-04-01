@@ -55,7 +55,8 @@
             this.testsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(654, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(872, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -66,27 +67,27 @@
             this.mapBuilderToolStripMenuItem,
             this.loadMapMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(44, 24);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // configsToolStripMenuItem
             // 
             this.configsToolStripMenuItem.Name = "configsToolStripMenuItem";
-            this.configsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.configsToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.configsToolStripMenuItem.Text = "Configs";
             this.configsToolStripMenuItem.Click += new System.EventHandler(this.configsToolStripMenuItem_Click);
             // 
             // mapBuilderToolStripMenuItem
             // 
             this.mapBuilderToolStripMenuItem.Name = "mapBuilderToolStripMenuItem";
-            this.mapBuilderToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.mapBuilderToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.mapBuilderToolStripMenuItem.Text = "Map Builder";
             this.mapBuilderToolStripMenuItem.Click += new System.EventHandler(this.mapBuilderToolStripMenuItem_Click);
             // 
             // loadMapMenuItem
             // 
             this.loadMapMenuItem.Name = "loadMapMenuItem";
-            this.loadMapMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.loadMapMenuItem.Size = new System.Drawing.Size(165, 26);
             this.loadMapMenuItem.Text = "Load Map";
             this.loadMapMenuItem.Click += new System.EventHandler(this.loadMapMenuItem_Click);
             // 
@@ -97,35 +98,36 @@
             this.qRTestToolStripMenuItem,
             this.motorTestToolStripMenuItem});
             this.testsToolStripMenuItem.Name = "testsToolStripMenuItem";
-            this.testsToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.testsToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
             this.testsToolStripMenuItem.Text = "Tests";
             // 
             // cameraTestToolStripMenuItem
             // 
             this.cameraTestToolStripMenuItem.Name = "cameraTestToolStripMenuItem";
-            this.cameraTestToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.cameraTestToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.cameraTestToolStripMenuItem.Text = "Camera Test";
             this.cameraTestToolStripMenuItem.Click += new System.EventHandler(this.cameraTestToolStripMenuItem_Click);
             // 
             // qRTestToolStripMenuItem
             // 
             this.qRTestToolStripMenuItem.Name = "qRTestToolStripMenuItem";
-            this.qRTestToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.qRTestToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.qRTestToolStripMenuItem.Text = "QR Test";
             this.qRTestToolStripMenuItem.Click += new System.EventHandler(this.qRTestToolStripMenuItem_Click);
             // 
             // motorTestToolStripMenuItem
             // 
             this.motorTestToolStripMenuItem.Name = "motorTestToolStripMenuItem";
-            this.motorTestToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.motorTestToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.motorTestToolStripMenuItem.Text = "Motor Test";
             this.motorTestToolStripMenuItem.Click += new System.EventHandler(this.motorTestToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(5, 25);
+            this.pictureBox1.Location = new System.Drawing.Point(7, 31);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(638, 442);
+            this.pictureBox1.Size = new System.Drawing.Size(851, 544);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
@@ -135,9 +137,10 @@
             // 
             // navigateBtn
             // 
-            this.navigateBtn.Location = new System.Drawing.Point(12, 473);
+            this.navigateBtn.Location = new System.Drawing.Point(16, 582);
+            this.navigateBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.navigateBtn.Name = "navigateBtn";
-            this.navigateBtn.Size = new System.Drawing.Size(75, 23);
+            this.navigateBtn.Size = new System.Drawing.Size(100, 28);
             this.navigateBtn.TabIndex = 2;
             this.navigateBtn.Text = "Navigate";
             this.navigateBtn.UseVisualStyleBackColor = true;
@@ -150,9 +153,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(104, 472);
+            this.button1.Location = new System.Drawing.Point(139, 581);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(85, 23);
+            this.button1.Size = new System.Drawing.Size(113, 28);
             this.button1.TabIndex = 3;
             this.button1.Text = "RobotPosition";
             this.button1.UseVisualStyleBackColor = true;
@@ -160,14 +164,15 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 503);
+            this.ClientSize = new System.Drawing.Size(872, 619);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.navigateBtn);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
