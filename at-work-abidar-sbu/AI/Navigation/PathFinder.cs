@@ -158,21 +158,21 @@ namespace at_work_abidar_sbu.AI.Navigation
         {
             return path;
         }
-		public void setSrc(int rectX, int rectY, int rectW, int rectH, int orientation, double laserLL, double laserLF, double laserRR, double laserRF)
+		public bool setSrc(int rectX, int rectY, int rectW, int rectH, int orientation, double laserLL, double laserLF, double laserRR, double laserRF)
 		{
 			double[] lasers = {(laserLF + laserRF) / 2.0, laserLL, -1, laserRR};
 			int srcX = 0;
 			int srcY = 0;
-			for (int i = 0; i < MapWidth; i++)
-				for (int j = 0; j < MapHeight; j++)
+			double minSum = 1000 * 1000 * 1000 + 10;
+			for (int i = rectX; i <= rectX + rectW; i++)
+				for (int j = rectY; j <= rectY + rectH; j++)
 				{
 					double sum = 0;
-					double minSum = 1000 * 1000 * 1000 + 10;
 					for (int k = 0; k < 4; k++)
 					{
 						int k2 = (k + orientation) % 4;
 						if (obstacleDistance[i, j,k2] != -1 && lasers[k] != -1)
-							sum += Math.Abs(lasers[k] - obstacleDistance[ i, j,k2]);
+							sum += Math.Abs(lasers[k] - obstacleDistance[i, j, k2]);
 					}
 					if (sum < minSum)
 					{
@@ -181,8 +181,8 @@ namespace at_work_abidar_sbu.AI.Navigation
 						srcY = j;
 					}
 				}
-			if (srcX >= rectX && srcY >= rectY && srcX <= rectX + rectW && srcY <= rectY + rectH)
-				setSrc(srcX, srcY);
+			setSrc(srcX, srcY);
+			return true;
 		}
 		private int calcDis(int x, int y, int orientation)
 		{

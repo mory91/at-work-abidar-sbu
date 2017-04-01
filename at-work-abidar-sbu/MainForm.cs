@@ -141,7 +141,8 @@ namespace at_work_abidar_sbu
                         Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
                         Render();
 
-                        route.pathFinder.setSrc((int) (robotl.x-R/2),(int) (robotl.y-R/2),R,R,0,route.LL,route.LF,route.RR,route.RF);
+						if (route.pathFinder.setSrc((int)(robotl.x - R / 2), (int)(robotl.y - R / 2), R, R, 0, route.LL, route.LF, route.RR, route.RF))
+							route.pathFinder.findPath();
                         path = new PathShape();
                         path.path = route.pathFinder.getPath();
                         route.path = path;
