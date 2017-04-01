@@ -189,5 +189,11 @@ namespace at_work_abidar_sbu
             Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
             Render();
         }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Console.WriteLine("Ending Navigation");
+            Navigation.i.End();
+        }
     }
 }
