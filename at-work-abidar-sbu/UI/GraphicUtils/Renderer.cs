@@ -11,7 +11,7 @@ namespace at_work_abidar_sbu.GraphicUtils
     {
         private Bitmap bitmap;
         private Graphics gr;
-        const int ROBOT_SIZE = 46;
+        const int ROBOT_SIZE = 44;
         public Renderer EmptyFrame(int width, int height,Color color)
         {
             bitmap = new Bitmap(width,height);
@@ -107,11 +107,18 @@ namespace at_work_abidar_sbu.GraphicUtils
             {
                 int Bottom = (int) (center.y + ROBOT_SIZE / 2);
                 int Left = (int) (center.x - ROBOT_SIZE / 2);
-                gr.DrawLine(Pens.Brown,(int) (Left*scalex), (int)(Bottom *scaley), (int)(Left * scalex), (int)((Bottom+RF) * scaley));
-                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Bottom * scaley), (int)((Left-RR) * scalex), (int)((Bottom) * scaley));
+                int Top = (int)(center.y - ROBOT_SIZE / 2);
+                int Right = (int)(center.x + ROBOT_SIZE / 2);
+                //                gr.DrawLine(Pens.Brown,(int) (Left*scalex), (int)(Bottom *scaley), (int)(Left * scalex), (int)((Bottom+RF) * scaley));
+                //                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Bottom * scaley), (int)((Left-RR) * scalex), (int)((Bottom) * scaley));
+                //                Left += ROBOT_SIZE;
+                //                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Bottom * scaley), (int)(Left * scalex), (int)((Bottom + LF) * scaley));
+                //                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Bottom * scaley), (int)((Left + LL) * scalex), (int)((Bottom) * scaley));
+                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)(Left * scalex), (int)((Top - RF) * scaley));
+                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)((Left - RR) * scalex), (int)((Top) * scaley));
                 Left += ROBOT_SIZE;
-                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Bottom * scaley), (int)(Left * scalex), (int)((Bottom + LF) * scaley));
-                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Bottom * scaley), (int)((Left + LL) * scalex), (int)((Bottom) * scaley));
+                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)(Left * scalex), (int)((Top - LF) * scaley));
+                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)((Left + LL) * scalex), (int)((Top) * scaley));
 
             }
             return this;

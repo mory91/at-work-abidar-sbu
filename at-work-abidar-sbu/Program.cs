@@ -20,7 +20,7 @@ namespace at_work_abidar_sbu
            // Application.Run(new ObjectRecognitionTestForm());
 //            SVMTraining svmTraining = new SVMTraining();
 //            svmTraining.train();
-//            Application.Run(new QrCodeTestForm());
+//            Application.Run(new ArmControl());
 //            Application.Run(new ObjectRecognitionTestForm());
 //            Listener listener = new Listener();
 //            listener.startListener();

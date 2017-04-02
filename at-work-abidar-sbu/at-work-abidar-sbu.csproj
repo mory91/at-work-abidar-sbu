@@ -155,143 +155,154 @@
   <ItemGroup>
     <Compile Include="AI\Navigation\PathFinder.cs" />
     <Compile Include="AI\Navigation\Point.cs" />
-    <Compile Include="HardwareAPI\Arm.cs" />
+    <Compile Include="AI\ObjectDetection\DetectedObject.cs" />
+    <Compile Include="AI\ObjectDetection\ObjectRecognizer.cs" />
+    <Compile Include="UI\ArmControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ArmControl.Designer.cs">
+      <DependentUpon>ArmControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Robotics\HardwareAPI\Arm.cs" />
     <Compile Include="AI\Planning\RoutePlanner.cs" />
-    <Compile Include="GraphicUtils\Renderer.cs" />
-    <Compile Include="HardwareAPI\Navigation.cs" />
-    <Compile Include="Listener.cs" />
+    <Compile Include="UI\GraphicUtils\Renderer.cs" />
+    <Compile Include="Robotics\HardwareAPI\Navigation.cs" />
+    <Compile Include="Network\Listener.cs" />
     <Compile Include="AI\Learning\LabelHandler.cs" />
     <Compile Include="AI\Learning\ObjectDetector.cs" />
-    <Compile Include="ObjectRecognitionTestForm.cs">
+    <Compile Include="UI\ObjectRecognitionTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ObjectRecognitionTestForm.Designer.cs">
+    <Compile Include="UI\ObjectRecognitionTestForm.Designer.cs">
       <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateQRForm.cs">
+    <Compile Include="UI\CreateQRForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateQRForm.Designer.cs">
+    <Compile Include="UI\CreateQRForm.Designer.cs">
       <DependentUpon>CreateQRForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreatePathForm.cs">
+    <Compile Include="UI\CreatePathForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreatePathForm.Designer.cs">
+    <Compile Include="UI\CreatePathForm.Designer.cs">
       <DependentUpon>CreatePathForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateStageForm.cs">
+    <Compile Include="UI\CreateStageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateStageForm.Designer.cs">
+    <Compile Include="UI\CreateStageForm.Designer.cs">
       <DependentUpon>CreateStageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateWallForm.cs">
+    <Compile Include="UI\CreateWallForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateWallForm.Designer.cs">
+    <Compile Include="UI\CreateWallForm.Designer.cs">
       <DependentUpon>CreateWallForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CameraTestForm.cs">
+    <Compile Include="UI\CameraTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CameraTestForm.Designer.cs">
+    <Compile Include="UI\CameraTestForm.Designer.cs">
       <DependentUpon>CameraTestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MotorControlForm.cs">
+    <Compile Include="UI\MotorControlForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="UI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MotorControlForm.Designer.cs">
+    <Compile Include="UI\MotorControlForm.Designer.cs">
       <DependentUpon>MotorControlForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="HardwareInterface\CentralBoard.cs" />
-    <Compile Include="HardwareInterface\DX.cs" />
-    <Compile Include="HardwareInterface\dynamixel.cs" />
-    <Compile Include="HardwareInterface\MotorControl.cs" />
-    <Compile Include="InitMapBuilderForm.cs">
+    <Compile Include="Robotics\HardwareInterface\CentralBoard.cs" />
+    <Compile Include="Robotics\HardwareInterface\DX.cs" />
+    <Compile Include="Robotics\HardwareInterface\dynamixel.cs" />
+    <Compile Include="Robotics\HardwareInterface\MotorControl.cs" />
+    <Compile Include="UI\InitMapBuilderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InitMapBuilderForm.Designer.cs">
+    <Compile Include="UI\InitMapBuilderForm.Designer.cs">
       <DependentUpon>InitMapBuilderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProtoBuf\AttentionMessage.cs" />
-    <Compile Include="ProtoBuf\BeaconSignal.cs" />
-    <Compile Include="ProtoBuf\BenchmarkControl.cs" />
-    <Compile Include="ProtoBuf\BenchmarkInfo.cs" />
-    <Compile Include="ProtoBuf\BenchmarkState.cs" />
-    <Compile Include="ProtoBuf\ConveyorBelt.cs" />
-    <Compile Include="ProtoBuf\Inventory.cs" />
-    <Compile Include="ProtoBuf\LoggingStatus.cs" />
-    <Compile Include="ProtoBuf\NavigationTask.cs" />
-    <Compile Include="ProtoBuf\RobotInfo.cs" />
-    <Compile Include="ProtoBuf\RobotStatusReport.cs" />
-    <Compile Include="ProtoBuf\TaskInfo.cs" />
-    <Compile Include="ProtoBuf\Time.cs" />
-    <Compile Include="ProtoBuf\TransportationTask.cs" />
-    <Compile Include="ProtoBuf\VersionInfo.cs" />
-    <Compile Include="WorldModel\Map.cs" />
-    <Compile Include="MapBuilderForm.cs">
+    <Compile Include="Network\ProtoBuf\AttentionMessage.cs" />
+    <Compile Include="Network\ProtoBuf\BeaconSignal.cs" />
+    <Compile Include="Network\ProtoBuf\BenchmarkControl.cs" />
+    <Compile Include="Network\ProtoBuf\BenchmarkInfo.cs" />
+    <Compile Include="Network\ProtoBuf\BenchmarkState.cs" />
+    <Compile Include="Network\ProtoBuf\ConveyorBelt.cs" />
+    <Compile Include="Network\ProtoBuf\Inventory.cs" />
+    <Compile Include="Network\ProtoBuf\LoggingStatus.cs" />
+    <Compile Include="Network\ProtoBuf\NavigationTask.cs" />
+    <Compile Include="Network\ProtoBuf\RobotInfo.cs" />
+    <Compile Include="Network\ProtoBuf\RobotStatusReport.cs" />
+    <Compile Include="Network\ProtoBuf\TaskInfo.cs" />
+    <Compile Include="Network\ProtoBuf\Time.cs" />
+    <Compile Include="Network\ProtoBuf\TransportationTask.cs" />
+    <Compile Include="Network\ProtoBuf\VersionInfo.cs" />
+    <Compile Include="AI\WorldModel\Map.cs" />
+    <Compile Include="UI\MapBuilderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MapBuilderForm.Designer.cs">
+    <Compile Include="UI\MapBuilderForm.Designer.cs">
       <DependentUpon>MapBuilderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="WorldModel\MapObject.cs" />
+    <Compile Include="AI\WorldModel\MapObject.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="PropertiesForm.cs">
+    <Compile Include="UI\PropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PropertiesForm.Designer.cs">
+    <Compile Include="UI\PropertiesForm.Designer.cs">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyManager.cs" />
-    <Compile Include="QrCodeTestForm.cs">
+    <Compile Include="Config\PropertyManager.cs" />
+    <Compile Include="UI\QrCodeTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="QrCodeTestForm.Designer.cs">
+    <Compile Include="UI\QrCodeTestForm.Designer.cs">
       <DependentUpon>QrCodeTestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PathShape.cs" />
+    <Compile Include="AI\Navigation\PathShape.cs" />
     <Compile Include="AI\Learning\SVMTraining.cs" />
-    <Compile Include="WorldModel\WordObjectType.cs" />
-    <EmbeddedResource Include="ObjectRecognitionTestForm.resx">
+    <Compile Include="AI\WorldModel\WordObjectType.cs" />
+    <EmbeddedResource Include="UI\ArmControl.resx">
+      <DependentUpon>ArmControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ObjectRecognitionTestForm.resx">
       <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CameraTestForm.resx">
+    <EmbeddedResource Include="UI\CameraTestForm.resx">
       <DependentUpon>CameraTestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateQRForm.resx">
+    <EmbeddedResource Include="UI\CreateQRForm.resx">
       <DependentUpon>CreateQRForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreatePathForm.resx">
+    <EmbeddedResource Include="UI\CreatePathForm.resx">
       <DependentUpon>CreatePathForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateStageForm.resx">
+    <EmbeddedResource Include="UI\CreateStageForm.resx">
       <DependentUpon>CreateStageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateWallForm.resx">
+    <EmbeddedResource Include="UI\CreateWallForm.resx">
       <DependentUpon>CreateWallForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InitMapBuilderForm.resx">
+    <EmbeddedResource Include="UI\InitMapBuilderForm.resx">
       <DependentUpon>InitMapBuilderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MapBuilderForm.resx">
+    <EmbeddedResource Include="UI\MapBuilderForm.resx">
       <DependentUpon>MapBuilderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MotorControlForm.resx">
+    <EmbeddedResource Include="UI\MotorControlForm.resx">
       <DependentUpon>MotorControlForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PropertiesForm.resx">
+    <EmbeddedResource Include="UI\PropertiesForm.resx">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -303,13 +314,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="QrCodeTestForm.resx">
+    <EmbeddedResource Include="UI\QrCodeTestForm.resx">
       <DependentUpon>QrCodeTestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="config\config.json">
+    <None Include="Config\Configs\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="config\Hardware.json">
+    <None Include="Config\Configs\Hardware.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="OpenTK.dll.config" />
@@ -328,8 +339,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HardwareInterface\dxl_x64_c.dll" />
-    <Content Include="HardwareInterface\FTD2XX_NET.dll" />
+    <Content Include="Robotics\HardwareInterface\dxl_x64_c.dll" />
+    <Content Include="Robotics\HardwareInterface\FTD2XX_NET.dll" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

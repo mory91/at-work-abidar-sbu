@@ -118,7 +118,7 @@ namespace at_work_abidar_sbu
         }
 
         private bool moved = false;
-        private int R = 32;
+        private int R = 44;
         private void Timer1_Tick(object sender, EventArgs e)
         {
 
@@ -141,7 +141,7 @@ namespace at_work_abidar_sbu
                         Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
                        // Render();
 
-                        if (route.pathFinder.setSrc((int) (robotl.x - R / 2), (int) (robotl.y - R / 2), R, R, 0,
+                        if (route.pathFinder.setSrc((int) (robotl.x - R / 2), (int) (robotl.y - R / 2), R, R, 2,
                             route.LL, route.LF, route.RR, route.RF))
                         {
                             route.pathFinder.findPath();
@@ -156,7 +156,15 @@ namespace at_work_abidar_sbu
                         route.path = path;
                         rallyPoint = route.NormalizePath();
                         rallyPoint.RemoveAt(0);
-
+                        while (rallyPoint.Count > 1)
+                        {
+                            double dx = rallyPoint[0].x - robot.x;
+                            double dy = rallyPoint[0].y - robot.y;
+                            if (dx * dx + dy * dy < 4)
+                                rallyPoint.RemoveAt(0);
+                            else
+                                break;
+                        }
 
                         if (rallyPoint.Count > 0)
                         {
@@ -172,7 +180,7 @@ namespace at_work_abidar_sbu
                                 dy = 0;
                             }
                            
-                            Navigation.i.Go((float)(-dx),(float) (dy));
+                            Navigation.i.Go((float)(dx),(float) (-dy));
                         }
                             
                     }
@@ -194,6 +202,18 @@ namespace at_work_abidar_sbu
         {
             Console.WriteLine("Ending Navigation");
             Navigation.i.End();
+        }
+
+        private void objectRecognitionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ObjectRecognitionTestForm test = new ObjectRecognitionTestForm();
+            test.Show();
+        }
+
+        private void armTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ArmControl armControl = new ArmControl();
+            armControl.Show();
         }
     }
 }
