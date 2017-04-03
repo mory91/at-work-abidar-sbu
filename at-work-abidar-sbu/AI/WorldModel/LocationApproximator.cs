@@ -78,13 +78,13 @@ namespace at_work_abidar_sbu.AI.WorldModel
             for (int k = 0; k < 4; k++)
                 for (int i = 0; i < MapWidth; i++)
                     for (int j = 0; j < MapHeight; j++)
-                        calcDis(i, j, k);
+                        CalcDis(i, j, k);
         }
         private int  CalcDis(int x, int y, int orientation)
         {
-            if (!isInMap(x, y) || map[x, y] == 2) //out or wall
+            if (!IsInMap(x, y) || map[x, y] == 2) //out or wall
             {
-                if (isInMap(x, y))
+                if (IsInMap(x, y))
                     obstacleDistance[x, y, orientation] = 0;
                 return 0;
             }
@@ -92,7 +92,7 @@ namespace at_work_abidar_sbu.AI.WorldModel
                 return obstacleDistance[x, y, orientation];
             int x2 = x + _dx[orientation];
             int y2 = y + _dy[orientation];
-            obstacleDistance[x, y, orientation] = calcDis(x2, y2, orientation) + 1;
+            obstacleDistance[x, y, orientation] = CalcDis(x2, y2, orientation) + 1;
             return obstacleDistance[x, y, orientation];
         }
         private bool IsInMap(int x, int y)
@@ -111,12 +111,12 @@ namespace at_work_abidar_sbu.AI.WorldModel
             for (int i = x; i < x + w; i++)
                 for (int j = y; j < y + h; j++)
                 {
-                    if (!isInMap(i, j))
+                    if (!IsInMap(i, j))
                         continue;
                     map[i, j] = tmp; //1 for FULL, 0 for EMPTY
                     for (int i2 = i - RobotSize / 2; i2 <= i + RobotSize / 2; i2++)
                         for (int j2 = j - RobotSize / 2; j2 <= j + RobotSize / 2; j2++)
-                            if (isInMap(i2, j2))
+                            if (IsInMap(i2, j2))
                                 touchWall[i2, j2] = 1;
                 }
         }

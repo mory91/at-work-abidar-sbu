@@ -30,8 +30,9 @@ namespace at_work_abidar_sbu
         {
             
             renderer.RegisterObjectRenderer<Map>(new MapRenderer());
+            renderer.RegisterObjectRenderer<IRobot>(new RobotRenderer());
             InitializeComponent();
-            robot = new VirtualRobot();
+            robot = new RealRobot();
         }
 
         private Map map;
@@ -87,6 +88,7 @@ namespace at_work_abidar_sbu
             float scalex = (float) (pictureBox1.Width / map.width);
             float scaley = (float) (pictureBox1.Height / map.height);
             renderer.AddObject(map);
+            renderer.AddObject(robot);
             pictureBox1.Image = renderer.Render(pictureBox1.Width,pictureBox1.Height,Color.White, scalex,scaley);
 
             //            var r = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
@@ -117,9 +119,7 @@ namespace at_work_abidar_sbu
                 rallyPoint = route.NormalizePath();
                 robot.Center = rallyPoint[0] ?? new Point(0, 0);
                 //rallyPoint.RemoveAt(0);
-
-              
-              //  nav.Initialize();
+               //  nav.Initialize();
                 robot.Speed = 10;
                 moved = true;
                 Timer1.Enabled = true;
@@ -148,13 +148,14 @@ namespace at_work_abidar_sbu
 
                         robot.ReadLaserValues(); 
                         Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.x);
-                        Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
+                        Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
                        // Render();
                         
-                        LocationApproximator
-                        if (route.pathFinder.setSrc((int) (robotl.x - R / 2), (int) (robotl.y - R / 2), R, R, 2,
-                            route.LL, route.LF, route.RR, route.RF))
+                        LocationApproximator locationApproximator = new LocationApproximator();
+                        Point loc = locationApproximator.GetLocation((int) (robotl.x - R / 2), (int) (robotl.y - R / 2), R, R, 2, robot.LL, robot.LF, robot.RR, robot.RF);
+                        if (loc != null)
                         {
+                            route.pathFinder.setSrc((int) loc.x,(int) loc.y);
                             route.pathFinder.findPath();
                             Console.WriteLine("rec");
                         }
@@ -203,14 +204,15 @@ namespace at_work_abidar_sbu
         private void button1_Click(object sender, EventArgs e)
         {
             route = new RoutePlanner(null,map,null);
-            route.ReadLaserValues();
+            robot.ReadLaserValues();
             Console.WriteLine("Robot: {0} {1}",robot.Center.x,robot.Center.y);
-            Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
+            Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
             Render();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            robot.End();
             Console.WriteLine("Ending Navigation");
         }
         private void objectRecognitionToolStripMenuItem_Click(object sender, EventArgs e)

@@ -180,6 +180,7 @@
     <Compile Include="Network\Listener.cs" />
     <Compile Include="AI\Learning\LabelHandler.cs" />
     <Compile Include="AI\Learning\ObjectDetector.cs" />
+    <Compile Include="UI\GraphicUtils\RobotRenderer.cs" />
     <Compile Include="UI\ObjectRecognitionTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
