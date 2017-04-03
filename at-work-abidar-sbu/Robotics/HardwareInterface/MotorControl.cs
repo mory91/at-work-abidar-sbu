@@ -271,7 +271,7 @@ namespace at_work_abidar_sbu.HardwareInterface
 
         public void SetDestination(int x, int y, float w)
         {
-            byte wTerm = (byte)((w * 44.4 * (Ly + Lx) * Math.PI) / 180);        //44 : factor to convert angle per second
+            int wTerm = (int)((w * 44.4 * (Ly + Lx) * Math.PI) / 180);        //44 : factor to convert angle per second
             x *= -2;                                                            //2: factor to conver cm per second
             y *= 2;
 

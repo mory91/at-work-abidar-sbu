@@ -12,6 +12,8 @@ namespace at_work_abidar_sbu.Robotics
     {
         void Go(float dx, float dy);
 
+        void Rotate(float degree);
+
         Point Center { get; set; }
 
         void ReadLaserValues();
