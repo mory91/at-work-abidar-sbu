@@ -177,16 +177,14 @@ namespace at_work_abidar_sbu.AI.Navigation
 			double[] lasers = {-1, laserLL, -1, laserRR};
 			int srcX = 0;
 			int srcY = 0;
-			int centerX = rectX + rectW / 2;
-			int centerY = rectY + rectH / 2;
-			int laserLX = centerX + _dx[(orientation + 1) % 4] * 11;
-			int laserLY = centerY + _dy[(orientation + 1) % 4] * 11;
-			int laserRX = centerX + _dx[(orientation + 3) % 4] * 11;
-			int laserRY = centerY + _dy[(orientation + 3) % 4] * 11;
 			double minSum = 1000 * 1000 * 1000 + 10;
 			for (int i = rectX; i <= rectX + rectW; i++)
 				for (int j = rectY; j <= rectY + rectH; j++)
 				{
+					int laserLX = i + _dx[(orientation + 1) % 4] * 11;
+					int laserLY = j + _dy[(orientation + 1) % 4] * 11;
+					int laserRX = i + _dx[(orientation + 3) % 4] * 11;
+					int laserRY = j + _dy[(orientation + 3) % 4] * 11;
 					if (!isInMap(i, j) || touchWall[i, j] != 0)
 						continue;
 					double sum = 0;
