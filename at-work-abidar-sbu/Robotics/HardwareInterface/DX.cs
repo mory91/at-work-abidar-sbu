@@ -104,7 +104,7 @@ namespace at_work_abidar_sbu.HardwareInterface
             dynamixel.write2ByteTxRx(portHandle, 1, (byte)act, (ushort)Instructions.MovingSpeed, speed);
         }
 
-        public void SetPositioinWithoutTof(Actuator act, ushort position)
+        public void SetPositionWithoutTof(Actuator act, ushort position)
         {
             dynamixel.write2ByteTxRx(portHandle, 1, (byte)act, (ushort)Instructions.GoalPosition, position);
         }

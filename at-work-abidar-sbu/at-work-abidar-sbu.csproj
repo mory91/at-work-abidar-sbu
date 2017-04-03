@@ -184,6 +184,12 @@
     <Compile Include="AI\Learning\LabelHandler.cs" />
     <Compile Include="AI\Learning\ObjectDetector.cs" />
     <Compile Include="UI\GraphicUtils\RobotRenderer.cs" />
+    <Compile Include="UI\IMUTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\IMUTest.Designer.cs">
+      <DependentUpon>IMUTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ObjectRecognitionTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -285,6 +291,9 @@
     <Compile Include="AI\WorldModel\WordObjectType.cs" />
     <EmbeddedResource Include="UI\ArmControl.resx">
       <DependentUpon>ArmControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\IMUTest.resx">
+      <DependentUpon>IMUTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ObjectRecognitionTestForm.resx">
       <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>

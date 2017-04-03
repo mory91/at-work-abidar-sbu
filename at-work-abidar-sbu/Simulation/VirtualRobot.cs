@@ -20,6 +20,11 @@ namespace at_work_abidar_sbu.Simulation
             Center.y += dy;
         }
 
+        public void Rotate(float degree)
+        {
+            throw new NotImplementedException("Rotate Not Implemented in Simulation");
+        }
+
         public Point Center { get; set; }
 
         public float Width

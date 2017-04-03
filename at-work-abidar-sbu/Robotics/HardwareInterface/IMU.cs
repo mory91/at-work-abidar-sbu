@@ -15,6 +15,7 @@ namespace at_work_abidar_sbu.HardwareInterface
         private const int BaudRate = 115200;
         private Thread DataRequester;
         private float degree;
+        private float referenceDegree;
         private bool running;
 
         public IMU()
@@ -27,12 +28,13 @@ namespace at_work_abidar_sbu.HardwareInterface
 
         ~IMU()
         {
+            Stop();
             serial.Close();
         }
 
         private void RequestData()
         {
-            string Request = ":1\n";
+            string Request = ":0\n";
             while(running)
             {
                 serial.Write(Request);
@@ -59,18 +61,32 @@ namespace at_work_abidar_sbu.HardwareInterface
         private void Serial_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             string Received = serial.ReadLine();
-            Monitor.Enter(degree);
-            degree = float.Parse(Received.Split(',')[2]);
-            degree = (float)(degree * 360 / Math.PI);
-            Monitor.Exit(degree);
+            var w = float.Parse(Received.Split(',')[0]);
+            var x = float.Parse(Received.Split(',')[1]);
+            var y = float.Parse(Received.Split(',')[2]);
+            var z = float.Parse(Received.Split(',')[3]);
+
+            var roll = Math.Atan2(2 * y * w - 2 * x * z, 1 - 2 * y * y - 2 * z * z);
+            var pitch = Math.Atan2(2 * x * w - 2 * y * z, 1 - 2 * x * x - 2 * z * z);
+            var yaw = Math.Asin(2 * x * y + 2 * z * w);
+            //Monitor.Enter(degree);
+            degree = (float)yaw;
+            //Monitor.Exit(degree);
         }
 
         public float GetDegree()
         {
-            Monitor.Enter(degree);
+            //Monitor.Enter(degree);
             var res = degree;
-            Monitor.Exit(degree);
+            //Monitor.Exit(degree);
+            res -= referenceDegree;
             return res;
+        }
+
+        public void SetReference()
+        {
+            referenceDegree = 0;
+            referenceDegree = GetDegree();
         }
     }
 }

@@ -18,6 +18,7 @@ using at_work_abidar_sbu.Robotics;
 using at_work_abidar_sbu.Simulation;
 using at_work_abidar_sbu.UI.GraphicUtils;
 using Point = at_work_abidar_sbu.AI.Navigation.Point;
+using at_work_abidar_sbu.UI;
 
 namespace at_work_abidar_sbu
 {
@@ -65,7 +66,7 @@ namespace at_work_abidar_sbu
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void motorTestToolStripMenuItem_Click(object sender, EventArgs e)
@@ -236,6 +237,12 @@ namespace at_work_abidar_sbu
         {
             ArmControl armControl = new ArmControl();
             armControl.Show();
+        }
+
+        private void iMUTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IMUTest test = new IMUTest();
+            test.ShowDialog();
         }
     }
 }

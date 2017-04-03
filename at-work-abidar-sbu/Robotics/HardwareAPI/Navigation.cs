@@ -173,11 +173,11 @@ namespace at_work_abidar_sbu.HardwareAPI
             if (degree == 0)
                 return;
 
-            desiredEncoderValue = (int)(degree * (3600 / 35));
+            desiredEncoderValue = (int)(degree * (630 / 35));
 
             encoderToWatch = MotorControl.Motors.FrontLeft;
 
-            int wSpeed = (degree > 0 ? Speed : -Speed);
+            int wSpeed = (degree > 0 ? 2 : -2);
 
             motor.SetDestination(0, 0, wSpeed);
 
@@ -194,11 +194,11 @@ namespace at_work_abidar_sbu.HardwareAPI
                     switch(laser)
                     {
                         case CentralBoard.Laser.Left:
-                            dynamixel.SetPositioinWithoutTof(Actuator.LeftLaser, 208);
+                            dynamixel.SetPositionWithoutTof(Actuator.LeftLaser, 208);
                             break;
 
                         case CentralBoard.Laser.Right:
-                            dynamixel.SetPositioinWithoutTof(Actuator.RightLaser, 820);
+                            dynamixel.SetPositionWithoutTof(Actuator.RightLaser, 820);
                             break;
                     }
                     break;
@@ -206,11 +206,11 @@ namespace at_work_abidar_sbu.HardwareAPI
                     switch (laser)
                     {
                         case CentralBoard.Laser.Left:
-                            dynamixel.SetPositioinWithoutTof(Actuator.LeftLaser, 511);
+                            dynamixel.SetPositionWithoutTof(Actuator.LeftLaser, 511);
                             break;
 
                         case CentralBoard.Laser.Right:
-                            dynamixel.SetPositioinWithoutTof(Actuator.RightLaser, 511);
+                            dynamixel.SetPositionWithoutTof(Actuator.RightLaser, 511);
                             break;
                     }
                     break;
@@ -218,11 +218,11 @@ namespace at_work_abidar_sbu.HardwareAPI
                     switch (laser)
                     {
                         case CentralBoard.Laser.Left:
-                            dynamixel.SetPositioinWithoutTof(Actuator.LeftLaser, 511);
+                            dynamixel.SetPositionWithoutTof(Actuator.LeftLaser, 511);
                             break;
 
                         case CentralBoard.Laser.Right:
-                            dynamixel.SetPositioinWithoutTof(Actuator.RightLaser, 511);
+                            dynamixel.SetPositionWithoutTof(Actuator.RightLaser, 511);
                             break;
                     }
                     break;

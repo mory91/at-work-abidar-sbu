@@ -19,6 +19,11 @@ namespace at_work_abidar_sbu.Robotics
             Navigation.i.Go((float)(dx), (float)(dy));
         }
 
+        public void Rotate(float degree)
+        {
+            Navigation.i.Rotate(degree);
+        }
+
         private Point _Center = new Point();
         public Point Center {
             get
