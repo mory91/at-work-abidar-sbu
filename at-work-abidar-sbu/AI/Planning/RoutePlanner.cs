@@ -52,19 +52,19 @@ namespace at_work_abidar_sbu.AI.Planning
         public float LL;
         public float RF;
         public float RR;
-        private const int ROBOT_SIZE = 55;
-        private const int LASER_TO_SIDE = 10;
-        private const int LASER_TO_FRONT = 4;
+        private const int ROBOT_SIZE = 44;
+        private const int LASER_TO_SIDE = 7;
+        private const int LASER_TO_FRONT = 2;
         public void ReadLaserValues()
         {
-            var t =nav.GetDistanceSync(Orientation.Front);
-            LF = t.Item1 + ROBOT_SIZE / 2 - LASER_TO_FRONT+10;
-            RF = t.Item2 + ROBOT_SIZE / 2 - LASER_TO_FRONT+10;
+            var t = nav.GetDistanceSync(Orientation.Front);
+            LF = t.Item1 + ROBOT_SIZE / 2 - LASER_TO_FRONT;
+            RF = t.Item2 + ROBOT_SIZE / 2 - LASER_TO_FRONT;
 
             t = nav.GetDistanceSync(Orientation.Left);
-            LL = t.Item1+ROBOT_SIZE/2 -LASER_TO_SIDE ;
-            RR = t.Item2+ROBOT_SIZE / 2 - LASER_TO_SIDE;
-            
+            LL = t.Item1 + ROBOT_SIZE / 2 - LASER_TO_SIDE;
+            RR = t.Item2 + ROBOT_SIZE / 2 - LASER_TO_SIDE;
+
         }
 
         public Point RobotPositionFromLasers()
@@ -72,7 +72,7 @@ namespace at_work_abidar_sbu.AI.Planning
             Point c = new Point();
             ReadLaserValues();
             c.x = RR ;
-            c.y = map.height-(RF );
+            c.y = RF ;
             return c;
         }
     }

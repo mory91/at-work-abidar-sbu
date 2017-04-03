@@ -156,7 +156,15 @@ namespace at_work_abidar_sbu
                         route.path = path;
                         rallyPoint = route.NormalizePath();
                         rallyPoint.RemoveAt(0);
-
+                        while (rallyPoint.Count > 1)
+                        {
+                            double dx = rallyPoint[0].x - robot.x;
+                            double dy = rallyPoint[0].y - robot.y;
+                            if (dx * dx + dy * dy < 4)
+                                rallyPoint.RemoveAt(0);
+                            else
+                                break;
+                        }
 
                         if (rallyPoint.Count > 0)
                         {
@@ -172,7 +180,7 @@ namespace at_work_abidar_sbu
                                 dy = 0;
                             }
                            
-                            Navigation.i.Go((float)(-dx),(float) (dy));
+                            Navigation.i.Go((float)(dx),(float) (-dy));
                         }
                             
                     }
