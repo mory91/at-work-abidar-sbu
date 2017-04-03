@@ -35,17 +35,18 @@ namespace at_work_abidar_sbu.HardwareInterface
     class DX
     {
         private string COMPort;
-        int portHandle;
+        private int portHandle;
         private static DX instance;
-        private const ushort Speed = 100;
-
-        int group_num;
+        private int group_num;      //For Sync Writing to Motors
+        private int PositionTofFactor;
 
         private DX()
         {
             FTDI ftdi = new FTDI();
 
-            ftdi.OpenBySerialNumber("A4012ADD");
+            PropertyManager.i.Load("Hardware");
+            PropertyManager.i.Load("Dynamixel");
+            ftdi.OpenBySerialNumber(PropertyManager.i.GetStringValue("Hardware","DynamixelSerialNumber"));
         
             if (!ftdi.IsOpen)
                 throw new Exception("Could not connect to Dynamixel");
@@ -61,23 +62,21 @@ namespace at_work_abidar_sbu.HardwareInterface
 
             dynamixel.packetHandler();
 
-            foreach(Actuator act in Enum.GetValues(typeof(Actuator)))
-            {
-                SetSpeed(act, Speed);
-            }
+            SetSpeed(Actuator.ArmPlate,      (ushort)PropertyManager.i.GetIntValue("Dynamixel", "ArmPlateSpeed"));
+            SetSpeed(Actuator.ArmMiddle1,    (ushort)PropertyManager.i.GetIntValue("Dynamixel", "ArmMiddle1Speed"));
+            SetSpeed(Actuator.ArmMiddle2,    (ushort)PropertyManager.i.GetIntValue("Dynamixel", "ArmMiddle2Speed"));
+            SetSpeed(Actuator.ArmMiddle3,    (ushort)PropertyManager.i.GetIntValue("Dynamixel", "ArmMiddle3Speed"));
+            SetSpeed(Actuator.GripperRotate, (ushort)PropertyManager.i.GetIntValue("Dynamixel", "GripperRotateSpeed"));
+            SetSpeed(Actuator.Gripper1,      (ushort)PropertyManager.i.GetIntValue("Dynamixel", "Gripper1Speed"));
+            SetSpeed(Actuator.Gripper2,      (ushort)PropertyManager.i.GetIntValue("Dynamixel", "Gripper2Speed"));
+            SetSpeed(Actuator.LeftLaser,     (ushort)PropertyManager.i.GetIntValue("Dynamixel", "LeftLaserSpeed"));
+            SetSpeed(Actuator.RightLaser,    (ushort)PropertyManager.i.GetIntValue("Dynamixel", "RightLaserSpeed"));
 
-            SetSpeed(Actuator.ArmPlate, 50);
-            SetSpeed(Actuator.ArmMiddle1, 50);
-            SetSpeed(Actuator.ArmMiddle2, 50);
-            SetSpeed(Actuator.Gripper1, 300);
-            SetSpeed(Actuator.Gripper2, 300);
-            SetSpeed(Actuator.LeftLaser, 1000);
-            SetSpeed(Actuator.RightLaser, 1000);
+            SetTorqueLimit(Actuator.Gripper1,(ushort)PropertyManager.i.GetIntValue("Dynamixel", "Gripper1TorqueLimit"));
+            SetTorqueLimit(Actuator.Gripper2,(ushort)PropertyManager.i.GetIntValue("Dynamixel", "Gripper2TorqueLimit"));
 
-            SetTorqueLimit(Actuator.Gripper1, 300);
-            SetTorqueLimit(Actuator.Gripper2, 300);
+            PositionTofFactor = PropertyManager.i.GetIntValue("Dynamixel", "PositionTofFactor");
 
-            
         }
         
         ~DX()
@@ -110,12 +109,17 @@ namespace at_work_abidar_sbu.HardwareInterface
             dynamixel.write2ByteTxRx(portHandle, 1, (byte)act, (ushort)Instructions.GoalPosition, position);
         }
 
+        public ushort GetCurrentPosition(Actuator act)
+        {
+            return dynamixel.read2ByteTxRx(portHandle, 1, (byte)act, (ushort)Instructions.PresentPosition);
+        }
+
         public void SetPositionWithTof(Actuator act, ushort position)
         {
             ushort CurrentPosition = 0;
             CurrentPosition = dynamixel.read2ByteTxRx(portHandle, 1, (byte)act, (ushort)Instructions.PresentPosition);
             dynamixel.write2ByteTxRx(portHandle, 1, (byte)act, (ushort)Instructions.GoalPosition, position);
-            while (Math.Abs(CurrentPosition - position) > 35)
+            while (Math.Abs(CurrentPosition - position) > PositionTofFactor)
             {
                 CurrentPosition = dynamixel.read2ByteTxRx(portHandle, 1, (byte)act, (ushort)Instructions.PresentPosition);
             }
