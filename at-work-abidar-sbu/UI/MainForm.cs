@@ -11,6 +11,7 @@ using at_work_abidar_sbu.HardwareInterface;
 using System.Threading;
 using at_work_abidar_sbu.AI.Navigation;
 using at_work_abidar_sbu.AI.Planning;
+using at_work_abidar_sbu.AI.WorldModel;
 using at_work_abidar_sbu.UI.GraphicUtils;
 using at_work_abidar_sbu.HardwareAPI;
 using at_work_abidar_sbu.Robotics;
@@ -149,7 +150,8 @@ namespace at_work_abidar_sbu
                         Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.x);
                         Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
                        // Render();
-
+                        
+                        LocationApproximator
                         if (route.pathFinder.setSrc((int) (robotl.x - R / 2), (int) (robotl.y - R / 2), R, R, 2,
                             route.LL, route.LF, route.RR, route.RF))
                         {
