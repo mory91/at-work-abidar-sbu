@@ -162,6 +162,7 @@
     <Compile Include="AI\ObjectDetection\DetectedObject.cs" />
     <Compile Include="AI\ObjectDetection\ObjectRecognizer.cs" />
     <Compile Include="AI\WorldModel\LocationApproximator.cs" />
+    <Compile Include="Network\NetworkListener.cs" />
     <Compile Include="Robotics\HardwareInterface\IMU.cs" />
     <Compile Include="Robotics\IRobot.cs" />
     <Compile Include="Robotics\RealRobot.cs" />
