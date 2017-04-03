@@ -31,6 +31,8 @@ namespace at_work_abidar_sbu
             {
                 Map map = Map.Load(openFileDialog1.FileName);
                 MapBuilderForm mp = new MapBuilderForm(map);
+                mp.Show();
+                this.Close();
             }
         }
     }

@@ -17,7 +17,7 @@ namespace at_work_abidar_sbu.AI.Navigation
 
         int MapHeight => _MapHeight;
 //y, cm
-        const int RobotSize = 55; //cm
+        const int RobotSize = 54; //cm
         int[,] dis;
         int[,] map;
         int[,] touchWall;

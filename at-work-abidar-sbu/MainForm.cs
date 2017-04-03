@@ -110,7 +110,7 @@ namespace at_work_abidar_sbu
 
               
               //  nav.Initialize();
-                nav.SetSpeed(10);
+                nav.SetSpeed(15);
                 moved = true;
                 Timer1.Enabled = true;
             };
@@ -141,7 +141,7 @@ namespace at_work_abidar_sbu
                         Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
                        // Render();
 
-                        if (route.pathFinder.setSrc((int) (robotl.x - R / 2), (int) (robotl.y - R / 2), R, R, 0,
+                        if (route.pathFinder.setSrc((int) (robotl.x - R / 2), (int) (robotl.y - R / 2), R, R, 2,
                             route.LL, route.LF, route.RR, route.RF))
                         {
                             route.pathFinder.findPath();
@@ -179,7 +179,15 @@ namespace at_work_abidar_sbu
                             {
                                 dy = 0;
                             }
-                           
+                            if (Math.Sqrt(dx * dx + dy * dy) < 15)
+                                Navigation.i.SetSpeed(5);
+                            else
+                            {
+                                Navigation.i.SetSpeed(15);
+                            }
+                            double fx = route.pathFinder.getDst().x - robot.x;
+                            double fy = route.pathFinder.getDst().y - robot.y;
+                            
                             Navigation.i.Go((float)(dx),(float) (-dy));
                         }
                             
