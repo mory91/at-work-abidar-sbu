@@ -161,6 +161,7 @@
     <Compile Include="AI\Navigation\Point.cs" />
     <Compile Include="AI\ObjectDetection\DetectedObject.cs" />
     <Compile Include="AI\ObjectDetection\ObjectRecognizer.cs" />
+    <Compile Include="AI\Task\BMT.cs" />
     <Compile Include="AI\WorldModel\RotationChecker.cs" />
     <Compile Include="AI\WorldModel\LocationApproximator.cs" />
     <Compile Include="Robotics\HardwareInterface\IMU.cs" />
@@ -340,12 +341,17 @@
     <EmbeddedResource Include="UI\QrCodeTestForm.resx">
       <DependentUpon>QrCodeTestForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Config\ColorFilter.json" />
+    <None Include="Config\config.json" />
     <None Include="Config\Configs\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Config\Configs\Hardware.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Config\Dynamixel.json" />
+    <None Include="Config\Hardware.json" />
+    <None Include="Config\MotorControl.json" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
