@@ -22,11 +22,15 @@ namespace at_work_abidar_sbu.HardwareAPI
 
         Position lastPosition;
 
-        public Arm()
+        private Arm()
         {
             dynamixel = DX.i;
             lastPosition = Position.Rest;
         }
+
+        private static Arm instance;
+        public static Arm i => instance ?? (instance = new Arm());
+
 
         public void OpenGripper()
         {
@@ -65,7 +69,7 @@ namespace at_work_abidar_sbu.HardwareAPI
         public void GoToGripPosition()
         {
             dynamixel.SetPositionWithTof(Actuator.ArmMiddle1, 1921);
-            dynamixel.SetPositionWithTof(Actuator.ArmMiddle2, 3409);
+            dynamixel.SetPositionWithTof(Actuator.ArmMiddle2, 3370);
             dynamixel.SetPositionWithTof(Actuator.ArmMiddle3, 1272);
             lastPosition = Position.Grip;
         }

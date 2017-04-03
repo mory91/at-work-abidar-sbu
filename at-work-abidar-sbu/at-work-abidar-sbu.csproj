@@ -163,48 +163,32 @@
     <Compile Include="Listener.cs" />
     <Compile Include="config\AI\Learning\LabelHandler.cs" />
     <Compile Include="config\AI\Learning\ObjectDetector.cs" />
-    <Compile Include="ObjectRecognitionTestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="ObjectRecognitionTestForm.cs" />
     <Compile Include="ObjectRecognitionTestForm.Designer.cs">
       <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateQRForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="CreateQRForm.cs" />
     <Compile Include="CreateQRForm.Designer.cs">
       <DependentUpon>CreateQRForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreatePathForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="CreatePathForm.cs" />
     <Compile Include="CreatePathForm.Designer.cs">
       <DependentUpon>CreatePathForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateStageForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="CreateStageForm.cs" />
     <Compile Include="CreateStageForm.Designer.cs">
       <DependentUpon>CreateStageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateWallForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="CreateWallForm.cs" />
     <Compile Include="CreateWallForm.Designer.cs">
       <DependentUpon>CreateWallForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CameraTestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="CameraTestForm.cs" />
     <Compile Include="CameraTestForm.Designer.cs">
       <DependentUpon>CameraTestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MotorControlForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MainForm.cs" />
+    <Compile Include="MotorControlForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
@@ -215,9 +199,7 @@
     <Compile Include="HardwareInterface\DX.cs" />
     <Compile Include="HardwareInterface\dynamixel.cs" />
     <Compile Include="HardwareInterface\MotorControl.cs" />
-    <Compile Include="InitMapBuilderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="InitMapBuilderForm.cs" />
     <Compile Include="InitMapBuilderForm.Designer.cs">
       <DependentUpon>InitMapBuilderForm.cs</DependentUpon>
     </Compile>
@@ -237,25 +219,19 @@
     <Compile Include="ProtoBuf\TransportationTask.cs" />
     <Compile Include="ProtoBuf\VersionInfo.cs" />
     <Compile Include="WorldModel\Map.cs" />
-    <Compile Include="MapBuilderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MapBuilderForm.cs" />
     <Compile Include="MapBuilderForm.Designer.cs">
       <DependentUpon>MapBuilderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WorldModel\MapObject.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="PropertiesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="PropertiesForm.cs" />
     <Compile Include="PropertiesForm.Designer.cs">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyManager.cs" />
-    <Compile Include="QrCodeTestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="QrCodeTestForm.cs" />
     <Compile Include="QrCodeTestForm.Designer.cs">
       <DependentUpon>QrCodeTestForm.cs</DependentUpon>
     </Compile>

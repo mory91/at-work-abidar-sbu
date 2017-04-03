@@ -57,23 +57,16 @@ namespace at_work_abidar_sbu.AI.Planning
         private const int LASER_TO_FRONT = 2;
         public void ReadLaserValues()
         {
-            var t = nav.GetDistanceSync(Orientation.Front);
-            LF = t.Item1 + ROBOT_SIZE / 2 - LASER_TO_FRONT;
-            RF = t.Item2 + ROBOT_SIZE / 2 - LASER_TO_FRONT;
-
-            t = nav.GetDistanceSync(Orientation.Left);
-            LL = t.Item1 + ROBOT_SIZE / 2 - LASER_TO_SIDE;
-            RR = t.Item2 + ROBOT_SIZE / 2 - LASER_TO_SIDE;
 
         }
 
-        public Point RobotPositionFromLasers()
-        {
-            Point c = new Point();
-            ReadLaserValues();
-            c.x = RR ;
-            c.y = RF ;
-            return c;
-        }
+//        public Point RobotPositionFromLasers()
+//        {
+//            Point c = new Point();
+//            ReadLaserValues();
+//            c.x = LL ;
+//            c.y = (RF );
+//            return c;
+//        }
     }
 }

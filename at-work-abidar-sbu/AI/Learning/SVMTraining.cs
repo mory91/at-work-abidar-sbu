@@ -101,7 +101,7 @@ namespace at_work_abidar_sbu
 
                 //bool trained = model.Train(trainData, trainClasses, null, null, p);
                 bool trained = model.TrainAuto(trainData);
-                SaveSVMToFile(model, "svm3.save");
+                SaveSVMToFile(model, "svm4.save");
             }
         }
         private T[,] To2D<T>(T[][] source)

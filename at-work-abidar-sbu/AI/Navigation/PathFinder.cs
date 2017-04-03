@@ -24,7 +24,6 @@ namespace at_work_abidar_sbu.AI.Navigation
         Point[,] nxt;
         Point src, dst;
         List<Point> path;
-		int[,,] obstacleDistance;
         public PathFinder()
         {
             SetUp();
@@ -37,7 +36,6 @@ namespace at_work_abidar_sbu.AI.Navigation
             map = new int[MapWidth + 10, MapHeight + 10];
             touchWall = new int[MapWidth + 10, MapHeight + 10];
             nxt = new Point[MapWidth + 10, MapHeight + 10];
-            obstacleDistance = new int[MapWidth + 10, MapHeight + 10,4];
             setSrc(0, 0);
             setDst(0, 0);
             for (int i = 0; i <= MapWidth; i++)
@@ -46,8 +44,6 @@ namespace at_work_abidar_sbu.AI.Navigation
                     map[i, j] = 0;
                     dis[i, j] = -1;
                     touchWall[i, j] = 0;
-					for (int k = 0; k < 4; k++)
-						obstacleDistance[i, j, k] = -1;
 				}
 			for (int i = 0; i <= MapWidth; i++)
                 for (int j = 0; j <= MapHeight; j++)
@@ -144,7 +140,6 @@ namespace at_work_abidar_sbu.AI.Navigation
             {
                 addObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height,o.Type==WordObjectType.Wall);
             }
-            calcObstacleDistances();
         }
         public Point getDst()
         {
@@ -172,65 +167,5 @@ namespace at_work_abidar_sbu.AI.Navigation
         {
             return path;
         }
-		public bool setSrc(int rectX, int rectY, int rectW, int rectH, int orientation, double laserLL, double laserLF, double laserRR, double laserRF)
-		{
-			double[] lasers = {-1, laserLL, -1, laserRR};
-			int srcX = 0;
-			int srcY = 0;
-			int centerX = rectX + rectW / 2;
-			int centerY = rectY + rectH / 2;
-			int laserLX = centerX + _dx[(orientation + 1) % 4] * 11;
-			int laserLY = centerY + _dy[(orientation + 1) % 4] * 11;
-			int laserRX = centerX + _dx[(orientation + 3) % 4] * 11;
-			int laserRY = centerY + _dy[(orientation + 3) % 4] * 11;
-			double minSum = 1000 * 1000 * 1000 + 10;
-			for (int i = rectX; i <= rectX + rectW; i++)
-				for (int j = rectY; j <= rectY + rectH; j++)
-				{
-					if (!isInMap(i, j) || touchWall[i, j] != 0)
-						continue;
-					double sum = 0;
-					for (int k = 0; k < 4; k++)
-					{
-						int k2 = (k + orientation) % 4;
-						if (obstacleDistance[i, j, k2] != -1 && lasers[k] > 0)
-							sum += Math.Abs(lasers[k] - obstacleDistance[i, j, k2]);
-					}
-					if (!isInMap(laserLX, laserLY) || !isInMap(laserRX, laserRY))
-						continue;
-                    sum += Math.Abs(laserLF - obstacleDistance[laserLX, laserLY, orientation]);
-					sum += Math.Abs(laserRF - obstacleDistance[laserRX, laserRY, orientation]);
-					if (sum < minSum)
-					{
-						minSum = sum;
-						srcX = i;
-						srcY = j;
-					}
-				}
-			setSrc(srcX, srcY);
-			return true;
-		}
-		private int calcDis(int x, int y, int orientation)
-		{
-			if (!isInMap(x, y) || map[x, y] == 2) //out or wall
-			{
-				if (isInMap(x, y))
-					obstacleDistance[x, y, orientation] = 0;
-				return 0;
-			}
-			if (obstacleDistance[x, y, orientation] != -1)
-				return obstacleDistance[x, y, orientation];
-			int x2 = x + _dx[orientation];
-			int y2 = y + _dy[orientation];
-			obstacleDistance[x, y, orientation] = calcDis(x2, y2, orientation) + 1;
-			return obstacleDistance[x, y, orientation];
-        }
-		public void calcObstacleDistances()
-		{
-			for (int k = 0; k < 4; k++)
-				for (int i = 0; i < MapWidth; i++)
-					for (int j = 0; j < MapHeight; j++)
-						calcDis(i, j, k);
-		}
     }
 }
