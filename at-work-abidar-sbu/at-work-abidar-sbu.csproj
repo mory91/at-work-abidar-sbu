@@ -153,15 +153,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI\Navigation\PathFinder.cs" />
-    <Compile Include="AI\Navigation\Point.cs" />
+    <Compile Include="config\AI\Navigation\PathFinder.cs" />
+    <Compile Include="config\AI\Navigation\Point.cs" />
     <Compile Include="HardwareAPI\Arm.cs" />
-    <Compile Include="AI\Planning\RoutePlanner.cs" />
+    <Compile Include="config\AI\Planning\RoutePlanner.cs" />
     <Compile Include="GraphicUtils\Renderer.cs" />
     <Compile Include="HardwareAPI\Navigation.cs" />
     <Compile Include="Listener.cs" />
-    <Compile Include="AI\Learning\LabelHandler.cs" />
-    <Compile Include="AI\Learning\ObjectDetector.cs" />
+    <Compile Include="config\AI\Learning\LabelHandler.cs" />
+    <Compile Include="config\AI\Learning\ObjectDetector.cs" />
     <Compile Include="ObjectRecognitionTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -259,7 +259,7 @@
       <DependentUpon>QrCodeTestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PathShape.cs" />
-    <Compile Include="AI\Learning\SVMTraining.cs" />
+    <Compile Include="config\AI\Learning\SVMTraining.cs" />
     <Compile Include="WorldModel\WordObjectType.cs" />
     <EmbeddedResource Include="ObjectRecognitionTestForm.resx">
       <DependentUpon>ObjectRecognitionTestForm.cs</DependentUpon>
