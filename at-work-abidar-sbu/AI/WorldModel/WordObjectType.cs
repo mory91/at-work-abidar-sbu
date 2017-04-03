@@ -2,6 +2,6 @@
 {
     public enum WordObjectType
     {
-        Wall,Stage,QR
+        Wall,Stage,QR,InvisbleWall,Entry,Exit
     }
 }
