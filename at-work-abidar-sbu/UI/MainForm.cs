@@ -92,7 +92,7 @@ namespace at_work_abidar_sbu
             renderer.AddObject(map);
             renderer.AddObject(robot);
             renderer.AddObject(path);
-            pictureBox1.Image = renderer.Render(pictureBox1.Width,pictureBox1.Height,Color.White, scalex,scaley);
+            pictureBox1.Image = renderer.Render(pictureBox1.Width,pictureBox1.Height,Color.White, scaley, scaley);
 
             //            var r = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
             //                .DrawMap(map)
