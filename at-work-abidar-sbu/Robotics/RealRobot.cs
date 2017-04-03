@@ -16,7 +16,7 @@ namespace at_work_abidar_sbu.Robotics
 
         public void Go(float dx, float dy)
         {
-            Navigation.i.Go((float)(dx), (float)(-dy));
+            Navigation.i.Go((float)(dx), (float)(dy));
         }
 
         private Point _Center = new Point();

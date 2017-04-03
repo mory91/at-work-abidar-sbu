@@ -23,7 +23,7 @@ namespace at_work_abidar_sbu.AI.WorldModel
 
         private int MapWidth => _MapWidth;
         int MapHeight => _MapHeight;
-        private void SetUp(Map imap)
+        public void SetUp(Map imap)
         {
             _MapWidth = (int)imap.width;
             _MapHeight = (int)imap.height;
@@ -48,13 +48,17 @@ namespace at_work_abidar_sbu.AI.WorldModel
 
         public Point GetLocation(int rectX, int rectY, int rectW, int rectH, int orientation, double laserLL, double laserLF, double laserRR, double laserRF)
         {
-            double[] lasers = { (laserLF + laserRF) / 2.0, laserLL, -1, laserRR };
+            double[] lasers = { -1, laserLL, -1, laserRR };
             int srcX = 0;
             int srcY = 0;
             double minSum = 1000 * 1000 * 1000 + 10;
             for (int i = rectX; i <= rectX + rectW; i++)
                 for (int j = rectY; j <= rectY + rectH; j++)
                 {
+                    int laserLX = i + _dx[(orientation + 1) % 4] * 11;
+                    int laserLY = j + _dy[(orientation + 1) % 4] * 11;
+                    int laserRX = i + _dx[(orientation + 3) % 4] * 11;
+                    int laserRY = j + _dy[(orientation + 3) % 4] * 11;
                     if (!IsInMap(i, j) || touchWall[i, j] != 0)
                         continue;
                     double sum = 0;
@@ -64,6 +68,10 @@ namespace at_work_abidar_sbu.AI.WorldModel
                         if (obstacleDistance[i, j, k2] != -1 && lasers[k] > 0)
                             sum += Math.Abs(lasers[k] - obstacleDistance[i, j, k2]);
                     }
+                    if (!IsInMap(laserLX, laserLY) || !IsInMap(laserRX, laserRY))
+                        continue;
+                    sum += Math.Abs(laserLF - obstacleDistance[laserLX, laserLY, orientation]);
+                    sum += Math.Abs(laserRF - obstacleDistance[laserRX, laserRY, orientation]);
                     if (sum < minSum)
                     {
                         minSum = sum;

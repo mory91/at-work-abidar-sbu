@@ -31,6 +31,7 @@ namespace at_work_abidar_sbu
             
             renderer.RegisterObjectRenderer<Map>(new MapRenderer());
             renderer.RegisterObjectRenderer<IRobot>(new RobotRenderer());
+            renderer.RegisterObjectRenderer<PathShape>(new PathRenderer());
             InitializeComponent();
             robot = new RealRobot();
         }
@@ -89,6 +90,7 @@ namespace at_work_abidar_sbu
             float scaley = (float) (pictureBox1.Height / map.height);
             renderer.AddObject(map);
             renderer.AddObject(robot);
+            renderer.AddObject(path);
             pictureBox1.Image = renderer.Render(pictureBox1.Width,pictureBox1.Height,Color.White, scalex,scaley);
 
             //            var r = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
@@ -152,6 +154,7 @@ namespace at_work_abidar_sbu
                        // Render();
 
                         LocationApproximator locationApproximator = new LocationApproximator();
+                        locationApproximator.SetUp(map);
                         Point loc = locationApproximator.GetLocation((int) (robotl.x - R / 2), (int) (robotl.y - R / 2), R, R, 2, robot.LL, robot.LF, robot.RR, robot.RF);
                         if (loc != null)
                         {
@@ -192,13 +195,13 @@ namespace at_work_abidar_sbu
                                 dy = 0;
                             }
                             if (Math.Sqrt(dx * dx + dy * dy) < 15)
-                                Navigation.i.SetSpeed(5);
+                                robot.Speed = 5;
                             else
                             {
-                                Navigation.i.SetSpeed(15);
+                                robot.Speed = 15;
                             }
-                            double fx = route.pathFinder.getDst().x - robot.x;
-                            double fy = route.pathFinder.getDst().y - robot.y;
+                            double fx = route.pathFinder.getDst().x - robot.Center.x;
+                            double fy = route.pathFinder.getDst().y - robot.Center.y;
                            
                             robot.Go((float)(dx),(float) (-dy));
                         }

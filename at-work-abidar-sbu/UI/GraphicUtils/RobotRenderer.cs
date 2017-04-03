@@ -46,11 +46,11 @@ namespace at_work_abidar_sbu.UI.GraphicUtils
 //                //                Left += ROBOT_SIZE;
 //                //                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Bottom * scaley), (int)(Left * scalex), (int)((Bottom + LF) * scaley));
 //                //                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Bottom * scaley), (int)((Left + LL) * scalex), (int)((Bottom) * scaley));
-                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)(Left * scalex), (int)((Top - robot.RF) * scaley));
-                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)((Left - robot.RR) * scalex), (int)((Top) * scaley));
-                Left += ROBOT_SIZE;
                 gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)(Left * scalex), (int)((Top - robot.LF) * scaley));
-                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)((Left + robot.LL) * scalex), (int)((Top) * scaley));
+                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)((Left - robot.LL) * scalex), (int)((Top) * scaley));
+                Left += ROBOT_SIZE;
+                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)(Left * scalex), (int)((Top - robot.RF) * scaley));
+                gr.DrawLine(Pens.Brown, (int)(Left * scalex), (int)(Top * scaley), (int)((Left + robot.RF) * scalex), (int)((Top) * scaley));
 
 //            }
 //            return this;

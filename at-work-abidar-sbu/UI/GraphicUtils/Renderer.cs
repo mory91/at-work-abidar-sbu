@@ -61,6 +61,11 @@ namespace at_work_abidar_sbu.UI.GraphicUtils
             foreach (var renderObject in renderObjects)
             {
                 bool flag = false;
+                if (renderObject == null)
+                {
+                    log.Warn("Cannot Render NULL Object");
+                    continue;
+                }
                 List<Type> types = new List<Type>(renderObject.GetType().GetInterfaces());
                 types.Add(renderObject.GetType());
 
