@@ -73,5 +73,13 @@ namespace at_work_abidar_sbu.AI.WorldModel
 								touchWallRotate[i2, j2] = 1;
 				}
         }
+		public bool CanStand(int x, int y)
+		{
+			return IsInMap(x, y) && touchWall[x, y] == 0;
+		}
+		public bool CanRotate(int x, int y)
+		{
+			return IsInMap(x, y) && touchWallRotate[x, y] == 0;
+		}
     }
 }
