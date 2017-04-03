@@ -18,6 +18,13 @@ namespace at_work_abidar_sbu
         List<Image> imagesList =new List<Image>();
         List<float[]> hogs = new List<float[]>();
         List<int> labels = new List<int>();
+        private String fileName;
+
+        public SVMTraining(string fileName)
+        {
+            this.fileName = fileName;
+        }
+
         private void loadImageAndLabel()
         {
             try
@@ -28,7 +35,7 @@ namespace at_work_abidar_sbu
                 int labelNum = 1;
                 foreach (var dir in dirs)
                 {
-                    Console.WriteLine(dir);
+                    System.IO.File.AppendAllText(fileName+".lables",dir);
                     string[] images = Directory.GetFiles(dir);
                     foreach (var image in images)
                     {
@@ -101,7 +108,7 @@ namespace at_work_abidar_sbu
 
                 //bool trained = model.Train(trainData, trainClasses, null, null, p);
                 bool trained = model.TrainAuto(trainData);
-                SaveSVMToFile(model, "svm4.save");
+                SaveSVMToFile(model, fileName);
             }
         }
         private T[,] To2D<T>(T[][] source)
