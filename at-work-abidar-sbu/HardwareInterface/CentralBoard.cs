@@ -94,7 +94,7 @@ namespace at_work_abidar_sbu.HardwareInterface
             if(packetStart[0] == 0xff && packetStart[1] == 0xff)    //Start of packet detected
             {
                 centralBoardCom.Read(packetBody, 10, ref read);
-                Monitor.Enter(readLock);
+//                Monitor.Enter(readLock);
 
                 int sum = 0;
 
