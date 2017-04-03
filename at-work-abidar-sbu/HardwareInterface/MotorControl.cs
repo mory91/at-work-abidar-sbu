@@ -43,10 +43,8 @@ namespace at_work_abidar_sbu.HardwareInterface
             RearRight
         }
 
-        private const string FrontSerialNumber = "A50285BI";
-        private const string RearSerialNumber = "A9SJ39XX";
-        private const byte Lx = 16;
-        private const byte Ly = 19;
+        private byte Lx;
+        private byte Ly;
         private const byte SYNC_BYTE = 0x00;
         private bool running;
 
@@ -63,9 +61,14 @@ namespace at_work_abidar_sbu.HardwareInterface
             frontFTDI = new FTDI();
             rearFTDI = new FTDI();
 
-            frontFTDI.OpenBySerialNumber(FrontSerialNumber);
-            rearFTDI.OpenBySerialNumber(RearSerialNumber);
+            PropertyManager.i.Load("Hardware");
+            PropertyManager.i.Load("MotorControl");
 
+            frontFTDI.OpenBySerialNumber(PropertyManager.i.GetStringValue("Hardware", "FrontMotorSerialNumber"));
+            rearFTDI.OpenBySerialNumber(PropertyManager.i.GetStringValue("Hardware", "RearMotorSerialNumber"));
+
+            Lx = (byte)PropertyManager.i.GetIntValue("MotorControl", "Lx");
+            Ly = (byte)PropertyManager.i.GetIntValue("MotorControl", "Ly");
 
             if (!frontFTDI.IsOpen)
                 throw new Exception("Could Not Connect to Front Motor Controller");
