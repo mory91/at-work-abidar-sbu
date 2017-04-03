@@ -159,6 +159,7 @@
     <Compile Include="config\AI\Planning\RoutePlanner.cs" />
     <Compile Include="GraphicUtils\Renderer.cs" />
     <Compile Include="HardwareAPI\Navigation.cs" />
+    <Compile Include="HardwareInterface\IMU.cs" />
     <Compile Include="Listener.cs" />
     <Compile Include="config\AI\Learning\LabelHandler.cs" />
     <Compile Include="config\AI\Learning\ObjectDetector.cs" />

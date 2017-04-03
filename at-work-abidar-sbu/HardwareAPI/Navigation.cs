@@ -168,7 +168,18 @@ namespace at_work_abidar_sbu.HardwareAPI
             if (Moving)
                 return;
 
-            ///TODO: Finish Rotate
+            motor.ResetEncoder();
+
+            if (degree == 0)
+                return;
+
+            desiredEncoderValue = (int)(degree * (3600 / 35));
+
+            encoderToWatch = MotorControl.Motors.FrontLeft;
+
+            int wSpeed = (degree > 0 ? Speed : -Speed);
+
+            motor.SetDestination(0, 0, wSpeed);
 
             Moving = true;
         }
@@ -217,7 +228,7 @@ namespace at_work_abidar_sbu.HardwareAPI
                     break;
             }
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
 
             result = board.GetLaserValue(laser) / 10;
 
