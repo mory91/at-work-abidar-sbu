@@ -174,9 +174,15 @@ namespace at_work_abidar_sbu.AI.Navigation
         }
 		public bool setSrc(int rectX, int rectY, int rectW, int rectH, int orientation, double laserLL, double laserLF, double laserRR, double laserRF)
 		{
-			double[] lasers = {(laserLF + laserRF) / 2.0, laserLL, -1, laserRR};
+			double[] lasers = {-1, laserLL, -1, laserRR};
 			int srcX = 0;
 			int srcY = 0;
+			int centerX = rectX + rectW / 2;
+			int centerY = rectY + rectH / 2;
+			int laserLX = centerX + _dx[(orientation + 1) % 4] * 11;
+			int laserLY = centerY + _dy[(orientation + 1) % 4] * 11;
+			int laserRX = centerX + _dx[(orientation + 3) % 4] * 11;
+			int laserRY = centerY + _dy[(orientation + 3) % 4] * 11;
 			double minSum = 1000 * 1000 * 1000 + 10;
 			for (int i = rectX; i <= rectX + rectW; i++)
 				for (int j = rectY; j <= rectY + rectH; j++)
@@ -187,9 +193,13 @@ namespace at_work_abidar_sbu.AI.Navigation
 					for (int k = 0; k < 4; k++)
 					{
 						int k2 = (k + orientation) % 4;
-						if (obstacleDistance[i, j,k2] != -1 && lasers[k] > 0)
+						if (obstacleDistance[i, j, k2] != -1 && lasers[k] > 0)
 							sum += Math.Abs(lasers[k] - obstacleDistance[i, j, k2]);
 					}
+					if (!isInMap(laserLX, laserLY) || !isInMap(laserRX, laserRY))
+						continue;
+                    sum += Math.Abs(laserLF - obstacleDistance[laserLX, laserLY, orientation]);
+					sum += Math.Abs(laserRF - obstacleDistance[laserRX, laserRY, orientation]);
 					if (sum < minSum)
 					{
 						minSum = sum;
