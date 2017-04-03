@@ -164,6 +164,7 @@
     <Compile Include="AI\Task\BMT.cs" />
     <Compile Include="AI\WorldModel\RotationChecker.cs" />
     <Compile Include="AI\WorldModel\LocationApproximator.cs" />
+    <Compile Include="Network\NetworkListener.cs" />
     <Compile Include="Robotics\HardwareInterface\IMU.cs" />
     <Compile Include="Robotics\IRobot.cs" />
     <Compile Include="Robotics\RealRobot.cs" />

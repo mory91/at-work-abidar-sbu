@@ -39,6 +39,12 @@
             this.widthTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.typeCombo = new System.Windows.Forms.ComboBox();
+            this.leftChk = new System.Windows.Forms.CheckBox();
+            this.upChk = new System.Windows.Forms.CheckBox();
+            this.rightChk = new System.Windows.Forms.CheckBox();
+            this.downChk = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // xTextBox
@@ -50,21 +56,21 @@
             // 
             // yTextBox
             // 
-            this.yTextBox.Location = new System.Drawing.Point(56, 43);
+            this.yTextBox.Location = new System.Drawing.Point(56, 40);
             this.yTextBox.Name = "yTextBox";
             this.yTextBox.Size = new System.Drawing.Size(149, 20);
             this.yTextBox.TabIndex = 2;
             // 
             // nameTextBox
             // 
-            this.nameTextBox.Location = new System.Drawing.Point(56, 121);
+            this.nameTextBox.Location = new System.Drawing.Point(56, 238);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(149, 20);
             this.nameTextBox.TabIndex = 5;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(130, 147);
+            this.button1.Location = new System.Drawing.Point(130, 269);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 6;
@@ -125,17 +131,82 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 124);
+            this.label5.Location = new System.Drawing.Point(12, 241);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(35, 13);
             this.label5.TabIndex = 11;
             this.label5.Text = "Name";
             // 
+            // typeCombo
+            // 
+            this.typeCombo.FormattingEnabled = true;
+            this.typeCombo.Location = new System.Drawing.Point(56, 121);
+            this.typeCombo.Name = "typeCombo";
+            this.typeCombo.Size = new System.Drawing.Size(149, 21);
+            this.typeCombo.TabIndex = 12;
+            // 
+            // leftChk
+            // 
+            this.leftChk.AutoSize = true;
+            this.leftChk.Location = new System.Drawing.Point(44, 169);
+            this.leftChk.Name = "leftChk";
+            this.leftChk.Size = new System.Drawing.Size(44, 17);
+            this.leftChk.TabIndex = 13;
+            this.leftChk.Text = "Left";
+            this.leftChk.UseVisualStyleBackColor = true;
+            // 
+            // upChk
+            // 
+            this.upChk.AutoSize = true;
+            this.upChk.Location = new System.Drawing.Point(44, 206);
+            this.upChk.Name = "upChk";
+            this.upChk.Size = new System.Drawing.Size(40, 17);
+            this.upChk.TabIndex = 14;
+            this.upChk.Text = "Up";
+            this.upChk.UseVisualStyleBackColor = true;
+            // 
+            // rightChk
+            // 
+            this.rightChk.AutoSize = true;
+            this.rightChk.Location = new System.Drawing.Point(130, 169);
+            this.rightChk.Name = "rightChk";
+            this.rightChk.Size = new System.Drawing.Size(51, 17);
+            this.rightChk.TabIndex = 15;
+            this.rightChk.Text = "Right";
+            this.rightChk.UseVisualStyleBackColor = true;
+            this.rightChk.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
+            // downChk
+            // 
+            this.downChk.AutoSize = true;
+            this.downChk.Location = new System.Drawing.Point(130, 206);
+            this.downChk.Name = "downChk";
+            this.downChk.Size = new System.Drawing.Size(54, 17);
+            this.downChk.TabIndex = 16;
+            this.downChk.Text = "Down";
+            this.downChk.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 129);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(31, 13);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Type";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
             // CreateStageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(238, 185);
+            this.ClientSize = new System.Drawing.Size(238, 304);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.downChk);
+            this.Controls.Add(this.rightChk);
+            this.Controls.Add(this.upChk);
+            this.Controls.Add(this.leftChk);
+            this.Controls.Add(this.typeCombo);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.widthTextBox);
@@ -167,5 +238,11 @@
 		private System.Windows.Forms.TextBox widthTextBox;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
-	}
+        private System.Windows.Forms.ComboBox typeCombo;
+        private System.Windows.Forms.CheckBox leftChk;
+        private System.Windows.Forms.CheckBox upChk;
+        private System.Windows.Forms.CheckBox rightChk;
+        private System.Windows.Forms.CheckBox downChk;
+        private System.Windows.Forms.Label label6;
+    }
 }

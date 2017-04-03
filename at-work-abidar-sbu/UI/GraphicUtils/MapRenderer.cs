@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,12 @@ namespace at_work_abidar_sbu.UI.GraphicUtils
                             break;
                         case WordObjectType.QR:
                             gr.FillRectangle(Brushes.Gray, rect);
+                            break;
+                        case WordObjectType.Entry:
+                            gr.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal,Color.Red,Color.White), rect);
+                            break;
+                        case WordObjectType.InvisbleWall:
+                            gr.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.Yellow, Color.White), rect);
                             break;
                         default:
                             gr.FillRectangle(Brushes.Crimson, rect);
