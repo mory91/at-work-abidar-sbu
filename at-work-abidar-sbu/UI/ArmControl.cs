@@ -12,6 +12,7 @@ using at_work_abidar_sbu.HardwareAPI;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
+using System.Threading;
 
 namespace at_work_abidar_sbu
 {
@@ -35,8 +36,9 @@ namespace at_work_abidar_sbu
         private void gripBtn_Click(object sender, EventArgs e)
         {
             Arm.i.OpenGripper();
-
+            Thread.Sleep(1000);
             Arm.i.GoToGripPosition();
+            Thread.Sleep(1000);
             Arm.i.CloseGripper();
         }
 
@@ -106,6 +108,23 @@ namespace at_work_abidar_sbu
 
             });
             imageViewer.Show();
+        }
+
+        private void checkBtn_Click(object sender, EventArgs e)
+        {
+            if (Arm.i.GripperGrabbedObject())
+                checkLbl.Text = "True";
+            else
+                checkLbl.Text = "False";
+        }
+
+        private void dropBtn_Click(object sender, EventArgs e)
+        {
+            Arm.i.GoToDropPosition();
+            Thread.Sleep(1000);
+            Arm.i.OpenGripper();
+            Thread.Sleep(1000);
+            Arm.i.CloseGripper();
         }
 
         private void button2_Click(object sender, EventArgs e)

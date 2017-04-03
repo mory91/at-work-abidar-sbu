@@ -26,6 +26,7 @@ namespace at_work_abidar_sbu.HardwareAPI
         {
             dynamixel = DX.i;
             lastPosition = Position.Rest;
+            GoToRestPosition();
         }
 
         private static Arm instance;
@@ -46,47 +47,72 @@ namespace at_work_abidar_sbu.HardwareAPI
         {
             if (lastPosition == Position.Rest)
             {
-                dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle3, 1100);
-                dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle2, 1460);
+                dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle3, 1100);
+                dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle2, 1460);
                 Thread.Sleep(1000);
-                dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle1, 1500);
+                dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle1, 1500);
                 Thread.Sleep(500);
-                dynamixel.SetPositioinWithoutTof(Actuator.ArmPlate, 1976);
-                dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle1, 2284);
-                dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle2, 3542);
-                dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle3, 1125);
-                dynamixel.SetPositioinWithoutTof(Actuator.GripperRotate, 2150);
+                dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle1, 2284);
+                dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle2, 3542);
+                dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle3, 1125);
+                Thread.Sleep(500);
+                TurnArmPlate(180);
+                TurnGripper(180);
             }
             else if(lastPosition == Position.Grip)
             {
-                dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle1, 2284);
-                dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle2, 3542);
-                dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle3, 1125);
+                dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle1, 2284);
+                dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle2, 3542);
+                dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle3, 1125);
             }
             lastPosition = Position.Camera;
         }
 
         public void GoToGripPosition()
         {
-            dynamixel.SetPositionWithTof(Actuator.ArmMiddle1, 1921);
-            dynamixel.SetPositionWithTof(Actuator.ArmMiddle2, 3370);
-            dynamixel.SetPositionWithTof(Actuator.ArmMiddle3, 1272);
+            dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle2, 3330);
+            dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle3, 1237);
+            Thread.Sleep(100);
+            dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle1, 1921);
             lastPosition = Position.Grip;
         }
 
         public void GoToRestPosition()
         {
-            dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle2, 1060);
+            dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle2, 1060);
             Thread.Sleep(1000);
-            dynamixel.SetPositioinWithoutTof(Actuator.ArmPlate, 984);
+            TurnArmPlate(90);
             Thread.Sleep(1000);
-            dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle3, 750);
+            dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle3, 750);
             Thread.Sleep(1000);
-            dynamixel.SetPositioinWithoutTof(Actuator.ArmMiddle1, 1094);
+            dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle1, 1094);
             Thread.Sleep(1000);
-            dynamixel.SetPositioinWithoutTof(Actuator.GripperRotate, 2156);
+            TurnGripper(180);
             CloseGripper();
             lastPosition = Position.Rest;
+        }
+
+        public bool GripperGrabbedObject()
+        {
+            int Gripper1Pos = dynamixel.GetCurrentPosition(Actuator.Gripper1);
+            int Gripper2Pos = dynamixel.GetCurrentPosition(Actuator.Gripper2);
+
+            if (Gripper1Pos < 2050 && Gripper2Pos > 1800)
+                return true;
+            else
+                return false;
+        }
+
+        public void TurnArmPlate(float degree)
+        {
+            degree -= 3F;
+            dynamixel.SetPositionWithoutTof(Actuator.ArmPlate, DX.RearAngleConverter(degree));
+        }
+
+        public void TurnGripper(float degree)
+        {
+            degree += 15F;
+            dynamixel.SetPositionWithoutTof(Actuator.GripperRotate, DX.RearAngleConverter(degree));
         }
 
         public void GoToHoldPosition()
@@ -96,7 +122,11 @@ namespace at_work_abidar_sbu.HardwareAPI
 
         public void GoToDropPosition()
         {
-
+            dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle2, 3200);
+            dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle3, 1100);
+            Thread.Sleep(100);
+            dynamixel.SetPositionWithoutTof(Actuator.ArmMiddle1, 1921);
+            lastPosition = Position.Grip;
         }
     }
 }
