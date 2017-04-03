@@ -11,8 +11,11 @@ using at_work_abidar_sbu.HardwareInterface;
 using System.Threading;
 using at_work_abidar_sbu.AI.Navigation;
 using at_work_abidar_sbu.AI.Planning;
-using at_work_abidar_sbu.GraphicUtils;
+using at_work_abidar_sbu.UI.GraphicUtils;
 using at_work_abidar_sbu.HardwareAPI;
+using at_work_abidar_sbu.Robotics;
+using at_work_abidar_sbu.Simulation;
+using at_work_abidar_sbu.UI.GraphicUtils;
 using Point = at_work_abidar_sbu.AI.Navigation.Point;
 
 namespace at_work_abidar_sbu
@@ -20,14 +23,18 @@ namespace at_work_abidar_sbu
     public partial class MainForm : Form
     {
         Arm arm;
-
+        Renderer renderer = new Renderer();
+        private IRobot robot;
         public MainForm()
         {
+            
+            renderer.RegisterObjectRenderer<Map>(new MapRenderer());
             InitializeComponent();
+            robot = new VirtualRobot();
         }
 
         private Map map;
-        private Point robot;
+//        private Point robot;
         private List<Point> rallyPoint;
         private void cameraTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -75,29 +82,31 @@ namespace at_work_abidar_sbu
 
         private void Render()
         {
-            Renderer renderer = new Renderer();
+            
+            float scalex = (float) (pictureBox1.Width / map.width);
+            float scaley = (float) (pictureBox1.Height / map.height);
+            renderer.AddObject(map);
+            pictureBox1.Image = renderer.Render(pictureBox1.Width,pictureBox1.Height,Color.White, scalex,scaley);
 
-
-            var r = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
-                .DrawMap(map)
-                .DrawRobot(robot, map)
-                .DrawPath(path, map);
-            if (route != null)
-                r = r.DrawLaseres(robot, map, (int) route.LL, (int) route.LF, (int) route.RR, (int) route.RF);
-
-            pictureBox1.Image = r.GetBitmap();
+            //            var r = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
+            //                .DrawMap(map)
+            //                .DrawRobot(robot, map)
+            //                .DrawPath(path, map);
+            //            if (route != null)
+            //                r = r.DrawLaseres(robot, map, (int) route.LL, (int) route.LF, (int) route.RR, (int) route.RF);
+            //
+            //            pictureBox1.Image = r.GetBitmap();
 
         }
 
         private RoutePlanner route;
         private PathShape path;
-        private Navigation nav;
         private void navigateBtn_Click(object sender, EventArgs e)
         {
             CreatePathForm createPathForm = new CreatePathForm();
             createPathForm.pathFinder =new PathFinder();
             createPathForm.map = map;
-            nav = Navigation.i;
+            
             createPathForm.FormClosing += (o, form) =>
             {
                 map = createPathForm.map;
@@ -105,12 +114,12 @@ namespace at_work_abidar_sbu
                 path.path = createPathForm.pathFinder.getPath();
                 route = new RoutePlanner(path,map,createPathForm.pathFinder);
                 rallyPoint = route.NormalizePath();
-                robot = rallyPoint[0] ?? new Point(0, 0);
+                robot.Center = rallyPoint[0] ?? new Point(0, 0);
                 //rallyPoint.RemoveAt(0);
 
               
               //  nav.Initialize();
-                nav.SetSpeed(10);
+                robot.Speed = 10;
                 moved = true;
                 Timer1.Enabled = true;
             };
@@ -122,7 +131,7 @@ namespace at_work_abidar_sbu
         private void Timer1_Tick(object sender, EventArgs e)
         {
 
-            if (nav.IsMoving())
+            if (robot.IsMoving)
                 moved = true;
             else
             {
@@ -136,8 +145,8 @@ namespace at_work_abidar_sbu
                         var robotl = rallyPoint[0];
 
 
-                        robot = route.RobotPositionFromLasers();
-                        Console.WriteLine("Robot: {0} {1}", robot.x, robot.y);
+                        robot.ReadLaserValues(); 
+                        Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.x);
                         Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
                        // Render();
 
@@ -158,8 +167,8 @@ namespace at_work_abidar_sbu
                         rallyPoint.RemoveAt(0);
                         while (rallyPoint.Count > 1)
                         {
-                            double dx = rallyPoint[0].x - robot.x;
-                            double dy = rallyPoint[0].y - robot.y;
+                            double dx = rallyPoint[0].x - robot.Center.x;
+                            double dy = rallyPoint[0].y - robot.Center.y;
                             if (dx * dx + dy * dy < 4)
                                 rallyPoint.RemoveAt(0);
                             else
@@ -168,8 +177,8 @@ namespace at_work_abidar_sbu
 
                         if (rallyPoint.Count > 0)
                         {
-                            double dx = rallyPoint[0].x - robot.x;
-                            double dy = rallyPoint[0].y - robot.y;
+                            double dx = rallyPoint[0].x - robot.Center.x;
+                            double dy = rallyPoint[0].y - robot.Center.y;
                             Console.WriteLine((float)(dx));
                             Console.WriteLine((float)(dy));
 
@@ -180,7 +189,7 @@ namespace at_work_abidar_sbu
                                 dy = 0;
                             }
                            
-                            Navigation.i.Go((float)(dx),(float) (-dy));
+                            robot.Go((float)(dx),(float) (-dy));
                         }
                             
                     }
@@ -192,8 +201,8 @@ namespace at_work_abidar_sbu
         private void button1_Click(object sender, EventArgs e)
         {
             route = new RoutePlanner(null,map,null);
-            robot = route.RobotPositionFromLasers();
-            Console.WriteLine("Robot: {0} {1}",robot.x,robot.y);
+            route.ReadLaserValues();
+            Console.WriteLine("Robot: {0} {1}",robot.Center.x,robot.Center.y);
             Console.WriteLine("Robot: {0} {1} {2} {3}", route.LL, route.LF, route.RF, route.RR);
             Render();
         }
@@ -201,9 +210,7 @@ namespace at_work_abidar_sbu
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Console.WriteLine("Ending Navigation");
-            Navigation.i.End();
         }
-
         private void objectRecognitionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ObjectRecognitionTestForm test = new ObjectRecognitionTestForm();

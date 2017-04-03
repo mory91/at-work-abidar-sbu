@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using at_work_abidar_sbu.AI.Navigation;
-using at_work_abidar_sbu.GraphicUtils;
+using at_work_abidar_sbu.UI.GraphicUtils;
 using Newtonsoft.Json;
 
 namespace at_work_abidar_sbu
@@ -88,10 +88,10 @@ namespace at_work_abidar_sbu
         private void DrawMap()
         {
             Renderer renderer = new Renderer();
-            pictureBox1.Image = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
-                .DrawMap(map)
-                .DrawPath(path, map)
-                .GetBitmap(); ;
+//            pictureBox1.Image = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
+//                .DrawMap(map)
+//                .DrawPath(path, map)
+//                .GetBitmap(); ;
 
         }
 
