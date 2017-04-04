@@ -98,8 +98,7 @@ namespace at_work_abidar_sbu.AI.WorldModel
 				return obstacleDistance[x, y, orientation];
 			if (map[x, y] == 2) //wall
             {
-                if (IsInMap(x, y))
-                    obstacleDistance[x, y, orientation] = 0;
+                obstacleDistance[x, y, orientation] = 0;
                 return 0;
             }
             int x2 = x + _dx[orientation];
@@ -123,8 +122,8 @@ namespace at_work_abidar_sbu.AI.WorldModel
 			for (int i = x; i < x + w; i++)
                 for (int j = y; j < y + h; j++)
                 {
-                    if (!IsInMap(i, j))
-                        continue;
+                    // if (!IsInMap(i, j))
+					//	continue;
                     map[i, j] = tmp;
                     for (int i2 = i - RobotSize / 2 - RobotPadding; i2 <= i + RobotSize / 2 + RobotPadding; i2++)
                         for (int j2 = j - RobotSize / 2 - RobotPadding; j2 <= j + RobotSize / 2 + RobotPadding; j2++)
