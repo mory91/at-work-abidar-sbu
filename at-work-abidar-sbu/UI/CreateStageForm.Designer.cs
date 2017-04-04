@@ -45,6 +45,10 @@
             this.rightChk = new System.Windows.Forms.CheckBox();
             this.downChk = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.btnMaxX = new System.Windows.Forms.Button();
+            this.btnMaxY = new System.Windows.Forms.Button();
+            this.btnMaxWidth = new System.Windows.Forms.Button();
+            this.btnMaxHeight = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // xTextBox
@@ -196,11 +200,55 @@
             this.label6.Text = "Type";
             this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
+            // btnMaxX
+            // 
+            this.btnMaxX.Location = new System.Drawing.Point(211, 10);
+            this.btnMaxX.Name = "btnMaxX";
+            this.btnMaxX.Size = new System.Drawing.Size(37, 23);
+            this.btnMaxX.TabIndex = 18;
+            this.btnMaxX.Text = "Max";
+            this.btnMaxX.UseVisualStyleBackColor = true;
+            this.btnMaxX.Click += new System.EventHandler(this.btnMaxX_Click);
+            // 
+            // btnMaxY
+            // 
+            this.btnMaxY.Location = new System.Drawing.Point(211, 38);
+            this.btnMaxY.Name = "btnMaxY";
+            this.btnMaxY.Size = new System.Drawing.Size(37, 23);
+            this.btnMaxY.TabIndex = 19;
+            this.btnMaxY.Text = "Max";
+            this.btnMaxY.UseVisualStyleBackColor = true;
+            this.btnMaxY.Click += new System.EventHandler(this.btnMaxY_Click);
+            // 
+            // btnMaxWidth
+            // 
+            this.btnMaxWidth.Location = new System.Drawing.Point(211, 67);
+            this.btnMaxWidth.Name = "btnMaxWidth";
+            this.btnMaxWidth.Size = new System.Drawing.Size(37, 23);
+            this.btnMaxWidth.TabIndex = 20;
+            this.btnMaxWidth.Text = "Max";
+            this.btnMaxWidth.UseVisualStyleBackColor = true;
+            this.btnMaxWidth.Click += new System.EventHandler(this.btnMaxWidth_Click);
+            // 
+            // btnMaxHeight
+            // 
+            this.btnMaxHeight.Location = new System.Drawing.Point(211, 93);
+            this.btnMaxHeight.Name = "btnMaxHeight";
+            this.btnMaxHeight.Size = new System.Drawing.Size(37, 23);
+            this.btnMaxHeight.TabIndex = 21;
+            this.btnMaxHeight.Text = "Max";
+            this.btnMaxHeight.UseVisualStyleBackColor = true;
+            this.btnMaxHeight.Click += new System.EventHandler(this.btnMaxHeight_Click);
+            // 
             // CreateStageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(238, 304);
+            this.ClientSize = new System.Drawing.Size(258, 304);
+            this.Controls.Add(this.btnMaxHeight);
+            this.Controls.Add(this.btnMaxWidth);
+            this.Controls.Add(this.btnMaxY);
+            this.Controls.Add(this.btnMaxX);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.downChk);
             this.Controls.Add(this.rightChk);
@@ -244,5 +292,9 @@
         private System.Windows.Forms.CheckBox rightChk;
         private System.Windows.Forms.CheckBox downChk;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnMaxX;
+        private System.Windows.Forms.Button btnMaxY;
+        private System.Windows.Forms.Button btnMaxWidth;
+        private System.Windows.Forms.Button btnMaxHeight;
     }
 }
