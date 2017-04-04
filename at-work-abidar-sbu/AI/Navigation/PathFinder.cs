@@ -101,6 +101,14 @@ namespace at_work_abidar_sbu.AI.Navigation
                 path.Add(cell);
                 cell = nxt[(int)cell.x, (int)cell.y];
             }
+			if (path.Count() > 0)
+			{
+				if ((int)path[0].x != (int)src.x || (int)path[0].y != (int)src.y)
+				{
+					path.Clear();
+					path.Add(new Point(src.x, src.y));
+				}
+			}
             path.Reverse();
         }
 
