@@ -20,6 +20,7 @@ using at_work_abidar_sbu.Simulation;
 using at_work_abidar_sbu.UI.GraphicUtils;
 using Point = at_work_abidar_sbu.AI.Navigation.Point;
 using at_work_abidar_sbu.UI;
+using Orientation = at_work_abidar_sbu.HardwareAPI.Orientation;
 
 namespace at_work_abidar_sbu
 {
@@ -94,6 +95,10 @@ namespace at_work_abidar_sbu
             renderer.AddObject(robot);
             if(route != null)
                 renderer.AddObject(route.GetPathShape());
+            if ( bnt != null)
+                renderer.AddObject(bnt.GetPathShape());
+
+
             pictureBox1.Image = renderer.Render(pictureBox1.Width,pictureBox1.Height,Color.White, scaley, scaley);
 
             //            var r = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
@@ -130,15 +135,35 @@ namespace at_work_abidar_sbu
         private void Timer1_Tick(object sender, EventArgs e)
         {
 
-            route.Tick();
+//            route.Tick();
+            bnt.Tick();
             Render();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             robot.ReadLaserValues();
-            Console.WriteLine("Robot: {0} {1}",robot.Center.x,robot.Center.y);
+
+            Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.y);
             Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
+
+            CreatePathForm createPathForm = new CreatePathForm();
+
+            createPathForm.FormClosing += (o, form) =>
+            {
+                var src = new Point(Int32.Parse(createPathForm.srcXTextBox.Text), Int32.Parse(createPathForm.srcYTextBox.Text));
+
+
+                LocationApproximator locationApproximator = new LocationApproximator();
+                locationApproximator.SetUp(map);
+                Point loc = locationApproximator.GetLocation((int)(src.x - R / 2), (int)(src.y - R / 2), R, R, 2, robot.LL, robot.LF, robot.RR, robot.RF);
+                robot.Center = loc;
+                Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.y);
+                Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
+                Render();
+            };
+            createPathForm.Show();
+
             Render();
         }
 
@@ -166,12 +191,37 @@ namespace at_work_abidar_sbu
             test.ShowDialog();
         }
 
+        private BNT bnt;
         private void bntBtn_Click(object sender, EventArgs e)
         {
-            BNT bnt = new BNT(map,robot);
-            var rect = bnt.FindStageRegion("S1");
-            var des=bnt.FindDestinationPoint(Rectangle.Round(rect));
-            var ev = bnt.FindEntryVector();
+         ///   robot.ReadLaserValues();
+
+            //Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.y);
+            //Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
+
+
+            robot.Rotate(-270);
+            return;
+            CreatePathForm createPathForm = new CreatePathForm();
+
+            createPathForm.FormClosing += (o, form) =>
+            {
+                var src = new Point(Int32.Parse(createPathForm.srcXTextBox.Text), Int32.Parse(createPathForm.srcYTextBox.Text));
+               // LocationApproximator locationApproximator = new LocationApproximator();
+             //   locationApproximator.SetUp(map);
+            //    Point loc = locationApproximator.GetLocation((int)(src.x - R / 2), (int)(src.y - R / 2), R, R, 2, robot.LL, robot.LF, robot.RR, robot.RF);
+          //      robot.Center = loc;
+                Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.y);
+                Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
+                bnt= new BNT(map,robot);
+                Orientation orientation;
+                Enum.TryParse<Orientation>(createPathForm.dstYTextBox.Text, out orientation);
+                bnt.Start(src,createPathForm.dstXtextBox.Text,orientation);
+                Timer1.Enabled = true;
+                Render();
+            };
+            createPathForm.Show();
+            Render();
         }
     }
 }

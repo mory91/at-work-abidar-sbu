@@ -52,6 +52,11 @@ namespace at_work_abidar_sbu.AI.Planning
         }
         bool moved = false;
 
+        public Point GetDestination()
+        {
+            return pathFinder.getDst();
+        }
+
         public void Start(Point src,Point dst)
         {
 
@@ -94,10 +99,12 @@ namespace at_work_abidar_sbu.AI.Planning
                         LocationApproximator locationApproximator = new LocationApproximator();
                         locationApproximator.SetUp(map);
                         Point loc = locationApproximator.GetLocation((int)(robotl.x - R / 2), (int)(robotl.y - R / 2), R, R, 2, robot.LL, robot.LF, robot.RR, robot.RF);
+
                         if (loc != null)
                         {
                             pathFinder.setSrc((int)loc.x, (int)loc.y);
                             pathFinder.findPath();
+                            robot.Center = loc;
                             Console.WriteLine("rec");
                         }
                        

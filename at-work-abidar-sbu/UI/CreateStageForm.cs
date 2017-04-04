@@ -24,7 +24,7 @@ namespace at_work_abidar_sbu
             WordObjectType type;
             Enum.TryParse<WordObjectType>(typeCombo.SelectedValue.ToString(), out type);
             MapObject stage = new MapObject(type, nameTextBox.Text, Double.Parse(xTextBox.Text), 
-                Double.Parse(yTextBox.Text), Int32.Parse(widthTextBox.Text), Int32.Parse(heightTextBox.Text));
+            Double.Parse(yTextBox.Text), Int32.Parse(widthTextBox.Text), Int32.Parse(heightTextBox.Text));
 
             //    pathFinder.addObstacle((int) stage.X, (int) stage.Y, (int)stage.Width, (int)stage.Height);
 

@@ -19,8 +19,7 @@ namespace at_work_abidar_sbu.AI.WorldModel
         private int _MapWidth = 800;
         private int _MapHeight = 600;
 
-        const int RobotSize = 45; //cm
-		const int RobotPadding = 5;
+        const int RobotSize = 55; //cm
 
         private int MapWidth => _MapWidth;
         int MapHeight => _MapHeight;
@@ -43,7 +42,8 @@ namespace at_work_abidar_sbu.AI.WorldModel
             {
                 AddObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height, o.Type == WordObjectType.Wall);
             }
-            CalcObstacleDistances();      
+            CalcObstacleDistances();
+
         }
 
         public Point GetLocation(int rectX, int rectY, int rectW, int rectH, int orientation, double laserLL, double laserLF, double laserRR, double laserRF)
@@ -59,17 +59,17 @@ namespace at_work_abidar_sbu.AI.WorldModel
                     int laserLY = j + _dy[(orientation + 1) % 4] * 11;
                     int laserRX = i + _dx[(orientation + 3) % 4] * 11;
                     int laserRY = j + _dy[(orientation + 3) % 4] * 11;
-                    if (!IsInMap(i, j) || touchWall[i, j] != 0 || !IsInMap(laserLX, laserLY) || !IsInMap(laserRX, laserRY))
+                    if (!IsInMap(i, j) || touchWall[i, j] != 0)
                         continue;
                     double sum = 0;
                     for (int k = 0; k < 4; k++)
                     {
                         int k2 = (k + orientation) % 4;
-						if (obstacleDistance[i, j, k2] > Math.Max(MapWidth, MapHeight) && lasers[k] > 200)
-							continue;
                         if (obstacleDistance[i, j, k2] != -1 && lasers[k] > 0)
                             sum += Math.Abs(lasers[k] - obstacleDistance[i, j, k2]);
                     }
+                    if (!IsInMap(laserLX, laserLY) || !IsInMap(laserRX, laserRY))
+                        continue;
                     sum += Math.Abs(laserLF - obstacleDistance[laserLX, laserLY, orientation]);
                     sum += Math.Abs(laserRF - obstacleDistance[laserRX, laserRY, orientation]);
                     if (sum < minSum)
@@ -90,18 +90,14 @@ namespace at_work_abidar_sbu.AI.WorldModel
         }
         private int CalcDis(int x, int y, int orientation)
         {
-			if (!IsInMap(x, y)) //outside
-			{
-				return Math.Max(MapWidth, MapHeight) * 2; //INF
-			}
-			if (obstacleDistance[x, y, orientation] != -1)
-				return obstacleDistance[x, y, orientation];
-			if (map[x, y] == 2) //wall
+            if (!IsInMap(x, y) || map[x, y] == 2) //out or wall
             {
                 if (IsInMap(x, y))
                     obstacleDistance[x, y, orientation] = 0;
                 return 0;
             }
+            if (obstacleDistance[x, y, orientation] != -1)
+                return obstacleDistance[x, y, orientation];
             int x2 = x + _dx[orientation];
             int y2 = y + _dy[orientation];
             obstacleDistance[x, y, orientation] = CalcDis(x2, y2, orientation) + 1;
@@ -117,17 +113,17 @@ namespace at_work_abidar_sbu.AI.WorldModel
         }
         public void AddObstacle(int x, int y, int w, int h, bool isWall)
         {
-            int tmp = 1; //robot touches but laser doesn't
+            int tmp = 1;
             if (isWall)
-                tmp = 2; //robot and laser touch
-			for (int i = x; i < x + w; i++)
+                tmp = 2;
+            for (int i = x; i < x + w; i++)
                 for (int j = y; j < y + h; j++)
                 {
                     if (!IsInMap(i, j))
                         continue;
-                    map[i, j] = tmp;
-                    for (int i2 = i - RobotSize / 2 - RobotPadding; i2 <= i + RobotSize / 2 + RobotPadding; i2++)
-                        for (int j2 = j - RobotSize / 2 - RobotPadding; j2 <= j + RobotSize / 2 + RobotPadding; j2++)
+                    map[i, j] = tmp; //1 for FULL, 0 for EMPTY
+                    for (int i2 = i - RobotSize / 2; i2 <= i + RobotSize / 2; i2++)
+                        for (int j2 = j - RobotSize / 2; j2 <= j + RobotSize / 2; j2++)
                             if (IsInMap(i2, j2))
                                 touchWall[i2, j2] = 1;
                 }

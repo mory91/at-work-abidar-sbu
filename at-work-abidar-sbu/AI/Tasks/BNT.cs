@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using at_work_abidar_sbu.AI.Planning;
 using at_work_abidar_sbu.AI.WorldModel;
 using at_work_abidar_sbu.HardwareAPI;
 using at_work_abidar_sbu.Robotics;
@@ -12,7 +13,12 @@ using Point = at_work_abidar_sbu.AI.Navigation.Point;
 
 namespace at_work_abidar_sbu.AI.Tasks
 {
-    class BNT
+    public enum BNTState
+    {
+        ROTATING, MOVING
+    }
+
+    public class BNT
     {
         private  readonly log4net.ILog log =
    log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -20,7 +26,8 @@ namespace at_work_abidar_sbu.AI.Tasks
         private IRobot robot;
         private RotationChecker rotationChecker;
         private int ROBOT_SIZE = 44;
-
+        private RoutePlanner route;
+        private Orientation orientation;
         public BNT(Map map, IRobot robot)
         {
             this.map = map;
@@ -151,6 +158,44 @@ namespace at_work_abidar_sbu.AI.Tasks
                 t.y = -p.x;
             }
             return t;
+        }
+
+        public void Start(Point src, string name , Orientation orientation)
+        {
+            route = new RoutePlanner(robot,map);
+            var rec = FindStageRegion(name);
+            Point p = FindDestinationPoint(Rectangle.Round(rec));
+            route.Start(src,p);
+            this.orientation = orientation;
+        }
+
+        BNTState state = BNTState.MOVING;    
+        public void Tick()
+        {
+            var d = robot.Center - route.GetDestination();
+            if (d.Lenght() < 4)
+            {
+                state = BNTState.ROTATING;
+            }
+            if(state == BNTState.MOVING)
+                route.Tick();
+            else
+            {
+                if(robot.IsMoving)
+                    return;
+                if (robot.Orientation != orientation)
+                {
+                    robot.Rotate(90);
+                    log.Info(robot.Orientation);
+
+                }
+                    
+            }
+        }
+
+        public PathShape GetPathShape()
+        {
+            return route.GetPathShape();
         }
 
     }

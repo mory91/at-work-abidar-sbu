@@ -22,7 +22,7 @@ namespace at_work_abidar_sbu.Robotics
         private int degree = 0;
         public void Rotate(float degree)
         {
-            this.degree += this.degree;
+            this.degree += (int)degree;
             this.degree %= 360;
             Navigation.i.Rotate(degree);
         }
@@ -33,8 +33,7 @@ namespace at_work_abidar_sbu.Robotics
             {
 
                 //                ReadLaserValues();
-                _Center.x = LL;
-                _Center.y = (RF);
+                
                 return _Center;
             }
             set { _Center = value; } 
@@ -48,6 +47,8 @@ namespace at_work_abidar_sbu.Robotics
             t = Navigation.i.GetDistanceSync(HardwareAPI.Orientation.W);
             LL = t.Item1 + ROBOT_SIZE / 2 - LASER_TO_SIDE;
             RR = t.Item2 + ROBOT_SIZE / 2 - LASER_TO_SIDE;
+            _Center.x = LL;
+            _Center.y = (RF);
 
         }
 
@@ -79,7 +80,7 @@ namespace at_work_abidar_sbu.Robotics
                     return Orientation.S;
                 if (degree > 260 && degree < 280)
                     return Orientation.W;
-                if((degree < 10 && degree >= 0) || degree > 350 && degree <= 360)
+                if((degree < 10 && degree >= 0) || (degree > 350 && degree <= 360))
                     return Orientation.N;
                 return Orientation.B;
                 

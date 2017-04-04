@@ -62,10 +62,9 @@ namespace at_work_abidar_sbu.UI.GraphicUtils
                 (int) ((Top - LF) * scaley));
             gr.DrawLine(Pens.Brown, (int) (Left * scalex), (int) (Top * scaley), (int) ((Left - LL) * scalex),
                 (int) ((Top) * scaley));
-            Left += ROBOT_SIZE;
-            gr.DrawLine(Pens.Brown, (int) (Left * scalex), (int) (Top * scaley), (int) (Left * scalex),
+            gr.DrawLine(Pens.Brown, (int) (Right * scalex), (int) (Top * scaley), (int) (Right * scalex),
                 (int) ((Top - RF) * scaley));
-            gr.DrawLine(Pens.Brown, (int) (Left * scalex), (int) (Top * scaley), (int) ((Left + RR) * scalex),
+            gr.DrawLine(Pens.Brown, (int) (Right * scalex), (int) (Top * scaley), (int) ((Right + RR) * scalex),
                 (int) ((Top) * scaley));
 
 //            }

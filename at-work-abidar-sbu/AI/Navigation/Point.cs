@@ -33,5 +33,10 @@ namespace at_work_abidar_sbu.AI.Navigation
         {
             return new Point(k * p.x, k * p.y);
         }
+
+        public double Lenght()
+        {
+            return Math.Sqrt(x * x + y * y);
+        }
     }
 }
