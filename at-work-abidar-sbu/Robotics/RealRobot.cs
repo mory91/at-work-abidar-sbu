@@ -19,8 +19,11 @@ namespace at_work_abidar_sbu.Robotics
             Navigation.i.Go((float)(dx), (float)(dy));
         }
 
+        private int degree = 0;
         public void Rotate(float degree)
         {
+            this.degree += this.degree;
+            this.degree %= 360;
             Navigation.i.Rotate(degree);
         }
 
@@ -38,11 +41,11 @@ namespace at_work_abidar_sbu.Robotics
         }
         public void ReadLaserValues()
         {
-            var t = Navigation.i.GetDistanceSync(HardwareAPI.Orientation.Front);
+            var t = Navigation.i.GetDistanceSync(HardwareAPI.Orientation.N);
             LF = t.Item1 + ROBOT_SIZE / 2 - LASER_TO_FRONT;
             RF = t.Item2 + ROBOT_SIZE / 2 - LASER_TO_FRONT;
 
-            t = Navigation.i.GetDistanceSync(HardwareAPI.Orientation.Left);
+            t = Navigation.i.GetDistanceSync(HardwareAPI.Orientation.W);
             LL = t.Item1 + ROBOT_SIZE / 2 - LASER_TO_SIDE;
             RR = t.Item2 + ROBOT_SIZE / 2 - LASER_TO_SIDE;
 
@@ -58,10 +61,29 @@ namespace at_work_abidar_sbu.Robotics
         public float LL { get; set; }
         public float RF { get; set; }
         public float RR { get; set; }
-        public float Orientation { get; set; }
+        public float Degree {
+            get { return degree; } 
+        }
+
         public void End()
         {
             Navigation.i.End();
+        }
+
+        public HardwareAPI.Orientation Orientation {
+            get
+            {
+                if(degree >80 && degree < 100)
+                    return  Orientation.E;
+                if (degree > 170 && degree < 190)
+                    return Orientation.S;
+                if (degree > 260 && degree < 280)
+                    return Orientation.W;
+                if((degree < 10 && degree >= 0) || degree > 350 && degree <= 360)
+                    return Orientation.N;
+                return Orientation.B;
+                
+            }
         }
 
         private byte _Speed;

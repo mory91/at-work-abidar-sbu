@@ -17,7 +17,10 @@ namespace at_work_abidar_sbu.UI.GraphicUtils
             using (gr)
             {
                 gr.FillRectangle(
-                    Brushes.White, 0, 0, bitmap.Width, bitmap.Height);
+                    Brushes.Black, 0, 0, bitmap.Width, bitmap.Height);
+
+                gr.FillRectangle(
+                    Brushes.White, 0, 0, (int)map.width*scalex, (int)map.height*scaley);
                 foreach (MapObject o in map.obstacles)
                 {
                     Rectangle rect = new Rectangle((int)(o.X * scalex), (int)(o.Y * scaley), (int)(o.Width * scalex), (int)(o.Height * scaley));
@@ -38,6 +41,8 @@ namespace at_work_abidar_sbu.UI.GraphicUtils
                                 gr.FillRectangle(Brushes.Yellow, rect);
                             if (name[0] == 'D')
                                 gr.FillRectangle(Brushes.Orange, rect);
+
+                            gr.DrawString(o.Name,SystemFonts.DefaultFont,Brushes.Green,rect);
                             break;
                         case WordObjectType.Wall:
                             gr.FillRectangle(Brushes.Black, rect);
@@ -47,6 +52,9 @@ namespace at_work_abidar_sbu.UI.GraphicUtils
                             break;
                         case WordObjectType.Entry:
                             gr.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal,Color.Red,Color.White), rect);
+                            break;
+                        case WordObjectType.Exit:
+                            gr.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.Red, Color.Blue), rect);
                             break;
                         case WordObjectType.InvisbleWall:
                             gr.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.Yellow, Color.White), rect);

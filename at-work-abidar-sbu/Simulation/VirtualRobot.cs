@@ -37,7 +37,7 @@ namespace at_work_abidar_sbu.Simulation
         public float LL { get; set; }
         public float RF { get; set; }
         public float RR { get; set; }
-        public float Orientation { get; set; }
+        public HardwareAPI.Orientation Orientation { get;  }
         public void ReadLaserValues()
         {
             
