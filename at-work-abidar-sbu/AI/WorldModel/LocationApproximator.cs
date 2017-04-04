@@ -20,7 +20,7 @@ namespace at_work_abidar_sbu.AI.WorldModel
 		private int _MapHeight = 600;
 
 		const int RobotSize = 45; //cm
-		const int RobotPadding = 5;
+		const int RobotPadding = 6;
 
 		private int MapWidth => _MapWidth;
 		int MapHeight => _MapHeight;
