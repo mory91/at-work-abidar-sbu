@@ -15,7 +15,7 @@ namespace at_work_abidar_sbu.AI.Navigation
 		private int MapWidth => _MapWidth;
 //x, cm
 
-        int MapHeight => _MapHeight;
+		private int MapHeight => _MapHeight;
 //y, cm
         const int RobotSize = 45; //cm
 		const int RobotPadding = 5; //cm
