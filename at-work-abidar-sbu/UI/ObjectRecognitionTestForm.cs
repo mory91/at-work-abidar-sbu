@@ -28,13 +28,10 @@ namespace at_work_abidar_sbu
         {
             InitializeComponent();
             objectDetector = new ObjectDetector("svm3.save");
-            recognizer = new ObjectRecognizer(); 
+            recognizer = new ObjectRecognizer("svm3.save"); 
         }
 
         private ObjectRecognizer recognizer;
-        private int frameCount = 0;
-        private int second = 1;
-        private Image<Rgb, byte> finalImage;
         private string[] names =
         {
             "big-nut",

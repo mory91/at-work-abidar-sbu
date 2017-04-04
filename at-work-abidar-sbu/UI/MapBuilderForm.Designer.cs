@@ -32,10 +32,7 @@
             this.createStage = new System.Windows.Forms.Button();
             this.save = new System.Windows.Forms.Button();
             this.delete = new System.Windows.Forms.Button();
-            this.createWall = new System.Windows.Forms.Button();
-            this.createQR = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.btnPath = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,7 +51,7 @@
             this.createStage.Name = "createStage";
             this.createStage.Size = new System.Drawing.Size(75, 23);
             this.createStage.TabIndex = 4;
-            this.createStage.Text = "Stage";
+            this.createStage.Text = "Add";
             this.createStage.UseVisualStyleBackColor = true;
             this.createStage.Click += new System.EventHandler(this.createStage_Click);
             // 
@@ -78,26 +75,6 @@
             this.delete.UseVisualStyleBackColor = true;
             this.delete.Click += new System.EventHandler(this.delete_Click);
             // 
-            // createWall
-            // 
-            this.createWall.Location = new System.Drawing.Point(93, 460);
-            this.createWall.Name = "createWall";
-            this.createWall.Size = new System.Drawing.Size(75, 23);
-            this.createWall.TabIndex = 8;
-            this.createWall.Text = "Wall";
-            this.createWall.UseVisualStyleBackColor = true;
-            this.createWall.Click += new System.EventHandler(this.createWall_Click);
-            // 
-            // createQR
-            // 
-            this.createQR.Location = new System.Drawing.Point(174, 460);
-            this.createQR.Name = "createQR";
-            this.createQR.Size = new System.Drawing.Size(75, 23);
-            this.createQR.TabIndex = 9;
-            this.createQR.Text = "QR";
-            this.createQR.UseVisualStyleBackColor = true;
-            this.createQR.Click += new System.EventHandler(this.createQR_Click);
-            // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
@@ -106,25 +83,12 @@
             this.listBox1.Size = new System.Drawing.Size(138, 433);
             this.listBox1.TabIndex = 10;
             // 
-            // btnPath
-            // 
-            this.btnPath.Location = new System.Drawing.Point(255, 460);
-            this.btnPath.Name = "btnPath";
-            this.btnPath.Size = new System.Drawing.Size(75, 23);
-            this.btnPath.TabIndex = 11;
-            this.btnPath.Text = "Path";
-            this.btnPath.UseVisualStyleBackColor = true;
-            this.btnPath.Click += new System.EventHandler(this.btnPath_Click);
-            // 
             // MapBuilderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(806, 495);
-            this.Controls.Add(this.btnPath);
             this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.createQR);
-            this.Controls.Add(this.createWall);
             this.Controls.Add(this.delete);
             this.Controls.Add(this.save);
             this.Controls.Add(this.createStage);
@@ -142,9 +106,6 @@
         private System.Windows.Forms.Button createStage;
         private System.Windows.Forms.Button save;
         private System.Windows.Forms.Button delete;
-        private System.Windows.Forms.Button createWall;
-        private System.Windows.Forms.Button createQR;
         private System.Windows.Forms.ListBox listBox1;
-		private System.Windows.Forms.Button btnPath;
 	}
 }

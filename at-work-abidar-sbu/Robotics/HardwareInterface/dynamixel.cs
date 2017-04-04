@@ -32,10 +32,11 @@
 
 using System;
 using System.Runtime.InteropServices;
-
+  #pragma warning disable 1060
 namespace dynamixel_sdk
 {
-  class dynamixel
+  
+    class dynamixel
   {
     const string dll_path = "./dxl_x64_c.dll";
 
@@ -60,6 +61,7 @@ namespace dynamixel_sdk
         [DllImport(dll_path)]
         public static extern int getBaudRate(int port_num);
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")]
         [DllImport(dll_path)]
         public static extern int readPort(int port_num, byte[] packet, int length);
         [DllImport(dll_path)]

@@ -34,9 +34,9 @@ namespace at_work_abidar_sbu.Robotics
 
                 //                ReadLaserValues();
                 
-                return _Center;
+                return new Point(_Center.x,_Center.y);
             }
-            set { _Center = value; } 
+            set { _Center = new Point(value.x,value.y); } 
         }
         public void ReadLaserValues()
         {

@@ -175,7 +175,7 @@ namespace at_work_abidar_sbu.HardwareAPI
             if (degree == 0)
                 return;
 
-            desiredEncoderValue = (int)(degree * (690 / 35));
+            desiredEncoderValue = (int)(degree * (665 / 35));
 
             encoderToWatch = MotorControl.Motors.FrontLeft;
 
