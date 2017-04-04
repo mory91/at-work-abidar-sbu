@@ -93,7 +93,7 @@ namespace at_work_abidar_sbu
         private void button1_Click(object sender, EventArgs e)
         {
             Capture capture = new Capture(0);
-            ObjectRecognizer recognizer = new ObjectRecognizer();
+            ObjectRecognizer recognizer = new ObjectRecognizer("svm4.svm");
             ImageViewer imageViewer = new ImageViewer();
             Application.Idle += new EventHandler((o, args) =>
             {

@@ -20,7 +20,6 @@ namespace at_work_abidar_sbu
         private double height, width;
         private Map map;
         Bitmap res;
-        PathShape path;
         Renderer renderer = new Renderer();
         public MapBuilderForm(double x, double y)
         {
@@ -73,28 +72,15 @@ namespace at_work_abidar_sbu
 
         }
 
-        private void createWall_Click(object sender, EventArgs e)
-        {
-            CreateWallForm cg = new CreateWallForm();
-		    cg.map = map;
-            cg.FormClosing += (o, form) =>
-            {
-                map = cg.map;
-                DrawMap();
-        //      pictureBox1.Image = map.build(res); ;
-                listBox1.DataSource = null;
-                listBox1.DataSource = map.obstacles;
-            };
-            cg.Show();
-        }
-
+        
         private void DrawMap()
         {
             renderer.AddObject(map);
+            int h = (int) (pictureBox1.Width * map.height / map.width);
             float scalex = (float)(pictureBox1.Width / map.width);
-            float scaley = (float)(pictureBox1.Height / map.height);
+            float scaley = (float)(h / map.height);
             renderer.AddObject(map);
-            pictureBox1.Image = renderer.Render(pictureBox1.Width, pictureBox1.Height, Color.White, scaley, scaley);
+            pictureBox1.Image = renderer.Render(pictureBox1.Width, pictureBox1.Height, Color.White, scalex, scaley);
 //            Renderer renderer = new Renderer();
 //            pictureBox1.Image = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
 //                .DrawMap(map)
@@ -102,45 +88,12 @@ namespace at_work_abidar_sbu
 //                .GetBitmap(); ;
 
         }
-
-        private void createQR_Click(object sender, EventArgs e)
-        {
-            CreateQRForm qr = new CreateQRForm();
-            qr.map = map;
-//            qr.scalex = scalex;
-//            qr.scaley = scaley;
-            qr.FormClosing += (o, form) =>
-            {
-                map = qr.map;
-                DrawMap();
-                ResetList();
-            };
-            qr.Show();
-        }
-
         private void ResetList()
         {
             listBox1.DataSource = null;
             listBox1.DataSource = map.obstacles;
         }
 
-
-        private void btnPath_Click(object sender, EventArgs e)
-		{
-			CreatePathForm createPathForm = new CreatePathForm();
-			createPathForm.pathFinder = pathFinder;
-			createPathForm.map = map;
-			createPathForm.FormClosing += (o, form) =>
-			{
-				map = createPathForm.map;
-			    path = new PathShape();
-                
-                path.path = pathFinder.getPath();
-                DrawMap();
-                ResetList();
-            };
-			createPathForm.Show();
-		}
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
