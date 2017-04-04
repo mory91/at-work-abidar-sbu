@@ -85,6 +85,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\at-work-abidar-sbu\at-work-abidar-sbu.csproj">
+      <Project>{F213BEA9-7222-4850-953E-6F874E14BBC0}</Project>
+      <Name>at-work-abidar-sbu</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
