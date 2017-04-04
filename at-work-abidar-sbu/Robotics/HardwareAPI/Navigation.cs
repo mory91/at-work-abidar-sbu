@@ -11,9 +11,11 @@ namespace at_work_abidar_sbu.HardwareAPI
 {
     public enum Orientation
     {
-        Front,
-        Left,
-        Right
+        N,
+        E,
+        S,
+        W,
+        B
     }
 
     public class Navigation
@@ -190,7 +192,7 @@ namespace at_work_abidar_sbu.HardwareAPI
 
             switch(or)
             {
-                case Orientation.Front:
+                case Orientation.N:
                     switch(laser)
                     {
                         case CentralBoard.Laser.Left:
@@ -202,7 +204,7 @@ namespace at_work_abidar_sbu.HardwareAPI
                             break;
                     }
                     break;
-                case Orientation.Left:
+                case Orientation.W:
                     switch (laser)
                     {
                         case CentralBoard.Laser.Left:
@@ -214,7 +216,7 @@ namespace at_work_abidar_sbu.HardwareAPI
                             break;
                     }
                     break;
-                case Orientation.Right:
+                case Orientation.E:
                     switch (laser)
                     {
                         case CentralBoard.Laser.Left:
@@ -238,7 +240,7 @@ namespace at_work_abidar_sbu.HardwareAPI
 
         public Tuple<float, float> GetDistanceSync(Orientation or)
         {
-            if (or == Orientation.Front)
+            if (or == Orientation.N)
             {
                 dynamixel.LasersPointForward();
             }

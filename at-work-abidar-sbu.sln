@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "at-work-abidar-sbu", "at-work-abidar-sbu\at-work-abidar-sbu.csproj", "{F213BEA9-7222-4850-953E-6F874E14BBC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "remote-control", "remote-control\remote-control.csproj", "{5D20260C-8D26-4D7D-8028-D81855BB3B15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +20,12 @@ Global
 		{F213BEA9-7222-4850-953E-6F874E14BBC0}.debug2|Any CPU.Build.0 = debug2|Any CPU
 		{F213BEA9-7222-4850-953E-6F874E14BBC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F213BEA9-7222-4850-953E-6F874E14BBC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D20260C-8D26-4D7D-8028-D81855BB3B15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D20260C-8D26-4D7D-8028-D81855BB3B15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D20260C-8D26-4D7D-8028-D81855BB3B15}.debug2|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D20260C-8D26-4D7D-8028-D81855BB3B15}.debug2|Any CPU.Build.0 = Debug|Any CPU
+		{5D20260C-8D26-4D7D-8028-D81855BB3B15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D20260C-8D26-4D7D-8028-D81855BB3B15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

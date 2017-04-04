@@ -136,14 +136,14 @@
 
 		#endregion
 
-		private System.Windows.Forms.TextBox srcXTextBox;
-		private System.Windows.Forms.TextBox srcYTextBox;
+	    public System.Windows.Forms.TextBox srcXTextBox;
+	    public System.Windows.Forms.TextBox srcYTextBox;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox dstYTextBox;
-		private System.Windows.Forms.TextBox dstXtextBox;
+	    public System.Windows.Forms.TextBox dstYTextBox;
+	    public System.Windows.Forms.TextBox dstXtextBox;
 		private System.Windows.Forms.Label label4;
 	}
 }

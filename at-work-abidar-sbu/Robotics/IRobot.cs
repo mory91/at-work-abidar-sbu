@@ -8,7 +8,7 @@ using at_work_abidar_sbu.HardwareAPI;
 
 namespace at_work_abidar_sbu.Robotics
 {
-    interface IRobot
+    public interface IRobot
     {
         void Go(float dx, float dy);
 
@@ -28,6 +28,6 @@ namespace at_work_abidar_sbu.Robotics
         float RR { get; set; }
         byte Speed { get; set; }
         bool IsMoving { get; }
-        float Orientation { get; set;  }
+        HardwareAPI.Orientation Orientation  { get;   }
     }
 }

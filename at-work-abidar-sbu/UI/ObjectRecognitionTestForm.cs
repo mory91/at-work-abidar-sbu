@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using at_work_abidar_sbu.AI.ObjectDetection;
@@ -109,7 +110,22 @@ namespace at_work_abidar_sbu
 
         private void button3_Click(object sender, EventArgs e)
         {
+            var result = saveFileDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                savePath = saveFileDialog1.FileName;
+                Thread thread = new Thread(learn);
+                thread.Start();
+           }
+            
+        }
 
+        private String savePath;
+        void learn()
+        {
+            SVMTraining svmTraining = new SVMTraining(savePath);
+            svmTraining.train();
+            MessageBox.Show("Learn Completed");
         }
     }
 }

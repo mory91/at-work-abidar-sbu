@@ -11,6 +11,7 @@ using at_work_abidar_sbu.HardwareInterface;
 using System.Threading;
 using at_work_abidar_sbu.AI.Navigation;
 using at_work_abidar_sbu.AI.Planning;
+using at_work_abidar_sbu.AI.Tasks;
 using at_work_abidar_sbu.AI.WorldModel;
 using at_work_abidar_sbu.UI.GraphicUtils;
 using at_work_abidar_sbu.HardwareAPI;
@@ -91,8 +92,9 @@ namespace at_work_abidar_sbu
             float scaley = (float) (pictureBox1.Height / map.height);
             renderer.AddObject(map);
             renderer.AddObject(robot);
-            renderer.AddObject(path);
-            pictureBox1.Image = renderer.Render(pictureBox1.Width,pictureBox1.Height,Color.White, scalex,scaley);
+            if(route != null)
+                renderer.AddObject(route.GetPathShape());
+            pictureBox1.Image = renderer.Render(pictureBox1.Width,pictureBox1.Height,Color.White, scaley, scaley);
 
             //            var r = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
             //                .DrawMap(map)
@@ -106,25 +108,18 @@ namespace at_work_abidar_sbu
         }
 
         private RoutePlanner route;
-        private PathShape path;
         private void navigateBtn_Click(object sender, EventArgs e)
         {
             CreatePathForm createPathForm = new CreatePathForm();
-            createPathForm.pathFinder =new PathFinder();
             createPathForm.map = map;
             
             createPathForm.FormClosing += (o, form) =>
             {
-                map = createPathForm.map;
-                path = new PathShape();
-                path.path = createPathForm.pathFinder.getPath();
-                route = new RoutePlanner(path,map,createPathForm.pathFinder);
-                rallyPoint = route.NormalizePath();
-                robot.Center = rallyPoint[0] ?? new Point(0, 0);
-                //rallyPoint.RemoveAt(0);
-              //  nav.Initialize();
-                robot.Speed = 10;
-                moved = true;
+                route = new RoutePlanner(robot,map);
+                var src = new Point(Int32.Parse(createPathForm.srcXTextBox.Text), Int32.Parse(createPathForm.srcYTextBox.Text));
+                var dest = new Point(Int32.Parse(createPathForm.dstXtextBox.Text), Int32.Parse(createPathForm.dstYTextBox.Text));
+
+                route.Start(src,dest);
                 Timer1.Enabled = true;
             };
             createPathForm.Show();
@@ -135,87 +130,12 @@ namespace at_work_abidar_sbu
         private void Timer1_Tick(object sender, EventArgs e)
         {
 
-            if (robot.IsMoving)
-                moved = true;
-            else
-            {
-                if (moved)
-                {
-                    moved = false;
-                    if (rallyPoint.Count > 0)
-                    {
-
-                        
-                        var robotl = rallyPoint[0];
-
-
-                        robot.ReadLaserValues(); 
-                        Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.x);
-                        Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
-                       // Render();
-
-                        LocationApproximator locationApproximator = new LocationApproximator();
-                        locationApproximator.SetUp(map);
-                        Point loc = locationApproximator.GetLocation((int) (robotl.x - R / 2), (int) (robotl.y - R / 2), R, R, 2, robot.LL, robot.LF, robot.RR, robot.RF);
-                        if (loc != null)
-                        {
-                            route.pathFinder.setSrc((int) loc.x,(int) loc.y);
-                            route.pathFinder.findPath();
-                            Console.WriteLine("rec");
-                        }
-                            
-
-
-                        path = new PathShape();
-                        Console.WriteLine("Path Hash" + path.GetHashCode());
-                        path.path = route.pathFinder.getPath();
-                        route.path = path;
-                        rallyPoint = route.NormalizePath();
-                        rallyPoint.RemoveAt(0);
-                        while (rallyPoint.Count > 1)
-                        {
-                            double dx = rallyPoint[0].x - robot.Center.x;
-                            double dy = rallyPoint[0].y - robot.Center.y;
-                            if (dx * dx + dy * dy < 4)
-                                rallyPoint.RemoveAt(0);
-                            else
-                                break;
-                        }
-
-                        if (rallyPoint.Count > 0)
-                        {
-                            double dx = rallyPoint[0].x - robot.Center.x;
-                            double dy = rallyPoint[0].y - robot.Center.y;
-                            Console.WriteLine((float)(dx));
-                            Console.WriteLine((float)(dy));
-
-                            if (Math.Abs(dx) <= Math.Abs(dy))
-                                dx = 0;
-                            else
-                            {
-                                dy = 0;
-                            }
-                            if (Math.Sqrt(dx * dx + dy * dy) < 15)
-                                robot.Speed = 5;
-                            else
-                            {
-                                robot.Speed = 15;
-                            }
-                            double fx = route.pathFinder.getDst().x - robot.Center.x;
-                            double fy = route.pathFinder.getDst().y - robot.Center.y;
-                           
-                            robot.Go((float)(dx),(float) (-dy));
-                        }
-                            
-                    }
-                }
-            }
+            route.Tick();
             Render();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            route = new RoutePlanner(null,map,null);
             robot.ReadLaserValues();
             Console.WriteLine("Robot: {0} {1}",robot.Center.x,robot.Center.y);
             Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
@@ -225,6 +145,7 @@ namespace at_work_abidar_sbu
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             robot.End();
+            
             Console.WriteLine("Ending Navigation");
         }
         private void objectRecognitionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -243,6 +164,14 @@ namespace at_work_abidar_sbu
         {
             IMUTest test = new IMUTest();
             test.ShowDialog();
+        }
+
+        private void bntBtn_Click(object sender, EventArgs e)
+        {
+            BNT bnt = new BNT(map,robot);
+            var rect = bnt.FindStageRegion("S1");
+            var des=bnt.FindDestinationPoint(Rectangle.Round(rect));
+            var ev = bnt.FindEntryVector();
         }
     }
 }

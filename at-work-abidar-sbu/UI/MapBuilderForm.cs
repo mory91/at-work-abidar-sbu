@@ -21,9 +21,11 @@ namespace at_work_abidar_sbu
         private Map map;
         Bitmap res;
         PathShape path;
+        Renderer renderer = new Renderer();
         public MapBuilderForm(double x, double y)
         {
             InitializeComponent();
+            renderer.RegisterObjectRenderer<Map>(new MapRenderer());
             width = x;
             height = y;
             res = new Bitmap((int)pictureBox1.Width, (int)pictureBox1.Height);
@@ -46,6 +48,7 @@ namespace at_work_abidar_sbu
         public MapBuilderForm(Map map)
         {
             InitializeComponent();
+            renderer.RegisterObjectRenderer<Map>(new MapRenderer());
             this.map = map;
             pictureBox1.Image = res;
             listBox1.DataSource = map.obstacles;
@@ -87,7 +90,12 @@ namespace at_work_abidar_sbu
 
         private void DrawMap()
         {
-            Renderer renderer = new Renderer();
+            renderer.AddObject(map);
+            float scalex = (float)(pictureBox1.Width / map.width);
+            float scaley = (float)(pictureBox1.Height / map.height);
+            renderer.AddObject(map);
+            pictureBox1.Image = renderer.Render(pictureBox1.Width, pictureBox1.Height, Color.White, scaley, scaley);
+//            Renderer renderer = new Renderer();
 //            pictureBox1.Image = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
 //                .DrawMap(map)
 //                .DrawPath(path, map)

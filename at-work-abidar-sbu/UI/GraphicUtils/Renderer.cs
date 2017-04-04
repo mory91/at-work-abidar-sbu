@@ -20,28 +20,7 @@ namespace at_work_abidar_sbu.UI.GraphicUtils
         private Dictionary<Type, IObjectRenderer> renderers = new Dictionary<Type, IObjectRenderer>();
         private List<object> renderObjects = new List<object>();
         private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        public Renderer EmptyFrame(int width, int height,Color color)
-        {
-
-            gr= Graphics.FromImage(bitmap);
-            return this;
-        }
-
-
-
-        public Renderer DrawPath(PathShape path,Map map)
-        {
-            var scalex = bitmap.Width / map.width;
-            var scaley = bitmap.Height / map.height;
-            gr = Graphics.FromImage(bitmap);
-            if (path != null)
-            {
-              
-                var points = path.path.ConvertAll(p => new Point( (int)(scalex*p.x),  (int)(scaley*p.y))).ToArray();
-                gr.DrawLines(Pens.Red,points);
-            }
-            return this;
-        }
+        
 
         
         public void RegisterObjectRenderer<T>(IObjectRenderer<T> renderer)

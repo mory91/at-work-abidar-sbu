@@ -21,14 +21,14 @@ namespace at_work_abidar_sbu
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            pathFinder.LoadInMap(map);
-            pathFinder.setSrc(Int32.Parse(srcXTextBox.Text), Int32.Parse(srcYTextBox.Text));
-			pathFinder.setDst(Int32.Parse(dstXtextBox.Text), Int32.Parse(dstYTextBox.Text));
-            
-            pathFinder.findPath();
-			pathShape.path = pathFinder.getPath();
-			pathShape.start = new Point(Int32.Parse(srcXTextBox.Text), Int32.Parse(srcYTextBox.Text));
-            //	map.obstacles.Add(pathShape);
+//            pathFinder.LoadInMap(map);
+//            pathFinder.setSrc(Int32.Parse(srcXTextBox.Text), Int32.Parse(srcYTextBox.Text));
+//			pathFinder.setDst(Int32.Parse(dstXtextBox.Text), Int32.Parse(dstYTextBox.Text));
+//            
+//            pathFinder.findPath();
+//			pathShape.path = pathFinder.getPath();
+//			pathShape.start = new Point(Int32.Parse(srcXTextBox.Text), Int32.Parse(srcYTextBox.Text));
+//            //	map.obstacles.Add(pathShape);
 			Close();
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using Newtonsoft.Json;
 
 namespace at_work_abidar_sbu
 {
@@ -13,6 +14,7 @@ namespace at_work_abidar_sbu
         public string Name { get; set; }
         public WordObjectType Type { get; set; }
 
+        [JsonIgnore]
         public RectangleF Bound {
             get
             {
@@ -49,6 +51,12 @@ namespace at_work_abidar_sbu
        public double Y { get; set; }
        public double Width { get; set; }
        public double Height { get; set; }
+
+        public bool Left { get; set; }
+        public bool Up { get; set; }
+        public bool Right { get; set; }
+        public bool Down { get; set; }
+
         // void draw(Bitmap scene);
     }
 }
