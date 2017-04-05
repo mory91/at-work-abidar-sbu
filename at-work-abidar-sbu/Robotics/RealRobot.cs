@@ -22,7 +22,7 @@ namespace at_work_abidar_sbu.Robotics
         private int degree = 0;
         public void Rotate(float degree)
         {
-            this.degree += (int)degree;
+            this.degree += (int)degree + 2;
             this.degree %= 360;
             Navigation.i.Rotate(degree);
         }

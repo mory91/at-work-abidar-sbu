@@ -294,7 +294,7 @@
     </Compile>
     <Compile Include="AI\Navigation\PathShape.cs" />
     <Compile Include="AI\Learning\SVMTraining.cs" />
-    <Compile Include="AI\WorldModel\WordObjectType.cs" />
+    <Compile Include="AI\WorldModel\WorldObjectType.cs" />
     <EmbeddedResource Include="UI\ArmControl.resx">
       <DependentUpon>ArmControl.cs</DependentUpon>
     </EmbeddedResource>

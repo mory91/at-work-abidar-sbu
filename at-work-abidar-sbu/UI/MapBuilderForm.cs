@@ -100,6 +100,18 @@ namespace at_work_abidar_sbu
 
         }
 
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (map != null)
+            {
+                int h = (int)(pictureBox1.Width * map.height / map.width);
+                float scalex = (float)(pictureBox1.Width / map.width);
+                float scaley = (float)(h / map.height);
+
+                toolStripStatusLabel1.Text = (int)(scalex * e.X) + "," + (int)(scaley * e.Y);
+            }
+        }
+
         private void delete_Click(object sender, EventArgs e)
         {
             map.obstacles.RemoveAt(listBox1.SelectedIndex);

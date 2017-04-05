@@ -101,7 +101,8 @@ namespace at_work_abidar_sbu.AI.Navigation
                 path.Add(cell);
                 cell = nxt[(int)cell.x, (int)cell.y];
             }
-			if (path.Count() > 0)
+            path.Reverse();
+            if (path.Count() > 0)
 			{
 				if ((int)path[0].x != (int)src.x || (int)path[0].y != (int)src.y)
 				{
@@ -109,7 +110,7 @@ namespace at_work_abidar_sbu.AI.Navigation
 					path.Add(new Point(src.x, src.y));
 				}
 			}
-            path.Reverse();
+           
         }
 
         public void addObstacle(int x, int y, int w, int h, bool isWall)
@@ -141,7 +142,7 @@ namespace at_work_abidar_sbu.AI.Navigation
             SetUp();
             foreach (MapObject o in map.obstacles)
             {
-                addObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height, o.Type==WordObjectType.Wall);
+                addObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height, o.Type==WorldObjectType.Wall);
             }
         }
         public Point getDst()

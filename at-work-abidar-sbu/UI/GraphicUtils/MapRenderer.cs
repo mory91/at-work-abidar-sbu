@@ -31,32 +31,33 @@ namespace at_work_abidar_sbu.UI.GraphicUtils
                     switch (o.Type)
                     {
 
-                        case WordObjectType.Stage:
+                        case WorldObjectType.Stage:
                             var name = o.Name;
                             if (name[0] == 'S')
                                 gr.FillRectangle(Brushes.Red, rect);
-                            if (name[0] == 'T')
+                           if (name[0] == 'T')
                                 gr.FillRectangle(Brushes.Blue, rect);
                             if (name[0] == 'U')
-                                gr.FillRectangle(Brushes.Yellow, rect);
+                               gr.FillRectangle(Brushes.Yellow, rect);
                             if (name[0] == 'D')
                                 gr.FillRectangle(Brushes.Orange, rect);
 
-                            gr.DrawString(o.Name,SystemFonts.DefaultFont,Brushes.Green,rect);
+                            gr.DrawString(o.Name,SystemFonts.DefaultFont,Brushes.Green,new PointF(rect.X,rect.Y));
                             break;
-                        case WordObjectType.Wall:
+                        case WorldObjectType.Wall:
                             gr.FillRectangle(Brushes.Black, rect);
                             break;
-                        case WordObjectType.QR:
+                        case WorldObjectType.QR:
                             gr.FillRectangle(Brushes.Gray, rect);
+                            gr.DrawString(o.Name, SystemFonts.DefaultFont, Brushes.Green,new PointF(rect.X, rect.Y));
                             break;
-                        case WordObjectType.Entry:
+                        case WorldObjectType.Entry:
                             gr.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal,Color.Red,Color.White), rect);
                             break;
-                        case WordObjectType.Exit:
+                        case WorldObjectType.Exit:
                             gr.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.Red, Color.Blue), rect);
                             break;
-                        case WordObjectType.InvisbleWall:
+                        case WorldObjectType.InvisbleWall:
                             gr.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.Yellow, Color.White), rect);
                             break;
                         default:

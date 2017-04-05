@@ -193,8 +193,8 @@ namespace at_work_abidar_sbu
         private void bntBtn_Click(object sender, EventArgs e)
         {
          ///   robot.ReadLaserValues();
-               robot.Rotate(90);
-            return;
+//               robot.Rotate(90);
+//            return;
             //Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.y);
             //Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
 

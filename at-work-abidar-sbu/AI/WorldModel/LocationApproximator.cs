@@ -41,7 +41,7 @@ namespace at_work_abidar_sbu.AI.WorldModel
 				}
 			foreach (MapObject o in imap.obstacles)
 			{
-				AddObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height, o.Type == WordObjectType.Wall);
+				AddObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height, o.Type == WorldObjectType.Wall);
 			}
 			CalcObstacleDistances();
 		}
@@ -52,45 +52,33 @@ namespace at_work_abidar_sbu.AI.WorldModel
 			int srcX = rectX + rectW / 2;
 			int srcY = rectY + rectH / 2;
 			double minSum = 1000 * 1000 * 1000 + 10;
-			for (int tmp = 0; tmp <= 1; tmp++)
+			for (int i = rectX; i <= rectX + rectW; i++)
 			{
-				for (int i = rectX; i <= rectX + rectW; i++)
+				for (int j = rectY; j <= rectY + rectH; j++)
 				{
-					for (int j = rectY; j <= rectY + rectH; j++)
+					int laserLX = i + _dx[(orientation + 1) % 4] * 11;
+					int laserLY = j + _dy[(orientation + 1) % 4] * 11;
+					int laserRX = i + _dx[(orientation + 3) % 4] * 11;
+					int laserRY = j + _dy[(orientation + 3) % 4] * 11;
+					if (!IsInMap(i, j) || touchWall[i, j] != 0 || !IsInMap(laserLX, laserLY) || !IsInMap(laserRX, laserRY))
+						continue;
+					double sum = 0;
+					for (int k = 0; k < 4; k++)
 					{
-						if (tmp == 0)
-						{
-							i = rectX + rectW / 2;
-							j = rectY + rectH / 2;
-						}
-						int laserLX = i + _dx[(orientation + 1) % 4] * 11;
-						int laserLY = j + _dy[(orientation + 1) % 4] * 11;
-						int laserRX = i + _dx[(orientation + 3) % 4] * 11;
-						int laserRY = j + _dy[(orientation + 3) % 4] * 11;
-						if (!IsInMap(i, j) || touchWall[i, j] != 0 || !IsInMap(laserLX, laserLY) || !IsInMap(laserRX, laserRY))
+						int k2 = (k + orientation) % 4;
+						if (obstacleDistance[i, j, k2] > Math.Max(MapWidth, MapHeight) && lasers[k] > 200)
 							continue;
-						double sum = 0;
-						for (int k = 0; k < 4; k++)
-						{
-							int k2 = (k + orientation) % 4;
-							if (obstacleDistance[i, j, k2] > Math.Max(MapWidth, MapHeight) && lasers[k] > 200)
-								continue;
-							if (obstacleDistance[i, j, k2] != -1 && lasers[k] > 0)
-								sum += Math.Abs(lasers[k] - obstacleDistance[i, j, k2]);
-						}
-						sum += Math.Abs(laserLF - obstacleDistance[laserLX, laserLY, orientation]);
-						sum += Math.Abs(laserRF - obstacleDistance[laserRX, laserRY, orientation]);
-						if (sum < minSum)
-						{
-							minSum = sum;
-							srcX = i;
-							srcY = j;
-						}
-						if (tmp == 0)
-							break;
+						if (obstacleDistance[i, j, k2] != -1 && lasers[k] > 0)
+							sum += Math.Abs(lasers[k] - obstacleDistance[i, j, k2]);
 					}
-					if (tmp == 0)
-						break;
+					sum += Math.Abs(laserLF - obstacleDistance[laserLX, laserLY, orientation]);
+					sum += Math.Abs(laserRF - obstacleDistance[laserRX, laserRY, orientation]);
+					if (sum < minSum)
+					{
+						minSum = sum;
+						srcX = i;
+						srcY = j;
+					}
 				}
 			}
 			return new Point(srcX, srcY);

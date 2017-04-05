@@ -40,6 +40,11 @@ namespace at_work_abidar_sbu
             {
                 o.Height ++;
                 o.Width++;
+                if (o.Type == WorldObjectType.QR)
+                {
+                    o.X -= o.Width/2;
+                    o.Y -= o.Height/2;
+                }
             }
             return map;
         }

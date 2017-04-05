@@ -12,7 +12,7 @@ namespace at_work_abidar_sbu
     {
 
         public string Name { get; set; }
-        public WordObjectType Type { get; set; }
+        public WorldObjectType Type { get; set; }
 
         [JsonIgnore]
         public RectangleF Bound {
@@ -26,7 +26,7 @@ namespace at_work_abidar_sbu
         {
         }
 
-        public MapObject(WordObjectType type,string name ,double x,double y,int width,int height)
+        public MapObject(WorldObjectType type,string name ,double x,double y,int width,int height)
         {
             X = x;
             Y = y;
@@ -35,10 +35,10 @@ namespace at_work_abidar_sbu
             Type = type;
             Name = name;
         }
-        public MapObject(WordObjectType type, double x, double y, int width, int height) : this(type, "", x, y, width, height)
+        public MapObject(WorldObjectType type, double x, double y, int width, int height) : this(type, "", x, y, width, height)
         {
         }
-        public MapObject(WordObjectType type, double x, double y):this(type,"",x,y,10,10)
+        public MapObject(WorldObjectType type, double x, double y):this(type,"",x,y,10,10)
         {
         }
 

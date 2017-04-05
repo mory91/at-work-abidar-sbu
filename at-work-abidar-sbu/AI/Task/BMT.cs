@@ -99,7 +99,7 @@ namespace at_work_abidar_sbu.AI.Task
         public Rectangle search()
         {
             Capture capture = new Capture(0);
-            ObjectRecognizer objectRecog = new ObjectRecognizer();
+            ObjectRecognizer objectRecog = new ObjectRecognizer("data.svm");
             List<DetectedObject> detecteds;
             DetectedObject firstDetected = new DetectedObject();
             bool search = true;

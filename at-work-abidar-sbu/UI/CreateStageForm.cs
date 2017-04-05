@@ -16,16 +16,15 @@ namespace at_work_abidar_sbu
         public CreateStageForm()
         {
             InitializeComponent();
-            typeCombo.DataSource = Enum.GetValues(typeof(WordObjectType));
+            typeCombo.DataSource = Enum.GetValues(typeof(WorldObjectType));
         }
         private void button1_Click(object sender, EventArgs e)
         {
 
-            WordObjectType type;
-            Enum.TryParse<WordObjectType>(typeCombo.SelectedValue.ToString(), out type);
+            WorldObjectType type;
+            Enum.TryParse<WorldObjectType>(typeCombo.SelectedValue.ToString(), out type);
             MapObject stage = new MapObject(type, nameTextBox.Text, Double.Parse(xTextBox.Text), 
             Double.Parse(yTextBox.Text), Int32.Parse(widthTextBox.Text), Int32.Parse(heightTextBox.Text));
-
             //    pathFinder.addObstacle((int) stage.X, (int) stage.Y, (int)stage.Width, (int)stage.Height);
 
             stage.Left = leftChk.Checked;

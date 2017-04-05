@@ -21,7 +21,7 @@ namespace at_work_abidar_sbu
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MapObject qr = new MapObject(WordObjectType.QR,Double.Parse(textBox1.Text), Double.Parse(textBox2.Text));
+            MapObject qr = new MapObject(WorldObjectType.QR,Double.Parse(textBox1.Text), Double.Parse(textBox2.Text));
            
             //qr = new Point(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text));
             map.obstacles.Add(qr);

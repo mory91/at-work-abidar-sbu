@@ -45,7 +45,7 @@ namespace at_work_abidar_sbu.AI.Tasks
             Point e = null;
             foreach (var o in map.obstacles)
             {
-                if (o.Type == WordObjectType.Entry)
+                if (o.Type == WorldObjectType.Entry)
                 {
 
                     if (o.Left)
@@ -82,36 +82,55 @@ namespace at_work_abidar_sbu.AI.Tasks
             MapObject stage = null;
             foreach (MapObject o in map.obstacles)
             {
-                if (o.Type == WordObjectType.Stage && o.Name == name)
+                if ((o.Type == WorldObjectType.QR) && o.Name == name)
                 {
                     stage = o;
+                    log.Info("QR CODE FOUND");
                     break;
                 }
             }
+            if (stage == null)
+            {
+                foreach (MapObject o in map.obstacles)
+                {
+                    if ((o.Type == WorldObjectType.Stage) && o.Name == name)
+                    {
+                        stage = o;
+                        break;
+                    }
+                }
+            }
+            
             if (stage != null)
             {
-                int RBP = ROBOT_SIZE + 10;
-                RectangleF rec = stage.Bound;
-                if (stage.Left)
+                if (stage.Type == WorldObjectType.QR)
                 {
+                    return stage.Bound;
+                }
+                if (stage.Type == WorldObjectType.Stage)
+                {
+                    int RBP = ROBOT_SIZE + 10;
+                    RectangleF rec = stage.Bound;
+                    if (stage.Left)
+                    {
 
-                    rec.X -= RBP;
+                        rec.X -= RBP;
+                    }
+                    else if (stage.Right)
+                    {
+                        rec.X += RBP + rec.Width;
+                    }
+                    else if (stage.Down)
+                    {
+                        rec.Y += RBP + rec.Height;
+                    }
+                    else if (stage.Up)
+                    {
+                        rec.Y -= RBP;
+                    }
+                    log.Info("Region Found For " + name + " Bounds : " + rec);
+                    return rec;
                 }
-                else if (stage.Right)
-                {
-                    rec.X += RBP + rec.Width;
-                }
-                else if (stage.Down)
-                {
-                    rec.Y += RBP + rec.Height;
-                }
-                else if (stage.Up)
-                {
-                    rec.Y -= RBP;
-                }
-                log.Info("Region Found For " + name + " Bounds : " + rec);
-                return rec;
-
             }
             else
             {
@@ -188,6 +207,8 @@ namespace at_work_abidar_sbu.AI.Tasks
         {
             var rec = FindStageRegion(name);
             Point p = FindDestinationPoint(Rectangle.Round(rec));
+
+
             log.Info("Location For Working Found" + p.x +","+p.y);
             route.Start(src, p);
         }
@@ -210,7 +231,7 @@ namespace at_work_abidar_sbu.AI.Tasks
                         return;
                     if (robot.Orientation != orientation)
                     {
-                        robot.Rotate(90);
+                        robot.Rotate(88);
                         log.Info(robot.Orientation);
                     }
                     else
@@ -232,7 +253,7 @@ namespace at_work_abidar_sbu.AI.Tasks
                         return;
                     if (robot.Orientation != Orientation.N)
                     {
-                        robot.Rotate(90);
+                        robot.Rotate(88);
                         log.Info(robot.Orientation);
                     }
                     else
