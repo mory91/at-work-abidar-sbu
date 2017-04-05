@@ -159,6 +159,7 @@
   <ItemGroup>
     <Compile Include="AI\Navigation\PathFinder.cs" />
     <Compile Include="AI\Navigation\Point.cs" />
+    <Compile Include="AI\Navigation\ReliableLaser.cs" />
     <Compile Include="AI\ObjectDetection\DetectedObject.cs" />
     <Compile Include="AI\ObjectDetection\ObjectRecognizer.cs" />
     <Compile Include="AI\Tasks\BNT.cs" />
