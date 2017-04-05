@@ -14,7 +14,6 @@ namespace at_work_abidar_sbu.UI.GraphicUtils
     public class Renderer
     {
         private Bitmap bitmap;
-        private Graphics gr;
         const int ROBOT_SIZE = 44;
 
         private Dictionary<Type, IObjectRenderer> renderers = new Dictionary<Type, IObjectRenderer>();

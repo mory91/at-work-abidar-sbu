@@ -48,5 +48,25 @@ namespace at_work_abidar_sbu
         {
 
         }
+
+        private void btnMaxX_Click(object sender, EventArgs e)
+        {
+            xTextBox.Text = ((int)map.width).ToString();
+        }
+
+        private void btnMaxY_Click(object sender, EventArgs e)
+        {
+            yTextBox.Text = ((int)map.height).ToString();
+        }
+
+        private void btnMaxWidth_Click(object sender, EventArgs e)
+        {
+            widthTextBox.Text = ((int)map.width).ToString();
+        }
+
+        private void btnMaxHeight_Click(object sender, EventArgs e)
+        {
+            heightTextBox.Text = ((int)map.height).ToString();
+        }
     }
 }

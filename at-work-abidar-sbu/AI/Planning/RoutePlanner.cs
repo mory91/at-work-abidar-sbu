@@ -20,14 +20,15 @@ namespace at_work_abidar_sbu.AI.Planning
         private IRobot robot;
         private int R = 44;
         public PathFinder pathFinder;
-
+        LocationApproximator locationApproximator = new LocationApproximator();
+        
         public RoutePlanner(IRobot robot,Map map)
         {
             this.robot = robot;
             this.map = map;
             this.pathFinder = new PathFinder();
             this.pathFinder.LoadInMap(map);
-
+            locationApproximator.SetUp(map);
         }
 
         public List<Point> NormalizePath(List<Point> path)
@@ -96,8 +97,7 @@ namespace at_work_abidar_sbu.AI.Planning
                         Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
                         // Render();
 
-                        LocationApproximator locationApproximator = new LocationApproximator();
-                        locationApproximator.SetUp(map);
+                        
                         Point loc = locationApproximator.GetLocation((int)(robotl.x - R / 2), (int)(robotl.y - R / 2), R, R, 2, robot.LL, robot.LF, robot.RR, robot.RF);
 
                         if (loc != null)

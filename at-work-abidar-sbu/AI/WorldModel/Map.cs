@@ -36,6 +36,11 @@ namespace at_work_abidar_sbu
             var settings = new JsonSerializerSettings();
             settings.TypeNameHandling = TypeNameHandling.Objects;
             Map map = JsonConvert.DeserializeObject<Map>(json, settings);
+            foreach (var o in map.obstacles)
+            {
+                o.Height ++;
+                o.Width++;
+            }
             return map;
         }
     }

@@ -15,7 +15,7 @@ namespace at_work_abidar_sbu.AI.Navigation
 		private int MapWidth => _MapWidth;
 //x, cm
 
-        int MapHeight => _MapHeight;
+		private int MapHeight => _MapHeight;
 //y, cm
         const int RobotSize = 45; //cm
 		const int RobotPadding = 5; //cm
@@ -101,6 +101,14 @@ namespace at_work_abidar_sbu.AI.Navigation
                 path.Add(cell);
                 cell = nxt[(int)cell.x, (int)cell.y];
             }
+			if (path.Count() > 0)
+			{
+				if ((int)path[0].x != (int)src.x || (int)path[0].y != (int)src.y)
+				{
+					path.Clear();
+					path.Add(new Point(src.x, src.y));
+				}
+			}
             path.Reverse();
         }
 

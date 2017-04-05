@@ -163,9 +163,11 @@
     <Compile Include="AI\ObjectDetection\DetectedObject.cs" />
     <Compile Include="AI\ObjectDetection\ObjectRecognizer.cs" />
     <Compile Include="AI\Tasks\BNT.cs" />
+    <Compile Include="AI\Tasks\BTT.cs" />
     <Compile Include="AI\Task\BMT.cs" />
     <Compile Include="AI\WorldModel\RotationChecker.cs" />
     <Compile Include="AI\WorldModel\LocationApproximator.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Network\NetworkListener.cs" />
     <Compile Include="Robotics\HardwareInterface\IMU.cs" />
     <Compile Include="Robotics\IRobot.cs" />

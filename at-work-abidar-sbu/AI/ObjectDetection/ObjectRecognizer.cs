@@ -41,9 +41,9 @@ namespace at_work_abidar_sbu.AI.ObjectDetection
         private ObjectDetector objectDetector;
         Rectangle lightbox = Rectangle.Empty;
 
-        public ObjectRecognizer()
+        public ObjectRecognizer(string path)
         {
-            objectDetector = new ObjectDetector("svm4.save");
+            objectDetector = new ObjectDetector(path);
         }
 
         public List<DetectedObject> DetectObjects(Image<Rgb, byte> imageInput)

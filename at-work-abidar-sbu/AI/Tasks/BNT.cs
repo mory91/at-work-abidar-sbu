@@ -15,7 +15,7 @@ namespace at_work_abidar_sbu.AI.Tasks
 {
     public enum BNTState
     {
-        ROTATING, MOVING
+        ROTATING, MOVING,WAITING,CORRECTING
     }
 
     public class BNT
@@ -27,7 +27,10 @@ namespace at_work_abidar_sbu.AI.Tasks
         private RotationChecker rotationChecker;
         private int ROBOT_SIZE = 44;
         private RoutePlanner route;
-        private Orientation orientation;
+//        private Orientation orientation;
+
+        private List<String> names = new List<string>();
+        List<Orientation> orientations = new List<Orientation>();
         public BNT(Map map, IRobot robot)
         {
             this.map = map;
@@ -163,32 +166,100 @@ namespace at_work_abidar_sbu.AI.Tasks
         public void Start(Point src, string name , Orientation orientation)
         {
             route = new RoutePlanner(robot,map);
-            var rec = FindStageRegion(name);
-            Point p = FindDestinationPoint(Rectangle.Round(rec));
-            route.Start(src,p);
-            this.orientation = orientation;
+            StartRoutingTo(src,name);
+            this.orientations.Add(orientation);
+            this.names.Add(name);
         }
 
-        BNTState state = BNTState.MOVING;    
+        public void Start(Point src, List<String> names, List<Orientation> orientations)
+        {
+            route = new RoutePlanner(robot, map);
+            StartRoutingTo(src, names[0]);
+            this.orientations.AddRange(orientations);
+            this.names.AddRange(names);
+            
+//            var rec = FindStageRegion(name);
+//            Point p = FindDestinationPoint(Rectangle.Round(rec));
+//            route.Start(src, p);
+//            this.orientation = orientation;
+        }
+
+        public void StartRoutingTo(Point src, string name)
+        {
+            var rec = FindStageRegion(name);
+            Point p = FindDestinationPoint(Rectangle.Round(rec));
+            log.Info("Location For Working Found" + p.x +","+p.y);
+            route.Start(src, p);
+        }
+
+        BNTState state = BNTState.MOVING;
+        private long startTime = 0;
         public void Tick()
         {
-            var d = robot.Center - route.GetDestination();
-            if (d.Lenght() < 4)
+            if (orientations.Count == 0)
             {
-                state = BNTState.ROTATING;
+                log.Info("BNT FINISHED");
+                return;
             }
+            var d = robot.Center - route.GetDestination();
+            var orientation = orientations.First();
+            switch (state)
+            {
+                case BNTState.ROTATING:
+                    if (robot.IsMoving)
+                        return;
+                    if (robot.Orientation != orientation)
+                    {
+                        robot.Rotate(90);
+                        log.Info(robot.Orientation);
+                    }
+                    else
+                    {
+                        state = BNTState.WAITING;
+                        startTime =  DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                    }
+                    break;
+                case BNTState.MOVING:
+                    if (d.Lenght() < 4)
+                    {
+                        state = BNTState.ROTATING;
+                        break;
+                    }
+                    route.Tick();
+                    break;
+                case BNTState.CORRECTING:
+                    if (robot.IsMoving)
+                        return;
+                    if (robot.Orientation != Orientation.N)
+                    {
+                        robot.Rotate(90);
+                        log.Info(robot.Orientation);
+                    }
+                    else
+                    {
+                        state = BNTState.MOVING;
+                        orientations.RemoveAt(0);
+                        names.RemoveAt(0);
+                        if (names.Count > 0)
+                            StartRoutingTo(robot.Center, names[0]);
+                    }
+
+                    break;
+                case BNTState.WAITING:
+                    var now = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                    if (now - startTime > 5000)
+                    {
+                        state = BNTState.CORRECTING;
+                    }
+                    break;
+            }
+            
+
             if(state == BNTState.MOVING)
                 route.Tick();
             else
             {
-                if(robot.IsMoving)
-                    return;
-                if (robot.Orientation != orientation)
-                {
-                    robot.Rotate(90);
-                    log.Info(robot.Orientation);
-
-                }
+                
                     
             }
         }

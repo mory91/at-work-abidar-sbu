@@ -17,7 +17,6 @@ using at_work_abidar_sbu.UI.GraphicUtils;
 using at_work_abidar_sbu.HardwareAPI;
 using at_work_abidar_sbu.Robotics;
 using at_work_abidar_sbu.Simulation;
-using at_work_abidar_sbu.UI.GraphicUtils;
 using Point = at_work_abidar_sbu.AI.Navigation.Point;
 using at_work_abidar_sbu.UI;
 using Orientation = at_work_abidar_sbu.HardwareAPI.Orientation;
@@ -26,7 +25,6 @@ namespace at_work_abidar_sbu
 {
     public partial class MainForm : Form
     {
-        Arm arm;
         Renderer renderer = new Renderer();
         private IRobot robot;
         public MainForm()
@@ -41,7 +39,6 @@ namespace at_work_abidar_sbu
 
         private Map map;
 //        private Point robot;
-        private List<Point> rallyPoint;
         private void cameraTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CameraTestForm cameraTestForm = new CameraTestForm();
@@ -89,8 +86,10 @@ namespace at_work_abidar_sbu
         private void Render()
         {
 
-            float scalex = (float) (pictureBox1.Width / map.width);
-            float scaley = (float) (pictureBox1.Height / map.height);
+            int h = (int)(pictureBox1.Width * map.height / map.width);
+            float scalex = (float)(pictureBox1.Width / map.width);
+            float scaley = (float)(h / map.height);
+
             renderer.AddObject(map);
             renderer.AddObject(robot);
             if(route != null)
@@ -99,7 +98,7 @@ namespace at_work_abidar_sbu
                 renderer.AddObject(bnt.GetPathShape());
 
 
-            pictureBox1.Image = renderer.Render(pictureBox1.Width,pictureBox1.Height,Color.White, scaley, scaley);
+            pictureBox1.Image = renderer.Render(pictureBox1.Width,pictureBox1.Height,Color.White, scalex, scaley);
 
             //            var r = renderer.EmptyFrame(pictureBox1.Width, pictureBox1.Height, Color.White)
             //                .DrawMap(map)
@@ -130,7 +129,6 @@ namespace at_work_abidar_sbu
             createPathForm.Show();
         }
 
-        private bool moved = false;
         private int R = 44;
         private void Timer1_Tick(object sender, EventArgs e)
         {
@@ -195,13 +193,11 @@ namespace at_work_abidar_sbu
         private void bntBtn_Click(object sender, EventArgs e)
         {
          ///   robot.ReadLaserValues();
-
+               robot.Rotate(90);
+            return;
             //Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.y);
             //Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
 
-
-            robot.Rotate(-270);
-            return;
             CreatePathForm createPathForm = new CreatePathForm();
 
             createPathForm.FormClosing += (o, form) =>
@@ -214,14 +210,42 @@ namespace at_work_abidar_sbu
                 Console.WriteLine("Robot: {0} {1}", robot.Center.x, robot.Center.y);
                 Console.WriteLine("Robot: {0} {1} {2} {3}", robot.LL, robot.LF, robot.RF, robot.RR);
                 bnt= new BNT(map,robot);
-                Orientation orientation;
-                Enum.TryParse<Orientation>(createPathForm.dstYTextBox.Text, out orientation);
-                bnt.Start(src,createPathForm.dstXtextBox.Text,orientation);
+                
+
+                List<String> names = new List<string>(createPathForm.dstXtextBox.Text.Split(' '));
+                List<String> oo = new List<string>(createPathForm.dstYTextBox.Text.Split(' '));
+                
+                List<Orientation> orientations = oo.ConvertAll(input =>
+                {
+                    Orientation orientation;
+                    Enum.TryParse<Orientation>(input, out orientation);
+                    return orientation;
+                });
+                bnt.Start(src,names,orientations);
+
+
                 Timer1.Enabled = true;
                 Render();
             };
             createPathForm.Show();
             Render();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (map != null)
+            {
+                int h = (int)(pictureBox1.Width * map.height / map.width);
+                float scalex = (float)(pictureBox1.Width / map.width);
+                float scaley = (float)(h / map.height);
+
+                toolStripStatusLabel1.Text = (int)(scalex * e.X) + "," + (int)(scaley * e.Y);
+            }
         }
     }
 }
