@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using at_work_abidar_sbu.AI.Navigation;
 using at_work_abidar_sbu.AI.Planning;
 using at_work_abidar_sbu.AI.WorldModel;
 using at_work_abidar_sbu.HardwareAPI;
@@ -15,19 +16,19 @@ namespace at_work_abidar_sbu.AI.Tasks
 {
     public enum BNTState
     {
-        ROTATING, MOVING,WAITING,CORRECTING
+        ROTATING, MOVING, WAITING, CORRECTING
     }
 
     public class BNT
     {
-        private  readonly log4net.ILog log =
+        private readonly log4net.ILog log =
    log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private Map map;
         private IRobot robot;
         private RotationChecker rotationChecker;
         private int ROBOT_SIZE = 44;
         private RoutePlanner route;
-//        private Orientation orientation;
+        //        private Orientation orientation;
 
         private List<String> names = new List<string>();
         List<Orientation> orientations = new List<Orientation>();
@@ -39,6 +40,7 @@ namespace at_work_abidar_sbu.AI.Tasks
             rotationChecker.SetUp(map);
         }
 
+        
         public Point FindEntryVector()
         {
 
@@ -50,17 +52,17 @@ namespace at_work_abidar_sbu.AI.Tasks
 
                     if (o.Left)
                     {
-                        e= new Point(1,0);
+                        e = new Point(1, 0);
                     }
                     else if (o.Right)
                     {
                         e = new Point(-1, 0);
                     }
-                    else if(o.Down)
+                    else if (o.Down)
                     {
                         e = new Point(0, -1);
                     }
-                    else if(o.Up)
+                    else if (o.Up)
                     {
                         e = new Point(0, 1);
                     }
@@ -100,12 +102,18 @@ namespace at_work_abidar_sbu.AI.Tasks
                     }
                 }
             }
-            
+
             if (stage != null)
             {
                 if (stage.Type == WorldObjectType.QR)
                 {
-                    return stage.Bound;
+                    RectangleF rec = stage.Bound;
+                    rec.X -= ROBOT_SIZE / 6;
+                    rec.Y -= ROBOT_SIZE / 6;
+
+                    rec.Height += ROBOT_SIZE / 3;
+                    rec.Width += ROBOT_SIZE / 3;
+                    return rec;
                 }
                 if (stage.Type == WorldObjectType.Stage)
                 {
@@ -163,7 +171,8 @@ namespace at_work_abidar_sbu.AI.Tasks
             {
                 t.x = p.x;
                 t.y = -p.y;
-            }else if (robot.Orientation == Orientation.E)
+            }
+            else if (robot.Orientation == Orientation.E)
             {
                 t.x = p.y;
                 t.y = p.x;
@@ -174,7 +183,8 @@ namespace at_work_abidar_sbu.AI.Tasks
                 t.y = p.y;
                 t.x = -p.x;
 
-            }else if (robot.Orientation == Orientation.W)
+            }
+            else if (robot.Orientation == Orientation.W)
             {
                 t.x = -p.y;
                 t.y = -p.x;
@@ -182,10 +192,10 @@ namespace at_work_abidar_sbu.AI.Tasks
             return t;
         }
 
-        public void Start(Point src, string name , Orientation orientation)
+        public void Start(Point src, string name, Orientation orientation)
         {
-            route = new RoutePlanner(robot,map);
-            StartRoutingTo(src,name);
+            route = new RoutePlanner(robot, map);
+            StartRoutingTo(src, name);
             this.orientations.Add(orientation);
             this.names.Add(name);
         }
@@ -196,20 +206,57 @@ namespace at_work_abidar_sbu.AI.Tasks
             StartRoutingTo(src, names[0]);
             this.orientations.AddRange(orientations);
             this.names.AddRange(names);
-            
-//            var rec = FindStageRegion(name);
-//            Point p = FindDestinationPoint(Rectangle.Round(rec));
-//            route.Start(src, p);
-//            this.orientation = orientation;
+
+            //            var rec = FindStageRegion(name);
+            //            Point p = FindDestinationPoint(Rectangle.Round(rec));
+            //            route.Start(src, p);
+            //            this.orientation = orientation;
+        }
+
+        public bool TEST(Point src, List<String> names, List<Orientation> orientations)
+        {
+            PathFinder pf = new PathFinder();
+            pf.LoadInMap(map);
+            for (int i = 0; i < names.Count; i++)
+
+            {
+                var name = names[i];
+                var rec = FindStageRegion(name);
+                Point p = FindDestinationPoint(Rectangle.Round(rec));
+                if (p == null)
+                {
+                    log.Info("No Location Found" + p.x + "," + p.y);
+                    p = new Point(rec.X, rec.Y);
+                }
+                    
+
+                log.Info("Location For Working Found" + p.x + "," + p.y);
+
+                pf.setSrc((int)src.x, (int)src.y);
+                pf.setDst((int)p.x, (int)p.y);
+                pf.findPath();
+                var path = pf.getPath();
+                if (path.Count > 1)
+                    log.Info("Path found for Target:" + name);
+                else
+                {
+                    log.Error("Path Not Found for Target:" + name);
+                    return false;
+                }
+                    
+            }
+            return true;
+
         }
 
         public void StartRoutingTo(Point src, string name)
         {
             var rec = FindStageRegion(name);
             Point p = FindDestinationPoint(Rectangle.Round(rec));
+            if (p == null)
+                p = new Point(rec.X, rec.Y);
 
-
-            log.Info("Location For Working Found" + p.x +","+p.y);
+            log.Info("Location For Working Found" + p.x + "," + p.y);
             route.Start(src, p);
         }
 
@@ -237,11 +284,11 @@ namespace at_work_abidar_sbu.AI.Tasks
                     else
                     {
                         state = BNTState.WAITING;
-                        startTime =  DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                        startTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
                     }
                     break;
                 case BNTState.MOVING:
-                    if (d.Lenght() < 4)
+                    if (d.Lenght() < 6)
                     {
                         state = BNTState.ROTATING;
                         break;
@@ -274,15 +321,11 @@ namespace at_work_abidar_sbu.AI.Tasks
                     }
                     break;
             }
-            
 
-            if(state == BNTState.MOVING)
+
+            if (state == BNTState.MOVING)
                 route.Tick();
-            else
-            {
-                
-                    
-            }
+           
         }
 
         public PathShape GetPathShape()

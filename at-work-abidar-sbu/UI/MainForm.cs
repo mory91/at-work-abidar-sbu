@@ -221,9 +221,9 @@ namespace at_work_abidar_sbu
                     Enum.TryParse<Orientation>(input, out orientation);
                     return orientation;
                 });
-                bnt.Start(src,names,orientations);
-
-
+//                bnt.TEST(src, names, orientations);
+                       bnt.Start(src,names,orientations);
+               
                 Timer1.Enabled = true;
                 Render();
             };

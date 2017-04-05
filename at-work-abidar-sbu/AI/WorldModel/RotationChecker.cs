@@ -41,7 +41,8 @@ namespace at_work_abidar_sbu.AI.WorldModel
                 }
             foreach (MapObject o in imap.obstacles)
             {
-                AddObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height, o.Type == WorldObjectType.Wall);
+                if(o.Type != WorldObjectType.QR)
+                    AddObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height, o.Type == WorldObjectType.Wall);
             }
         }
         private bool IsInMap(int x, int y)

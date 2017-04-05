@@ -164,7 +164,7 @@
     <Compile Include="AI\ObjectDetection\ObjectRecognizer.cs" />
     <Compile Include="AI\Tasks\BNT.cs" />
     <Compile Include="AI\Tasks\BTT.cs" />
-    <Compile Include="AI\Task\BMT.cs" />
+    <Compile Include="AI\Tasks\BMT.cs" />
     <Compile Include="AI\WorldModel\RotationChecker.cs" />
     <Compile Include="AI\WorldModel\LocationApproximator.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -388,7 +388,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="AI\Task\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

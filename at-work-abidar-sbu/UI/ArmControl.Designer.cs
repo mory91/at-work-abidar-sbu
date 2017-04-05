@@ -46,10 +46,9 @@
             // 
             // restBtn
             // 
-            this.restBtn.Location = new System.Drawing.Point(681, 30);
-            this.restBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.restBtn.Location = new System.Drawing.Point(511, 24);
             this.restBtn.Name = "restBtn";
-            this.restBtn.Size = new System.Drawing.Size(100, 28);
+            this.restBtn.Size = new System.Drawing.Size(75, 23);
             this.restBtn.TabIndex = 0;
             this.restBtn.Text = "Rest";
             this.restBtn.UseVisualStyleBackColor = true;
@@ -57,10 +56,9 @@
             // 
             // cameraBtn
             // 
-            this.cameraBtn.Location = new System.Drawing.Point(681, 65);
-            this.cameraBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cameraBtn.Location = new System.Drawing.Point(511, 53);
             this.cameraBtn.Name = "cameraBtn";
-            this.cameraBtn.Size = new System.Drawing.Size(100, 28);
+            this.cameraBtn.Size = new System.Drawing.Size(75, 23);
             this.cameraBtn.TabIndex = 1;
             this.cameraBtn.Text = "Camera";
             this.cameraBtn.UseVisualStyleBackColor = true;
@@ -68,10 +66,9 @@
             // 
             // gripBtn
             // 
-            this.gripBtn.Location = new System.Drawing.Point(681, 101);
-            this.gripBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gripBtn.Location = new System.Drawing.Point(511, 82);
             this.gripBtn.Name = "gripBtn";
-            this.gripBtn.Size = new System.Drawing.Size(100, 28);
+            this.gripBtn.Size = new System.Drawing.Size(75, 23);
             this.gripBtn.TabIndex = 2;
             this.gripBtn.Text = "Grip";
             this.gripBtn.UseVisualStyleBackColor = true;
@@ -79,10 +76,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(681, 203);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Location = new System.Drawing.Point(511, 165);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 28);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 3;
             this.button1.Text = "Detect";
             this.button1.UseVisualStyleBackColor = true;
@@ -90,10 +86,9 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(16, 15);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(637, 290);
+            this.pictureBox1.Size = new System.Drawing.Size(478, 236);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -104,26 +99,25 @@
             // 
             // cannyHighHS
             // 
-            this.cannyHighHS.Location = new System.Drawing.Point(681, 330);
+            this.cannyHighHS.Location = new System.Drawing.Point(511, 268);
             this.cannyHighHS.Maximum = 300;
             this.cannyHighHS.Name = "cannyHighHS";
-            this.cannyHighHS.Size = new System.Drawing.Size(219, 26);
+            this.cannyHighHS.Size = new System.Drawing.Size(164, 26);
             this.cannyHighHS.TabIndex = 10;
             // 
             // cannyLowHS
             // 
-            this.cannyLowHS.Location = new System.Drawing.Point(681, 273);
+            this.cannyLowHS.Location = new System.Drawing.Point(511, 222);
             this.cannyLowHS.Maximum = 300;
             this.cannyLowHS.Name = "cannyLowHS";
-            this.cannyLowHS.Size = new System.Drawing.Size(219, 26);
+            this.cannyLowHS.Size = new System.Drawing.Size(164, 26);
             this.cannyLowHS.TabIndex = 9;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(800, 203);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Location = new System.Drawing.Point(600, 165);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 28);
+            this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 11;
             this.button2.Text = "Scan";
             this.button2.UseVisualStyleBackColor = true;
@@ -131,10 +125,9 @@
             // 
             // checkBtn
             // 
-            this.checkBtn.Location = new System.Drawing.Point(800, 30);
-            this.checkBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBtn.Location = new System.Drawing.Point(600, 24);
             this.checkBtn.Name = "checkBtn";
-            this.checkBtn.Size = new System.Drawing.Size(100, 63);
+            this.checkBtn.Size = new System.Drawing.Size(75, 51);
             this.checkBtn.TabIndex = 12;
             this.checkBtn.Text = "Check Gripper";
             this.checkBtn.UseVisualStyleBackColor = true;
@@ -143,18 +136,18 @@
             // checkLbl
             // 
             this.checkLbl.AutoSize = true;
-            this.checkLbl.Location = new System.Drawing.Point(932, 53);
+            this.checkLbl.Location = new System.Drawing.Point(699, 43);
+            this.checkLbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.checkLbl.Name = "checkLbl";
-            this.checkLbl.Size = new System.Drawing.Size(42, 17);
+            this.checkLbl.Size = new System.Drawing.Size(32, 13);
             this.checkLbl.TabIndex = 13;
             this.checkLbl.Text = "False";
             // 
             // dropBtn
             // 
-            this.dropBtn.Location = new System.Drawing.Point(681, 137);
-            this.dropBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.dropBtn.Location = new System.Drawing.Point(511, 111);
             this.dropBtn.Name = "dropBtn";
-            this.dropBtn.Size = new System.Drawing.Size(100, 28);
+            this.dropBtn.Size = new System.Drawing.Size(75, 23);
             this.dropBtn.TabIndex = 14;
             this.dropBtn.Text = "Drop";
             this.dropBtn.UseVisualStyleBackColor = true;
@@ -162,9 +155,9 @@
             // 
             // ArmControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1011, 444);
+            this.ClientSize = new System.Drawing.Size(758, 361);
             this.Controls.Add(this.dropBtn);
             this.Controls.Add(this.checkLbl);
             this.Controls.Add(this.checkBtn);
@@ -176,9 +169,9 @@
             this.Controls.Add(this.gripBtn);
             this.Controls.Add(this.cameraBtn);
             this.Controls.Add(this.restBtn);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ArmControl";
             this.Text = "ArmControl";
+            this.Load += new System.EventHandler(this.ArmControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

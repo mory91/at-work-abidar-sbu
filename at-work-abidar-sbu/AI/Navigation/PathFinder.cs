@@ -18,7 +18,7 @@ namespace at_work_abidar_sbu.AI.Navigation
 		private int MapHeight => _MapHeight;
 //y, cm
         const int RobotSize = 45; //cm
-		const int RobotPadding = 6; //cm
+		const int RobotPadding = 2; //cm
         int[,] dis;
         int[,] map;
         int[,] touchWall;
@@ -142,7 +142,8 @@ namespace at_work_abidar_sbu.AI.Navigation
             SetUp();
             foreach (MapObject o in map.obstacles)
             {
-                addObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height, o.Type==WorldObjectType.Wall);
+                if (o.Type != WorldObjectType.QR)
+                    addObstacle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height, o.Type==WorldObjectType.Wall);
             }
         }
         public Point getDst()

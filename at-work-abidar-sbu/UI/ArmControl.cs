@@ -127,6 +127,11 @@ namespace at_work_abidar_sbu
             Arm.i.CloseGripper();
         }
 
+        private void ArmControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             Navigation.i.SetSpeed(5);
